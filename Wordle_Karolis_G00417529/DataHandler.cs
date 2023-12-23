@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-using System.Net;
-using System.Text.Json;
+﻿using System.Text.Json;
 
 namespace Wordle_Karolis_G00417529
 {
