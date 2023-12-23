@@ -1,4 +1,6 @@
-﻿namespace Wordle_Karolis_G00417529
+﻿using System.Diagnostics;
+
+namespace Wordle_Karolis_G00417529
 {
     public partial class MainPage : ContentPage
     {
@@ -7,6 +9,7 @@
         public MainPage()
         {
             InitializeComponent();
+            //Debug.Print(attemptFinished.ToString());
         }
 
         private void OnCounterClicked(object sender, EventArgs e)
