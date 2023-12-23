@@ -4,7 +4,7 @@ namespace Wordle_Karolis_G00417529
     // this class holds data for a wordle attempt
     public class wordleAttempt
     {
-        // class fields ( keeping them private for security reasons and preventing bugs )
+        // class fields ( keeping them private for preventing bugs )
         private String correctWord;
         private DateTime attemptFinished;
         private int numberOfGuesses;
@@ -51,12 +51,14 @@ namespace Wordle_Karolis_G00417529
         }
 
         // object methods
-        public void finished()
+        async public void finished()
         {
             // setting finish time of wordle
             attemptFinished = DateTime.Now;
 
-            // prompting DataHandler to save finished game
+            // saving data
+            DataHandler.attemptList.Add(this); // adds itself into list to save
+            await DataHandler.saveDataAsync();
         }
     }
 }

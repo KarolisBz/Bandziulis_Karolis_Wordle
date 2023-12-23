@@ -1,4 +1,5 @@
-﻿
+﻿using System.Text.Json;
+
 namespace Wordle_Karolis_G00417529
 {
     public partial class MainPage : ContentPage
@@ -9,6 +10,12 @@ namespace Wordle_Karolis_G00417529
         public MainPage()
         {
             InitializeComponent();
+            DataHandler.Display();
+        }
+
+        async private void saveTest()
+        {
+            await DataHandler.saveDataAsync();
         }
 
         private void OnCounterClicked(object sender, EventArgs e)

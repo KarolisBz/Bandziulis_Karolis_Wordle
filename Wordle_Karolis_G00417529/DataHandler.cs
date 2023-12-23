@@ -1,24 +1,24 @@
-﻿using Foundation;
+﻿using System.Diagnostics;
 using System.Text.Json;
 
 namespace Wordle_Karolis_G00417529
 {
-    // this class handles most of loading and saving of data
+    // this class handles most of loading, saving and storing of data
     public class DataHandler
     {
         // class fields //
-        static String filePath = "wordle_UserData.json";
+        static private String filePath = System.IO.Path.Combine(FileSystem.Current.AppDataDirectory, "wordle_UserData.json");
         // player data
-        static String currentPlayer;
+        static public String currentPlayer;
         // settings data
-        static bool darkMode;
-        static float fontSize;
-        static bool easyMode;
-        static bool timerOn;
+        static public bool darkMode;
+        static public float fontSize;
+        static public bool easyMode;
+        static public bool timerOn;
         // wordle attempt list
-        static List<wordleAttempt> attemptList;
+        static public List<wordleAttempt> attemptList;
         // wrapped data
-        static DataPackage wrappedData = new DataPackage(); // creating data wrapper
+        static private DataPackage wrappedData = new DataPackage(); // creating data wrapper
 
         // constructor
         public DataHandler()
@@ -36,19 +36,59 @@ namespace Wordle_Karolis_G00417529
             }
         }
 
-        // creating an internal class that containts all the required data
-        // so we can read it and write it all at once while keeping as a static class
+        // creating an internal class that contains all the required data
+        // so we can read it and write it all at once while keeping all the varibles in the class static
+        // normally storing data like this will cause very easy cheating as all the data is static and public, but since it's a client only game cheats can never be prevented
+        // as memory on the client can be changed
         private class DataPackage
         {
-            public String currentPlayerPacked;
-            public bool darkModePacked;
-            public float fontSizePacked;
-            public bool easyModePacked;
-            public bool timerOnPacked;
-            public List<wordleAttempt> attemptListPacked;
+            // wrapped variables
+            private String currentPlayerPacked;
+            private bool darkModePacked;
+            private float fontSizePacked;
+            private bool easyModePacked;
+            private bool timerOnPacked;
+            private List<wordleAttempt> attemptListPacked;
+
+            // getters and setters
+            public String CurrentPlayerPacked
+            {
+                get { return currentPlayerPacked; }
+                set { currentPlayerPacked = value; }
+            }
+
+            public bool DarkModePacked
+            {
+                get { return darkMode; }
+                set { darkMode = value; }
+            }
+
+            public float FontSizePacked
+            {
+                get { return fontSizePacked; }
+                set { fontSizePacked = value; }
+            }
+
+            public bool EasyModePacked
+            {
+                get { return easyModePacked; }
+                set { easyModePacked = value; }
+            }
+
+            public bool TimerOnPacked
+            {
+                get { return timerOnPacked; }
+                set { timerOnPacked = value; }
+            }
+
+            public List<wordleAttempt> AttemptListPacked
+            {
+                get { return attemptListPacked; }
+                set { attemptListPacked = value; }
+            }
         }
 
-        static private bool loadData()
+        static public bool loadData()
         {
             bool status = false; // false if failed, true if success in loading data
 
@@ -64,7 +104,15 @@ namespace Wordle_Karolis_G00417529
                     {
                         // loading Data package
                         string jsonstring = reader.ReadToEnd();
-                        dataStored = JsonSerializer.Deserialize<List<DataPackage>>(jsonstring);
+                        wrappedData = JsonSerializer.Deserialize<DataPackage>(jsonstring);
+
+                        // moving data from wrapped package to class
+                        currentPlayer = wrappedData.CurrentPlayerPacked;
+                        darkMode = wrappedData.DarkModePacked;
+                        fontSize = wrappedData.FontSizePacked;
+                        easyMode = wrappedData.EasyModePacked;
+                        timerOn = wrappedData.TimerOnPacked;
+                        attemptList = wrappedData.AttemptListPacked;
                     }
                     status = true;
                 }
@@ -85,37 +133,31 @@ namespace Wordle_Karolis_G00417529
             return status;
         }
 
-        static private async Task<bool> saveDataAsync()
+        static public async Task<bool> saveDataAsync()
         {
             bool status = false; // false if failed, true if success in loading data
 
             try
             {
-                if (File.Exists(filePath)) // if file exists
-                {
-                    // we attempt to load data from the file
-                    using FileStream outputStream = System.IO.File.OpenWrite(filePath); // using Filestream for compatability and preformance
-                    using StreamWriter streamWriter = new StreamWriter(outputStream);
+                // we attempt to load data from the file
+                using FileStream outputStream = System.IO.File.OpenWrite(filePath); // using Filestream for compatability and preformance
+                using StreamWriter streamWriter = new StreamWriter(outputStream);
 
-                    // wrapping all data in current class into wrappedData, overwriting old dataStore
-                    wrappedData.currentPlayerPacked = currentPlayer;
-                    wrappedData.darkModePacked = darkMode;
-                    wrappedData.fontSizePacked = fontSize;
-                    wrappedData.easyModePacked = easyMode;
-                    wrappedData.timerOnPacked = timerOn;
-                    wrappedData.attemptListPacked = attemptList;
+                // wrapping all data in current class into wrappedData, overwriting old dataStore
+                wrappedData.CurrentPlayerPacked = currentPlayer;
+                wrappedData.DarkModePacked = darkMode;
+                wrappedData.FontSizePacked = fontSize;
+                wrappedData.EasyModePacked = easyMode;
+                wrappedData.TimerOnPacked = timerOn;
+                wrappedData.AttemptListPacked = attemptList;
 
-                    string JsonString = JsonSerializer.Serialize(wrappedData);
-                    using (streamWriter)
-                    {
-                        await streamWriter.WriteAsync(JsonString);
-                    }
-                    status = true;
-                }
-                else
+                string JsonString = JsonSerializer.Serialize(wrappedData);
+                using (streamWriter)
                 {
-                    status = false;
+                    await streamWriter.WriteAsync(JsonString);
                 }
+                status = true;
+                Debug.Print("Data is saved");
             }
             catch (UnauthorizedAccessException) // don't have premission to open file
             {
@@ -127,6 +169,15 @@ namespace Wordle_Karolis_G00417529
             }
 
             return status;
+        }
+
+        static public void Display()
+        {
+            Debug.Print("\nCurrent Player: " + currentPlayer + "\n" +
+                        "Dark Mode: " + darkMode + "\n" +
+                        "Font Size: " + fontSize + "\n" +
+                        "Easy Mode: " + easyMode + "\n" +
+                        "Timer On: " + timerOn + "\n");
         }
     }
 }
