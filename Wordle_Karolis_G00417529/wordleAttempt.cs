@@ -1,5 +1,4 @@
-﻿using SceneKit;
-
+﻿
 namespace Wordle_Karolis_G00417529
 {
     // this class holds data for a wordle attempt
