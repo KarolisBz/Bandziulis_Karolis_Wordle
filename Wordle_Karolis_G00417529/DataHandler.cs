@@ -20,7 +20,7 @@ namespace Wordle_Karolis_G00417529
         // wrapped data
         static private DataPackage wrappedData = new DataPackage(); // creating data wrapper
 
-        // constructor
+        // constructor, don't call more then once in entire program
         public DataHandler()
         {
             // requests loading of data when created, however data is static and can be accessed anywhere without object

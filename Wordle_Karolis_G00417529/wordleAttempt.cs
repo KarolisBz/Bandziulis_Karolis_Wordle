@@ -8,6 +8,7 @@ namespace Wordle_Karolis_G00417529
         private String correctWord;
         private DateTime attemptFinished;
         private int numberOfGuesses;
+        private int[,] attemptVisualData;
 
         // constructor
         public wordleAttempt()
@@ -50,6 +51,11 @@ namespace Wordle_Karolis_G00417529
             // no setter as it's set only when game is finished
         }
 
+        public void tryAttempt()
+        {
+
+        }
+
         // object methods
         async public void finished()
         {
@@ -58,7 +64,7 @@ namespace Wordle_Karolis_G00417529
 
             // saving data
             DataHandler.attemptList.Add(this); // adds itself into list to save
-            await DataHandler.saveDataAsync();
+            await DataHandler.saveDataAsync(); // saving game progress so far
         }
     }
 }
