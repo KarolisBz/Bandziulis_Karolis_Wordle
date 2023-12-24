@@ -13,6 +13,8 @@ namespace Wordle_Karolis_G00417529
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                    // adding custom fonts
+                    fonts.AddFont("Heavenly Christmas - Personal Use.otf", "HeavenlyChristmas");
                 });
 
 #if DEBUG

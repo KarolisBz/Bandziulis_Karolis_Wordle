@@ -2,9 +2,11 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Wordle_Karolis_G00417529.MainPage"
-             BackgroundColor="White">
+             BackgroundColor="White"
+             Shell.NavBarIsVisible="False">
 
     <!-- All the images belong and are made by me - Karolis Bandziulis -->
+    <!-- imported fonts do not belong to me, and are used under personal use, liscense is imported under licenses -->
 
     <VerticalStackLayout>
         <!-- background image -->
@@ -16,11 +18,88 @@
              Source="background3.png"/>
 
             <!-- Content over background image -->
-            <Label
-               HorizontalTextAlignment="Center"
-               Text="Worldle"/>
-              
-            
+
+            <Grid>
+                <!-- background grid -->
+                <BoxView
+                 ZIndex="0"
+                 Grid.Row="1"
+                 x:Name = "holderShadow"
+                 HeightRequest = "720"
+                 WidthRequest = "430"
+                 VerticalOptions="Center"
+                 HorizontalOptions="Center"
+                 CornerRadius="40"
+                 Color="black"
+                 Opacity="0.95"/>
+
+                <BoxView
+                Grid.Row="1"
+                x:Name = "holder"
+                HeightRequest = "700"
+                WidthRequest = "500"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                CornerRadius="40"
+                Color="white"
+                Opacity="0.95"   
+                 />
+
+                <Label
+                 FontFamily="HeavenlyChristmas"
+                 x:Name="fontPageTitle"
+                 FontSize="250"
+                 TextColor ="Black"
+                 HorizontalTextAlignment="Center"
+                 Text="(Winter Worldle)"/>
+
+                <!-- content grid -->
+                <Grid RowDefinitions="*,*,*,*,*,*,*,*,*,*,*,*,*,*,*" ZIndex="2">
+                    <Label
+                     Grid.Row="4"
+                     x:Name="subTitle"
+                     FontFamily="HeavenlyChristmas"
+                     HorizontalOptions="Center"
+                     FontSize="100"
+                     TextColor ="Black"
+                     Text="Login page"/>
+
+                    <Label
+                      Grid.Row="6"
+                      x:Name="userDisplay"
+                      FontFamily="HeavenlyChristmas"
+                      VerticalOptions="Center"
+                      HorizontalOptions="Center"
+                      FontSize="50"
+                      TextColor ="Black"
+                      Text="Welcome back Username!"/>
+                    <Label
+                      Grid.Row="7"
+                      x:Name="actionDisplay"
+                      FontFamily="HeavenlyChristmas"
+                      VerticalOptions="Center"
+                      HorizontalOptions="Center"
+                      FontSize="50"
+                      TextColor ="Black"
+                      Text="Press start to play!"/>
+
+                    <Button
+                    Grid.Row="10"
+                    x:Name="startBtn"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    WidthRequest="300"
+                    FontSize="75"
+                    Style="{StaticResource buttonStyle1}"
+                    Clicked="startBtn_Clicked"
+                    Text="Start"/>
+
+                </Grid>
+            </Grid>
+
+
+
+
         </Grid>
     </VerticalStackLayout>
 

@@ -49,9 +49,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Fonts\Heavenly Christmas - Personal Use.otf" />
 	  <None Remove="Resources\Images\background3.svg" />
 	  <None Remove="Resources\Images\icon.svg" />
-	  <None Remove="Resources\Images\mobileBackground.svg" />
+	  <None Remove="Resources\Images\mobilebackground.svg" />
 	</ItemGroup>
 
 	<ItemGroup>

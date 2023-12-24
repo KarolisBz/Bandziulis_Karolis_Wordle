@@ -9,6 +9,13 @@
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            
+            <!-- adding custom application styles -->
+            <Style x:Key="buttonStyle1" TargetType="Button" >
+                <Setter Property="BackgroundColor" Value="Black"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="FontFamily" Value="HeavenlyChristmas"/>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
