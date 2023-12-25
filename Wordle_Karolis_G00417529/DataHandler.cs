@@ -7,7 +7,7 @@ namespace Wordle_Karolis_G00417529
     public class DataHandler
     {
         // class fields //
-        static private String filePath = System.IO.Path.Combine(FileSystem.Current.AppDataDirectory, "wordle_UserData.json");
+        static private String filePath = System.IO.Path.Combine(FileSystem.Current.AppDataDirectory, "wordleUserData.json");
         // player data
         static public String currentPlayer;
         // settings data
@@ -102,7 +102,13 @@ namespace Wordle_Karolis_G00417529
 
             try
             {
-                // we attempt to load data from the file
+                // we wipe old save, as we are overwriting it anyways and it may mess up writing in async
+                if (File.Exists(filePath)) // if file exists
+                {
+                    System.IO.File.Delete(filePath);
+                }
+
+                // we attempt to save data
                 using FileStream outputStream = System.IO.File.OpenWrite(filePath); // using Filestream for compatability and preformance
                 using StreamWriter streamWriter = new StreamWriter(outputStream);
                 Debug.WriteLine(filePath);
@@ -118,6 +124,7 @@ namespace Wordle_Karolis_G00417529
                 string JsonString = JsonSerializer.Serialize(wrappedData);
                 using (streamWriter)
                 {
+     
                     await streamWriter.WriteAsync(JsonString);
                 }
                 status = true;

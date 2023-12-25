@@ -25,7 +25,7 @@ public partial class gamePage : ContentPage
                 Image newImage = new Image();
                 newImage.ZIndex = 1;
                 newImage.Source = "candygridimage.png";
-                newImage.Aspect = Aspect.AspectFit;
+                newImage.Aspect = Aspect.Fill;
                 newImage.SetValue(Grid.RowProperty, row);
                 newImage.SetValue(Grid.ColumnProperty, col);
                 gameGrid.Add(newImage);
@@ -53,5 +53,23 @@ public partial class gamePage : ContentPage
 
         // scalling fonts
         pageTitle.FontSize = fontManager.scaleFontSize(180, windowHeight, windowWidth);
+
+        // scaling grid, we want it to always be square so we will take the smallest value ( width or height)
+        // use it to make a square
+        double SmallestLength;
+
+        if (windowWidth > windowHeight)
+        {
+            SmallestLength = windowHeight / pixelDensity;
+        }
+        else
+        {
+            SmallestLength = windowWidth / pixelDensity;
+        }
+
+        Debug.WriteLine(SmallestLength.ToString());
+
+        gameGrid.WidthRequest = SmallestLength * 0.65;
+        gameGrid.HeightRequest = (gameGrid.WidthRequest / 5) * 6; // makes images square, as rows and coloumns are not equal so images wouldn't be square
     }
 }

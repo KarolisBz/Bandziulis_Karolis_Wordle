@@ -27,7 +27,7 @@
             
             <!-- wordle grid-->
             <Grid x:Name="gameGrid" RowDefinitions="*,*,*,*,*,*" ColumnDefinitions="*,*,*,*,*" BackgroundColor="black"
-                  HeightRequest="1000" WidthRequest="1000">
+                  HeightRequest="390" WidthRequest="390" HorizontalOptions="Center" VerticalOptions="Center">
                 
             </Grid>
         </Grid>
