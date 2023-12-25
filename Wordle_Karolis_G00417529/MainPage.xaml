@@ -71,31 +71,24 @@
                       FontFamily="LittleSanta"
                       VerticalOptions="Center"
                       HorizontalOptions="Center"
-                      LineBreakMode="WordWrap"
-                      FontSize="50"
-                      TextColor ="Black"
+                      Style="{StaticResource labelStyle1}"
                       Text="Welcome back Karolis Bandziulis!"/>
                     <Label
                       x:Name="mobileUserDisplay"
                       Grid.Row="7"
-                      FontFamily="LittleSanta"
                       VerticalOptions="Center"
                       HorizontalOptions="Center"
                       VerticalTextAlignment="Center"
                       HorizontalTextAlignment="Center"
-                      LineBreakMode="WordWrap"
-                      FontSize="40"
-                      TextColor ="Black"
+                      Style="{StaticResource labelStyle1}"
                       IsVisible="false"
                       Text="mobile display"/>
                     <Label
                       Grid.Row="7"
                       x:Name="actionDisplay"
-                      FontFamily="LittleSanta"
                       VerticalOptions="Center"
                       HorizontalOptions="Center"
-                      FontSize="40"
-                      TextColor ="Black"
+                      Style="{StaticResource labelStyle1}"
                       Text="Press start to play!"/>
 
                     <Button
