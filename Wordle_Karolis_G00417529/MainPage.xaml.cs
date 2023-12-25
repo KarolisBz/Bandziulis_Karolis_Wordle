@@ -11,7 +11,6 @@ namespace Wordle_Karolis_G00417529
         public MainPage()
         {
             InitializeComponent();
-            DataHandler.currentPlayer = "Default_User";
             setupUI(); // setting up ui
             swapPageContent(); // making sure we display the right content
         }
@@ -84,7 +83,7 @@ namespace Wordle_Karolis_G00417529
             background.WidthRequest = windowWidth / pixelDensity;
 
             // scalling fonts
-            fontPageTitle.FontSize = scaleFontSize(180, windowHeight, windowWidth);
+            fontPageTitle.FontSize = fontManager.scaleFontSize(180, windowHeight, windowWidth);
 
             // scaling assests (from ratio of 2k monitor)
             if (windowWidth < 500 || windowHeight < (700 + titleSize)) // we only scale if screen is smaller then requested size
@@ -92,8 +91,6 @@ namespace Wordle_Karolis_G00417529
                 // scaling fonts relative to box, not screen
                 double relativeWidth = 2560 * (windowWidth / 500);
                 double relativeHeight = 1408 * ((windowHeight - titleSize) / 700); // we use titleSize as an offset, so the title always stays above text box
-
-                Debug.Print(titleSize.ToString());
 
                 if (windowWidth < 500) { holder.WidthRequest = windowWidth; } else {  holder.WidthRequest = 500; relativeWidth = 2560; }
                 if (windowHeight < (700 + titleSize)) { holder.HeightRequest = (windowHeight - titleSize); } else { holder.HeightRequest = 700; relativeHeight = 1408; }
@@ -103,12 +100,12 @@ namespace Wordle_Karolis_G00417529
                 holderShadow.HeightRequest = holder.HeightRequest + 10;
                 holderShadow.WidthRequest = holder.WidthRequest + 10;
 
-                startBtn.FontSize = scaleFontSize(75, relativeHeight, relativeWidth);
-                logoutBtn.FontSize = scaleFontSize(40, relativeHeight, relativeWidth);
-                actionDisplay.FontSize = scaleFontSize(40, relativeHeight, relativeWidth);
-                userDisplay.FontSize = scaleFontSize(40, relativeHeight, relativeWidth);
-                subTitle.FontSize = scaleFontSize(100, relativeHeight, relativeWidth);
-                mobileUserDisplay.FontSize = scaleFontSize(40, relativeHeight, relativeWidth);
+                startBtn.FontSize = fontManager.scaleFontSize(75, relativeHeight, relativeWidth);
+                logoutBtn.FontSize = fontManager.scaleFontSize(40, relativeHeight, relativeWidth);
+                actionDisplay.FontSize = fontManager.scaleFontSize(40, relativeHeight, relativeWidth);
+                userDisplay.FontSize = fontManager.scaleFontSize(40, relativeHeight, relativeWidth);
+                subTitle.FontSize = fontManager.scaleFontSize(100, relativeHeight, relativeWidth);
+                mobileUserDisplay.FontSize = fontManager.scaleFontSize(40, relativeHeight, relativeWidth);
             }
             else // return to original size
             {
@@ -126,19 +123,6 @@ namespace Wordle_Karolis_G00417529
                 mobileUserDisplay.FontSize = 40;
             }
 
-        }
-
-        private double scaleFontSize(double fullSize, double windowHeight, double windowWidth)
-        {
-            // function varibles 
-            double pixelDensity = DeviceDisplay.MainDisplayInfo.Density;
-
-            // originally made at 2560p x 1440p, so we scale to that (minus the task bar ect)
-            double scaledHeight = (windowHeight / pixelDensity) / 1408;
-            double scaledWidth = (windowWidth / pixelDensity) / 2560;
-            double scaledFontSize = ((scaledHeight + scaledWidth) / 2) * fullSize;
-
-            return scaledFontSize;
         }
 
         private async void login()

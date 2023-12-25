@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Wordle_Karolis_G00417529.gamePage"
+             Title="game page"
+             BackgroundColor="White"
+             Shell.NavBarIsVisible="False">
+    
+    <VerticalStackLayout>
+        <!-- background image -->
+        <Grid>
+            <Image
+             x:Name="background"
+             Aspect="AspectFill"
+             ZIndex="-1"
+             Source="background3.png"/>
+
+            <!-- Content over background image -->
+            <Label
+              ZIndex="1"
+              FontFamily="HeavenlyChristmas"
+              x:Name="pageTitle"
+              FontSize="250"
+              TextColor ="Black"
+              HorizontalTextAlignment="Center"
+              Text="(Winter Worldle)"/>
+            
+            <!-- wordle grid-->
+            <Grid x:Name="gameGrid" RowDefinitions="*,*,*,*,*,*" ColumnDefinitions="*,*,*,*,*" BackgroundColor="black"
+                  HeightRequest="1000" WidthRequest="1000">
+                
+            </Grid>
+        </Grid>
+    </VerticalStackLayout>
+</ContentPage>

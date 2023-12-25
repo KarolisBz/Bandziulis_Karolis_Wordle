@@ -43,51 +43,13 @@ namespace Wordle_Karolis_G00417529
         private class DataPackage
         {
             // wrapped variables
-            private String currentPlayerPacked;
-            private bool darkModePacked;
-            private float fontSizePacked;
-            private bool easyModePacked;
-            private bool timerOnPacked;
-            private List<wordleAttempt> attemptListPacked;
-
-            // getters and setters
-            public String CurrentPlayerPacked
-            {
-                get { return currentPlayerPacked; }
-                set { currentPlayerPacked = value; }
-            }
-
-            public bool DarkModePacked
-            {
-                get { return darkMode; }
-                set { darkMode = value; }
-            }
-
-            public float FontSizePacked
-            {
-                get { return fontSizePacked; }
-                set { fontSizePacked = value; }
-            }
-
-            public bool EasyModePacked
-            {
-                get { return easyModePacked; }
-                set { easyModePacked = value; }
-            }
-
-            public bool TimerOnPacked
-            {
-                get { return timerOnPacked; }
-                set { timerOnPacked = value; }
-            }
-
-            public List<wordleAttempt> AttemptListPacked
-            {
-                get { return attemptListPacked; }
-                set { attemptListPacked = value; }
-            }
+            public String currentPlayerPacked { get; set; }
+            public bool darkModePacked { get; set; }
+            public float fontSizePacked { get; set; }
+            public bool easyModePacked { get; set; }
+            public bool timerOnPacked { get; set; }
+            public List<wordleAttempt> attemptListPacked { get; set; }
         }
-
         static public bool loadData()
         {
             bool status = false; // false if failed, true if success in loading data
@@ -107,13 +69,14 @@ namespace Wordle_Karolis_G00417529
                         wrappedData = JsonSerializer.Deserialize<DataPackage>(jsonstring);
 
                         // moving data from wrapped package to class
-                        currentPlayer = wrappedData.CurrentPlayerPacked;
-                        darkMode = wrappedData.DarkModePacked;
-                        fontSize = wrappedData.FontSizePacked;
-                        easyMode = wrappedData.EasyModePacked;
-                        timerOn = wrappedData.TimerOnPacked;
-                        attemptList = wrappedData.AttemptListPacked;
+                        currentPlayer = wrappedData.currentPlayerPacked;
+                        darkMode = wrappedData.darkModePacked;
+                        fontSize = wrappedData.fontSizePacked;
+                        easyMode = wrappedData.easyModePacked;
+                        timerOn = wrappedData.timerOnPacked;
+                        attemptList = wrappedData.attemptListPacked;
                     }
+                    Debug.Print(currentPlayer);
                     status = true;
                 }
                else
@@ -142,14 +105,15 @@ namespace Wordle_Karolis_G00417529
                 // we attempt to load data from the file
                 using FileStream outputStream = System.IO.File.OpenWrite(filePath); // using Filestream for compatability and preformance
                 using StreamWriter streamWriter = new StreamWriter(outputStream);
+                Debug.WriteLine(filePath);
 
                 // wrapping all data in current class into wrappedData, overwriting old dataStore
-                wrappedData.CurrentPlayerPacked = currentPlayer;
-                wrappedData.DarkModePacked = darkMode;
-                wrappedData.FontSizePacked = fontSize;
-                wrappedData.EasyModePacked = easyMode;
-                wrappedData.TimerOnPacked = timerOn;
-                wrappedData.AttemptListPacked = attemptList;
+                wrappedData.currentPlayerPacked = currentPlayer;
+                wrappedData.darkModePacked = darkMode;
+                wrappedData.fontSizePacked = fontSize;
+                wrappedData.easyModePacked = easyMode;
+                wrappedData.timerOnPacked = timerOn;
+                wrappedData.attemptListPacked = attemptList;
 
                 string JsonString = JsonSerializer.Serialize(wrappedData);
                 using (streamWriter)
