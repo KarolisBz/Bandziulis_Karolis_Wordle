@@ -1,6 +1,4 @@
 ﻿using System.Diagnostics;
-using System.Text.Json;
-using System.Xml.Linq;
 
 namespace Wordle_Karolis_G00417529
 {
@@ -8,6 +6,7 @@ namespace Wordle_Karolis_G00417529
     {
         bool loggedIn = false;
         DataHandler data = new DataHandler(); // setup data ONCE, when program is opened
+        double titleSize;
 
         public MainPage()
         {
@@ -55,6 +54,7 @@ namespace Wordle_Karolis_G00417529
         {
             // hooking function to every time layout is changed
             this.LayoutChanged += OnWindowChange;
+            titleSize = fontPageTitle.FontSize;
 
             // changing background more suited for mobile
             if (DeviceInfo.Current.Idiom == DeviceIdiom.Phone)
@@ -87,14 +87,16 @@ namespace Wordle_Karolis_G00417529
             fontPageTitle.FontSize = scaleFontSize(180, windowHeight, windowWidth);
 
             // scaling assests (from ratio of 2k monitor)
-            if (windowWidth < 500 || windowHeight < 700) // we only scale if screen is smaller then requested size
+            if (windowWidth < 500 || windowHeight < (700 + titleSize)) // we only scale if screen is smaller then requested size
             {
                 // scaling fonts relative to box, not screen
                 double relativeWidth = 2560 * (windowWidth / 500);
-                double relativeHeight = 1408 * (windowHeight / 700);
+                double relativeHeight = 1408 * ((windowHeight - titleSize) / 700); // we use titleSize as an offset, so the title always stays above text box
+
+                Debug.Print(titleSize.ToString());
 
                 if (windowWidth < 500) { holder.WidthRequest = windowWidth; } else {  holder.WidthRequest = 500; relativeWidth = 2560; }
-                if (windowHeight < 700) { holder.HeightRequest = windowHeight; } else { holder.HeightRequest = 700; relativeHeight = 1408; }
+                if (windowHeight < (700 + titleSize)) { holder.HeightRequest = (windowHeight - titleSize); } else { holder.HeightRequest = 700; relativeHeight = 1408; }
 
                 startBtn.WidthRequest = holder.WidthRequest / 2;
                 logoutBtn.WidthRequest = holder.WidthRequest / 4;
@@ -141,8 +143,8 @@ namespace Wordle_Karolis_G00417529
 
         private async void login()
         {
-            string name = await DisplayPromptAsync("Login", "What's your username?");
-            if (name != null && name != "") // if the user doesn't cancel and enters a valid name, swap content
+            string name = await DisplayPromptAsync("Login", "What's your username? (max length of 30)");
+            if (name != null && name != "" && name.Length < 31) // if the user doesn't cancel and enters a valid name, swap content
             {
                 DataHandler.currentPlayer = name;
                 saveData(); // saves new data now that user logged in
