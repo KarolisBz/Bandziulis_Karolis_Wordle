@@ -6,7 +6,7 @@
              Shell.NavBarIsVisible="False">
 
     <!-- All the images belong and are made by me - Karolis Bandziulis -->
-    <!-- imported fonts do not belong to me, and are used under personal use, liscense is imported under licenses -->
+    <!-- imported fonts do not belong to me, and are used under personal use, liscense is imported under licenses for fonts that had them provided -->
 
     <VerticalStackLayout>
         <!-- background image -->
@@ -20,10 +20,19 @@
             <!-- Content over background image -->
 
             <Grid>
+                <Label
+                 ZIndex="1"
+                 FontFamily="HeavenlyChristmas"
+                 x:Name="fontPageTitle"
+                 FontSize="250"
+                 TextColor ="Black"
+                 HorizontalTextAlignment="Center"
+                 Text="(Winter Worldle)"/>
+                
                 <!-- background grid -->
                 <BoxView
                  ZIndex="0"
-                 Grid.Row="1"
+                 Grid.Row="0"
                  x:Name = "holderShadow"
                  HeightRequest = "720"
                  WidthRequest = "430"
@@ -34,7 +43,7 @@
                  Opacity="0.95"/>
 
                 <BoxView
-                Grid.Row="1"
+                Grid.Row="0"
                 x:Name = "holder"
                 HeightRequest = "700"
                 WidthRequest = "500"
@@ -45,16 +54,8 @@
                 Opacity="0.95"   
                  />
 
-                <Label
-                 FontFamily="HeavenlyChristmas"
-                 x:Name="fontPageTitle"
-                 FontSize="250"
-                 TextColor ="Black"
-                 HorizontalTextAlignment="Center"
-                 Text="(Winter Worldle)"/>
-
                 <!-- content grid -->
-                <Grid RowDefinitions="*,*,*,*,*,*,*,*,*,*,*,*,*,*,*" ZIndex="2">
+                <Grid RowDefinitions="*,*,*,*,*,*,*,*,*,*,*,*,*,*,*" ZIndex="2" x:Name="contentGrid">
                     <Label
                      Grid.Row="4"
                      x:Name="subTitle"
@@ -67,22 +68,47 @@
                     <Label
                       Grid.Row="6"
                       x:Name="userDisplay"
-                      FontFamily="HeavenlyChristmas"
+                      FontFamily="LittleSanta"
                       VerticalOptions="Center"
                       HorizontalOptions="Center"
+                      LineBreakMode="WordWrap"
                       FontSize="50"
                       TextColor ="Black"
-                      Text="Welcome back Username!"/>
+                      Text="Welcome back Karolis Bandziulis!"/>
+                    <Label
+                      x:Name="mobileUserDisplay"
+                      Grid.Row="7"
+                      FontFamily="LittleSanta"
+                      VerticalOptions="Center"
+                      HorizontalOptions="Center"
+                      VerticalTextAlignment="Center"
+                      HorizontalTextAlignment="Center"
+                      LineBreakMode="WordWrap"
+                      FontSize="40"
+                      TextColor ="Black"
+                      IsVisible="false"
+                      Text="mobile display"/>
                     <Label
                       Grid.Row="7"
                       x:Name="actionDisplay"
-                      FontFamily="HeavenlyChristmas"
+                      FontFamily="LittleSanta"
                       VerticalOptions="Center"
                       HorizontalOptions="Center"
-                      FontSize="50"
+                      FontSize="40"
                       TextColor ="Black"
                       Text="Press start to play!"/>
 
+                    <Button
+                     Grid.Row="9"
+                     x:Name="logoutBtn"
+                     VerticalOptions="Center"
+                     HorizontalOptions="Center"
+                     WidthRequest="150"
+                     FontSize="50"
+                     Style="{StaticResource buttonStyle1}"
+                     Clicked="logout_Clicked"
+                     Text="logout"/>
+                    
                     <Button
                     Grid.Row="10"
                     x:Name="startBtn"

@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Text.Json;
+using System.Xml.Linq;
 
 namespace Wordle_Karolis_G00417529
 {
@@ -11,6 +12,7 @@ namespace Wordle_Karolis_G00417529
         public MainPage()
         {
             InitializeComponent();
+            DataHandler.currentPlayer = "Default_User";
             setupUI(); // setting up ui
             swapPageContent(); // making sure we display the right content
         }
@@ -21,14 +23,30 @@ namespace Wordle_Karolis_G00417529
             // checking if user is not logged in
             if (DataHandler.currentPlayer == "Default_User")
             {
-                userDisplay.Text = "You're currently logged out";
+                userDisplay.Text = "You're logged out";
                 actionDisplay.Text = "Press login to login!";
                 startBtn.Text = "Login";
+                logoutBtn.IsVisible = false;
+                mobileUserDisplay.IsVisible = false;
+                Grid.SetRow(actionDisplay, 7);
             }
             else
             {
-                userDisplay.Text = ("Welcome back " + DataHandler.currentPlayer + "!");
-                actionDisplay.Text = "Press start to play!";
+                if (DeviceInfo.Current.Idiom == DeviceIdiom.Phone)
+                {
+                    // mobile word wrap doesn't work well for layout, so we use extra label
+                    userDisplay.Text = "Welcome back";
+                    mobileUserDisplay.Text = (DataHandler.currentPlayer + "!");
+                    actionDisplay.Text = "Press start to play!";
+                    mobileUserDisplay.IsVisible = true;
+                    Grid.SetRow(actionDisplay, 8);
+                }
+                else
+                {
+                    userDisplay.Text = ("Welcome back " + DataHandler.currentPlayer + "!");
+                    actionDisplay.Text = "Press start to play!";
+                }
+                logoutBtn.IsVisible = true;
                 startBtn.Text = "Start";
                 loggedIn = true;
             }
@@ -76,16 +94,19 @@ namespace Wordle_Karolis_G00417529
                 double relativeHeight = 1408 * (windowHeight / 700);
 
                 if (windowWidth < 500) { holder.WidthRequest = windowWidth; } else {  holder.WidthRequest = 500; relativeWidth = 2560; }
-                if (windowHeight < 500) { holder.HeightRequest = windowHeight; } else { holder.HeightRequest = 700; relativeHeight = 1408; }
+                if (windowHeight < 700) { holder.HeightRequest = windowHeight; } else { holder.HeightRequest = 700; relativeHeight = 1408; }
 
                 startBtn.WidthRequest = holder.WidthRequest / 2;
+                logoutBtn.WidthRequest = holder.WidthRequest / 4;
                 holderShadow.HeightRequest = holder.HeightRequest + 10;
                 holderShadow.WidthRequest = holder.WidthRequest + 10;
 
                 startBtn.FontSize = scaleFontSize(75, relativeHeight, relativeWidth);
-                actionDisplay.FontSize = scaleFontSize(50, relativeHeight, relativeWidth);
-                userDisplay.FontSize = scaleFontSize(50, relativeHeight, relativeWidth);
+                logoutBtn.FontSize = scaleFontSize(40, relativeHeight, relativeWidth);
+                actionDisplay.FontSize = scaleFontSize(40, relativeHeight, relativeWidth);
+                userDisplay.FontSize = scaleFontSize(40, relativeHeight, relativeWidth);
                 subTitle.FontSize = scaleFontSize(100, relativeHeight, relativeWidth);
+                mobileUserDisplay.FontSize = scaleFontSize(40, relativeHeight, relativeWidth);
             }
             else // return to original size
             {
@@ -96,9 +117,11 @@ namespace Wordle_Karolis_G00417529
                 holderShadow.WidthRequest = holder.WidthRequest + 10;
                 // scaling fonts
                 startBtn.FontSize = 75;
-                actionDisplay.FontSize = 50;
-                userDisplay.FontSize = 50;
+                logoutBtn.FontSize = 40;
+                actionDisplay.FontSize = 40;
+                userDisplay.FontSize = 40;
                 subTitle.FontSize = 100;
+                mobileUserDisplay.FontSize = 40;
             }
 
         }
@@ -128,6 +151,14 @@ namespace Wordle_Karolis_G00417529
             }
         }
 
+        private void logout()
+        {
+            DataHandler.currentPlayer = "Default_User";
+            saveData(); // saves new data now that user logged out
+            swapPageContent(); // swaps to logged out page
+            loggedIn = false;
+        }
+
         private async void toPage2()
         {
             await Navigation.PopAsync();
@@ -146,9 +177,14 @@ namespace Wordle_Karolis_G00417529
             }
         }
 
-        async private void saveData()
+        private async void saveData()
         {
             await DataHandler.saveDataAsync();
+        }
+
+        private void logout_Clicked(object sender, EventArgs e)
+        {
+            logout(); // logs out
         }
     }
 }

@@ -49,7 +49,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Fonts\ChristmasLightsIndoor.ttf" />
 	  <None Remove="Resources\Fonts\Heavenly Christmas - Personal Use.otf" />
+	  <None Remove="Resources\Fonts\Little Santa Personal Use Only.otf" />
+	  <None Remove="Resources\Fonts\Merry Deer ttf.ttf" />
+	  <None Remove="Resources\Fonts\Playful Christmas-Personal Use.otf" />
 	  <None Remove="Resources\Images\background3.svg" />
 	  <None Remove="Resources\Images\icon.svg" />
 	  <None Remove="Resources\Images\mobilebackground.svg" />
