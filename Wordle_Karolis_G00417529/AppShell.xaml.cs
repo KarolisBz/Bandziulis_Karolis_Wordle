@@ -10,6 +10,7 @@
             if (DeviceInfo.Current.Idiom == DeviceIdiom.Desktop)
             {
                 Shell.SetFlyoutBehavior(this, Microsoft.Maui.FlyoutBehavior.Disabled);
+                Shell.SetFlyoutItemIsVisible(this, false);
             }
         }
     }
