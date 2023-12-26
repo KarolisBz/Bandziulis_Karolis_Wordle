@@ -45,6 +45,7 @@ public partial class gamePage : ContentPage
                 newEntry.MaxLength = 2;
                 newEntry.FontSize = 80;
                 newEntry.FontFamily = "MerryDeer";
+                newEntry.TextColor = new Color(255, 255, 255);
                 newEntry.HorizontalTextAlignment = TextAlignment.Center;
                 newEntry.VerticalTextAlignment = TextAlignment.Center;
                 newEntry.IsTextPredictionEnabled = false;

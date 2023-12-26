@@ -3,27 +3,52 @@
     x:Class="Wordle_Karolis_G00417529.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:Wordle_Karolis_G00417529">
+    xmlns:local="clr-namespace:Wordle_Karolis_G00417529"
+    Shell.FlyoutItemIsVisible = "True"
+    Shell.FlyoutBehavior="Flyout"
+    Shell.TabBarIsVisible="False">
 
+    <!-- styling flyout page -->
     <Shell.FlyoutHeader>
-        <Label Text="header"/>
+        <Image Source="flyoutdashboard.png"
+               Aspect="AspectFill"/>
     </Shell.FlyoutHeader>
 
-    <FlyoutItem Title="Dashboard" FlyoutDisplayOptions="AsMultipleItems" FlyoutItemIsVisible="False">
-        <ShellContent
-        Title="Login"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <Shell.ItemTemplate>
+        <DataTemplate>
+            <Grid ColumnSpacing="10" RowDefinitions="*,*,*,*" ColumnDefinitions="*,*,*,*" >
+                <Image Source="{Binding FlyoutIcon}" Aspect="AspectFill" HeightRequest="45" Grid.Column="0"/>
+                <Label VerticalTextAlignment="Center" Text="{Binding Title}" Grid.Column="1" FontFamily="HeavenlyChristmas" FontSize="40"/>
+                <BoxView Grid.Row="3" Color="LightGrey" Grid.ColumnSpan="4" HeightRequest="1"/>
+            </Grid>
+        </DataTemplate>
+    </Shell.ItemTemplate>
 
-        <ShellContent Icon="icon.png"
-          Title="Wordle"
-          ContentTemplate="{DataTemplate local:gamePage}"
-          Route="gamePage"/>
+    <!-- adding content to flyout -->
+    <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
+       <ShellContent
+       Title="Login"
+       ContentTemplate="{DataTemplate local:MainPage}"
+       Route="MainPage"
+       Icon="loginicon.png"
+       FlyoutIcon="loginicon.png"/>
 
-        <ShellContent Icon="icon.png"
-          Title="Settings"
-          ContentTemplate="{DataTemplate local:SettingsPage}"
-          Route="SettingsPage"/>
+       <ShellContent FlyoutIcon="wordleiconv2.png"
+       Icon="wordleiconv2.png" 
+       Title="Wordle"
+       ContentTemplate="{DataTemplate local:gamePage}"
+       Route="gamePage"/>
+
+       <ShellContent FlyoutIcon="settingimage.png"
+       Icon="settingimage.png" 
+       Title="Settings"
+       ContentTemplate="{DataTemplate local:SettingsPage}"
+       Route="SettingsPage"/>
     </FlyoutItem>
+
+    <!-- adding content to flyout -->
+  
+    
+    <!-- adding tab bars -->
 
 </Shell>

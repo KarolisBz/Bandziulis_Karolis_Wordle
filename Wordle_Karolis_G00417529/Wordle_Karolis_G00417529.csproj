@@ -32,7 +32,6 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
 
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
@@ -49,14 +48,23 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\AppIcon\appicon.svg" />
 	  <None Remove="Resources\Fonts\ChristmasLightsIndoor.ttf" />
 	  <None Remove="Resources\Fonts\Heavenly Christmas - Personal Use.otf" />
 	  <None Remove="Resources\Fonts\Little Santa Personal Use Only.otf" />
 	  <None Remove="Resources\Fonts\Merry Deer ttf.ttf" />
 	  <None Remove="Resources\Fonts\Playful Christmas-Personal Use.otf" />
 	  <None Remove="Resources\Images\background3.svg" />
-	  <None Remove="Resources\Images\icon.svg" />
+	  <None Remove="Resources\Images\flyoutDashboard.svg" />
+	  <None Remove="Resources\Images\loginicon.svg" />
 	  <None Remove="Resources\Images\mobilebackground.svg" />
+	  <None Remove="Resources\Images\settingImage.svg" />
+	  <None Remove="Resources\Images\wordleIcon.svg" />
+	  <None Remove="Resources\Images\wordleiconv2.svg" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiImage Include="Resources\AppIcon\appicon.svg" />
 	</ItemGroup>
 
 	<ItemGroup>

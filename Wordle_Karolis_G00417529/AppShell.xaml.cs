@@ -6,8 +6,11 @@
         {
             InitializeComponent();
 
-            // enable tabs if on phone
-             Shell.SetTabBarIsVisible(this, DeviceInfo.Current.Idiom == DeviceIdiom.Phone);
+            // disable flyout if on pc
+            if (DeviceInfo.Current.Idiom == DeviceIdiom.Desktop)
+            {
+                Shell.SetFlyoutBehavior(this, Microsoft.Maui.FlyoutBehavior.Disabled);
+            }
         }
     }
 }
