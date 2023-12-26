@@ -147,8 +147,7 @@ namespace Wordle_Karolis_G00417529
 
         private async void toPage2()
         {
-            await Navigation.PopAsync();
-            await Navigation.PushAsync(new gamePage()); // going to new page
+           await Navigation.PushAsync(new gamePage()); // going to new page
         }
 
         private void startBtn_Clicked(object sender, EventArgs e)

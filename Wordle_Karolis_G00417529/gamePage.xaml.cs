@@ -67,7 +67,7 @@ public partial class gamePage : ContentPage
 
     private void NewEntry_TextChanged(object sender, TextChangedEventArgs e)
     {
-        Debug.Print( " lock status: " + inputLocked.ToString());
+        // creating dynamic entery box moving
         switchFocus((Entry)sender);
         inputLocked = false;
     }

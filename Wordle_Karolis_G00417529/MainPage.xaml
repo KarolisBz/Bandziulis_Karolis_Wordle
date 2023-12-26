@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Wordle_Karolis_G00417529.MainPage"
              BackgroundColor="White"
-             Shell.NavBarIsVisible="False">
+             Shell.NavBarIsVisible="False"
+              Shell.FlyoutItemIsVisible = "False">
 
     <!-- All the images belong and are made by me - Karolis Bandziulis -->
     <!-- imported fonts do not belong to me, and are used under personal use, liscense is imported under licenses for fonts that had them provided -->

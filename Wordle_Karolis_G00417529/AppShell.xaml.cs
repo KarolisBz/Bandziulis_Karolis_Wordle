@@ -5,6 +5,9 @@
         public AppShell()
         {
             InitializeComponent();
+
+            // enable tabs if on phone
+             Shell.SetTabBarIsVisible(this, DeviceInfo.Current.Idiom == DeviceIdiom.Phone);
         }
     }
 }
