@@ -58,13 +58,15 @@
 	  <None Remove="Resources\Images\flyoutDashboard.svg" />
 	  <None Remove="Resources\Images\loginicon.svg" />
 	  <None Remove="Resources\Images\mobilebackground.svg" />
+	  <None Remove="Resources\Images\progressioniconv2.svg" />
 	  <None Remove="Resources\Images\settingImage.svg" />
 	  <None Remove="Resources\Images\wordleIcon.svg" />
 	  <None Remove="Resources\Images\wordleiconv2.svg" />
+	  <None Remove="Resources\Images\wordleIconV3.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiImage Include="Resources\AppIcon\appicon.svg" />
+	  <MauiIcon Include="Resources\AppIcon\appicon.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -75,6 +77,9 @@
 	  <Compile Update="gamePage.xaml.cs">
 	    <DependentUpon>gamePage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="progressionPage.xaml.cs">
+	    <DependentUpon>progressionPage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="SettingsPage.xaml.cs">
 	    <DependentUpon>SettingsPage.xaml</DependentUpon>
 	  </Compile>
@@ -82,6 +87,9 @@
 
 	<ItemGroup>
 	  <MauiXaml Update="gamePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="progressionPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="SettingsPage.xaml">

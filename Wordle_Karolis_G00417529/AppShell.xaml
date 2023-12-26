@@ -17,8 +17,9 @@
     <Shell.ItemTemplate>
         <DataTemplate>
             <Grid ColumnSpacing="10" RowDefinitions="*,*,*,*" ColumnDefinitions="*,*,*,*" >
-                <Image Source="{Binding FlyoutIcon}" Aspect="AspectFill" HeightRequest="45" Grid.Column="0"/>
-                <Label VerticalTextAlignment="Center" Text="{Binding Title}" Grid.Column="1" FontFamily="HeavenlyChristmas" FontSize="40"/>
+                <!-- we want the image to overfow a bit, creates a better asthetic. white background is better then transparent as the outline is see even in darkmode -->
+                <Image Source="{Binding FlyoutIcon}" Aspect="AspectFill" HeightRequest="50" Grid.Column="0"/>
+                <Label VerticalTextAlignment="Center" Text="{Binding Title}" Grid.Column="1" FontFamily="HeavenlyChristmas" FontSize="50" Grid.ColumnSpan="4"/>
                 <BoxView Grid.Row="3" Color="LightGrey" Grid.ColumnSpan="4" HeightRequest="1"/>
             </Grid>
         </DataTemplate>
@@ -27,19 +28,25 @@
     <!-- adding content to flyout -->
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
        <ShellContent
-       Title="Login"
+       Title="Account"
        ContentTemplate="{DataTemplate local:MainPage}"
        Route="MainPage"
        Icon="loginicon.png"
        FlyoutIcon="loginicon.png"/>
 
-       <ShellContent FlyoutIcon="wordleiconv2.png"
-       Icon="wordleiconv2.png" 
+       <ShellContent FlyoutIcon="wordleiconv3.png"
+       Icon="wordleiconv3.png" 
        Title="Wordle"
        ContentTemplate="{DataTemplate local:gamePage}"
        Route="gamePage"/>
 
-       <ShellContent FlyoutIcon="settingimage.png"
+       <ShellContent FlyoutIcon="progressioniconv2.png"
+       Icon="progressioniconv2.png" 
+       Title="Progression"
+       ContentTemplate="{DataTemplate local:progressionPage}"
+       Route="progressionPage"/>
+
+        <ShellContent FlyoutIcon="settingimage.png"
        Icon="settingimage.png" 
        Title="Settings"
        ContentTemplate="{DataTemplate local:SettingsPage}"
