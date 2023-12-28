@@ -1,5 +1,6 @@
 using Microsoft.Maui.Controls;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 namespace Wordle_Karolis_G00417529;
 
@@ -10,7 +11,7 @@ public partial class gamePage : ContentPage
     bool inputLocked = false;
 
 	public gamePage()
-	{
+    {
 		InitializeComponent();
 
         // intilizing class fields

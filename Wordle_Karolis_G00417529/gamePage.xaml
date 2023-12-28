@@ -8,6 +8,7 @@
 
     <!-- All the images belong and are made by me - Karolis Bandziulis -->
     <!-- imported fonts do not belong to me, and are used under personal use, liscense is imported under licenses for fonts that had them provided -->
+    <!-- latest version -->
 
     <VerticalStackLayout>
         <!-- background image -->
@@ -27,7 +28,96 @@
               TextColor ="Black"
               HorizontalTextAlignment="Center"
               Text="(Winter Worldle)"/>
-            
+
+            <!-- button grid -->
+            <Grid RowDefinitions="*,*,*,*,*,*,*,*,*,*,*,*" ColumnDefinitions="*,*" ColumnSpacing="1555">
+ 
+                 <!-- account btn -->
+                <Button 
+                 Grid.Row="0"
+                 Grid.Column="0"
+                 Style="{StaticResource buttonStyle1}"
+                 Text="Account"
+                 HeightRequest="120"
+                 WidthRequest="500"
+                 FontSize="100"
+                 HorizontalOptions="Start"/>
+
+                <Image
+                HeightRequest="120"
+                WidthRequest="100"
+                Source="loginicon.png"
+                Aspect="AspectFill"
+                Grid.Column="0"
+                Grid.Row="0"
+                Opacity="0.5"
+                HorizontalOptions="Start"/>
+
+                <!-- wordle btn -->
+                <Button 
+                 Grid.Row="0"
+                 Grid.Column="9"
+                 Style="{StaticResource buttonStyle1}"
+                 Text="Wordle"
+                 Opacity="0.7"
+                 HeightRequest="120"
+                 WidthRequest="500"
+                 FontSize="100"
+                 HorizontalOptions="Start"/>
+
+                <Image
+                HeightRequest="120"
+                WidthRequest="100"
+                Source="wordleiconv2.png"
+                Aspect="AspectFill"
+                Grid.Column="9"
+                Grid.Row="0"
+                Opacity="0.1"
+                HorizontalOptions="Start"/>
+
+                <!-- progression btn -->
+                <Button 
+                 Grid.Row="1"
+                 Grid.Column="0"
+                 Style="{StaticResource buttonStyle1}"
+                 Text="Progression"
+                 HeightRequest="120"
+                 WidthRequest="500"
+                 FontSize="100"
+                 HorizontalOptions="Start"/>
+
+                <Image
+                HeightRequest="120"
+                WidthRequest="100"
+                Source="progressionicon.png"
+                Aspect="AspectFill"
+                Grid.Column="0"
+                Grid.Row="1"
+                Opacity="0.5"
+                HorizontalOptions="Start"/>
+
+                <!-- progression btn -->
+                <Button 
+                 Grid.Row="1"
+                 Grid.Column="10"
+                 Style="{StaticResource buttonStyle1}"
+                 Text="Settings"
+                 HeightRequest="120"
+                 WidthRequest="500"
+                 FontSize="100"
+                 HorizontalOptions="Start"/>
+
+                <Image
+                HeightRequest="120"
+                WidthRequest="100"
+                Source="settingimage.png"
+                Aspect="AspectFill"
+                Grid.Column="10"
+                Grid.Row="1"
+                Opacity="0.5"
+                HorizontalOptions="Start"/>
+            </Grid>
+
             <!-- wordle grid-->
             <Grid x:Name="gameGrid" RowDefinitions="*,*,*,*,*,*" ColumnDefinitions="*,*,*,*,*" BackgroundColor="black"
                   HeightRequest="390" WidthRequest="390" HorizontalOptions="Center" VerticalOptions="Center">
