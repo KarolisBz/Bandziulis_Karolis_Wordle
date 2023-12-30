@@ -18,7 +18,7 @@
         <DataTemplate>
             <Grid ColumnSpacing="10" RowDefinitions="*,*,*,*" ColumnDefinitions="*,*,*,*" >
                 <!-- we want the image to overfow a bit, creates a better asthetic. white background is better then transparent as the outline is see even in darkmode -->
-                <Image Source="{Binding FlyoutIcon}" Aspect="AspectFill" HeightRequest="50" Grid.Column="0"/>
+                <Image Source="{Binding FlyoutIcon}" Aspect="AspectFill" HeightRequest="49" Grid.Column="0"/>
                 <Label VerticalTextAlignment="Center" Text="{Binding Title}" Grid.Column="1" FontFamily="HeavenlyChristmas" FontSize="50" Grid.ColumnSpan="4"/>
                 <BoxView Grid.Row="3" Color="LightGrey" Grid.ColumnSpan="4" HeightRequest="1"/>
             </Grid>
