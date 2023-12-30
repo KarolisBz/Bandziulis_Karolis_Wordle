@@ -7,6 +7,8 @@
 
     <!-- All the images belong and are made by me - Karolis Bandziulis -->
     <!-- imported fonts do not belong to me, and are used under personal use, liscense is imported under licenses for fonts that had them provided -->
+    <!-- important notice: -->
+    <!-- Mobile devices use flyout pages, to activate it hold down for 1 second on the left hand size of the mobile screen, then swipe -->
 
     <VerticalStackLayout>
         <!-- background image -->
