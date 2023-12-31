@@ -8,7 +8,8 @@ public partial class gamePage : ContentPage
 {
     // class fields
     List<Entry> entries;
-    int currentEntery;
+    int currentEntery, enteryMaxSize;
+    double maxSize;
     bool inputLocked, appOn;
 
 	public gamePage()
@@ -25,9 +26,6 @@ public partial class gamePage : ContentPage
         // this is done asynchronously
         Thread focusingText = new Thread(focusAllTextBoxs);
         focusingText.Start();
-
-        // page is being removed, so we stop calling functions from another thread to the main thread to prevent bugs
-        //this.Window.Destroying += Window_Destroying;
     }
 
     protected override void OnDisappearing()
@@ -41,7 +39,6 @@ public partial class gamePage : ContentPage
         while (true && appOn)
         {
             Thread.Sleep(1000); // slows down multithreaded loop
-            Debug.Print("looping");
             // accessing function from the main thread
             MainThread.InvokeOnMainThreadAsync(() => { entries[currentEntery].Focus(); });
         }
@@ -51,8 +48,10 @@ public partial class gamePage : ContentPage
     {
         // initializing class fields
         currentEntery = 0;
+        maxSize = gameGrid.WidthRequest;
         inputLocked = false;
         appOn = true;
+        enteryMaxSize = 50;
 
         // hooking function to every time layout is changed
         LayoutChanged += OnWindowChange;
@@ -75,7 +74,7 @@ public partial class gamePage : ContentPage
                 Entry newEntry = new Entry();
                 newEntry.ZIndex = 5; // always ontop
                 newEntry.MaxLength = 2;
-                newEntry.FontSize = 80;
+                newEntry.FontSize = enteryMaxSize;
                 newEntry.FontFamily = "MerryDeer";
                 newEntry.TextColor = new Color(255, 255, 255);
                 newEntry.HorizontalTextAlignment = TextAlignment.Center;
@@ -84,7 +83,6 @@ public partial class gamePage : ContentPage
                 newEntry.VerticalOptions = LayoutOptions.Center;
                 newEntry.IsTextPredictionEnabled = false;
                 newEntry.IsSpellCheckEnabled = false;
-                //newEntry.Unfocused += NewEntry_Unfocused;
                 newEntry.SetValue(Grid.RowProperty, row);
                 newEntry.SetValue(Grid.ColumnProperty, col);
                 gameGrid.Add(newEntry);
@@ -211,18 +209,15 @@ public partial class gamePage : ContentPage
         gameGrid.HeightRequest = (gameGrid.WidthRequest / 5) * 6; // makes images square, as rows and coloumns are not equal so images wouldn't be square
 
         // scaling grid fonts relative to any selection of the grid
-        double maxSelectionSize = 390 / 5;
-        double currentSelectionSize = gameGrid.WidthRequest / 5;
-        double relativeWidth = 2560 * (currentSelectionSize / maxSelectionSize);
-        double relativeHeight = 1408 * (currentSelectionSize / maxSelectionSize);
+        // PS: There is a weird glitch that stops you from scaling entries correctly
+        double percentChanged = gameGrid.WidthRequest / maxSize;
 
         foreach (Entry currentEntery in entries)
         {
-            currentEntery.FontSize = fontManager.scaleFontSize(80, relativeHeight, relativeWidth);
-            currentEntery.TranslationX = windowWidth / 2;
-            //currentEntery.TranslationY = (currentSelectionSize / 2) + gameGrid.Y;
+            currentEntery.FontSize = enteryMaxSize * (percentChanged);
+            currentEntery.ScaleX = percentChanged;
+            currentEntery.ScaleY = percentChanged;
         }
-        Debug.Print(entries[0].FontSize.ToString() + ", maxSize: " + maxSelectionSize.ToString() + ", currentSize: " + currentSelectionSize.ToString());
     }
 
     private void OnWindowChange(object sender, EventArgs e)

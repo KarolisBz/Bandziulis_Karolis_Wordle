@@ -120,7 +120,7 @@
 
             <!-- wordle grid-->
             <Grid x:Name="gameGrid" RowDefinitions="*,*,*,*,*,*" ColumnDefinitions="*,*,*,*,*" BackgroundColor="black"
-                  HeightRequest="390" WidthRequest="390" HorizontalOptions="Center" VerticalOptions="Center">
+                  HeightRequest="468" WidthRequest="468" HorizontalOptions="Center" VerticalOptions="Center">
                 
             </Grid>
         </Grid>
