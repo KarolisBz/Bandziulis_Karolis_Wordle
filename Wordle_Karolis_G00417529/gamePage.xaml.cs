@@ -219,7 +219,7 @@ public partial class gamePage : ContentPage
 
         foreach (Entry currentEntery in entries)
         {
-            currentEntery.FontSize = enteryMaxSize * percentChanged;
+            currentEntery.FontSize = (enteryMaxSize * percentChanged) * 0.9;
             currentEntery.ScaleX = refernce.WidthRequest * 0.85;
             currentEntery.ScaleY = refernce.HeightRequest * 0.85;
         }
