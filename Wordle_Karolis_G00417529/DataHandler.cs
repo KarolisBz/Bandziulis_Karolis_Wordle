@@ -8,6 +8,7 @@ namespace Wordle_Karolis_G00417529
     {
         // class fields //
         static private String filePath = System.IO.Path.Combine(FileSystem.Current.AppDataDirectory, "wordleUserData.json");
+        static private String wordfilePath = System.IO.Path.Combine(FileSystem.Current.AppDataDirectory, "cachedWords.txt");
         // player data
         static public String currentPlayer;
         // settings data
@@ -15,6 +16,9 @@ namespace Wordle_Karolis_G00417529
         static public float fontSize;
         static public bool easyMode;
         static public bool timerOn;
+        // api cached
+        static HttpClient client;
+        static public List<string> wordList;
         // wordle attempt list
         static public List<wordleAttempt> attemptList;
         // wrapped data
@@ -33,6 +37,16 @@ namespace Wordle_Karolis_G00417529
                 easyMode = false;
                 timerOn = true;
                 attemptList = new List<wordleAttempt>();
+            }
+
+            // requests api call to fetch words if it has not do so before
+            if (!File.Exists(wordfilePath)) // if file doesn't exist
+            {
+                fetchSaveApi();
+            }
+            else
+            {
+                fetchLocalWords();
             }
         }
 
@@ -150,5 +164,85 @@ namespace Wordle_Karolis_G00417529
                         "Easy Mode: " + easyMode + "\n" +
                         "Timer On: " + timerOn + "\n");
         }
+
+        static private async void fetchSaveApi()
+        {
+            // varibles
+            bool fetchSuccess = false;
+
+            // fetching the data and storing it in a list
+            try
+            {
+                var serverResponse = await client.GetAsync("https://raw.githubusercontent.com/DonH-ITS/jsonfiles/main/words.txt");
+                if (serverResponse.IsSuccessStatusCode)
+                {
+                    string content = await serverResponse.Content.ReadAsStringAsync();
+                    wordList = JsonSerializer.Deserialize<List<string>>(content);
+                }
+
+                fetchSuccess = true;
+            }
+            catch (Exception ex) // if failed request
+            {
+                Debug.WriteLine("failed to download words: ", ex.Message);
+            }
+
+            // saving data we just fetched
+            if (fetchSuccess)
+            {
+                try
+                {
+                    // we attempt to save data
+                    using FileStream outputStream = System.IO.File.OpenWrite(wordfilePath); // using Filestream for compatability and preformance
+                    using StreamWriter streamWriter = new StreamWriter(outputStream);
+
+                    string JsonString = JsonSerializer.Serialize(wordList);
+                    using (streamWriter)
+                    {
+                        await streamWriter.WriteAsync(JsonString);
+                    }
+                }
+                catch (Exception ex) // error saving file
+                {
+                    Console.WriteLine($"An unexpected error occurred while saving api data : {ex.Message}");
+                }
+            }
+        }
+
+        static private void fetchLocalWords()
+        {
+            bool fetchSuccess = false;
+
+            try
+            {
+                // we attempt to load data from the file
+                using FileStream InputStream = System.IO.File.OpenRead(wordfilePath); // using Filestream for compatability and preformance
+                using StreamReader reader = new StreamReader(InputStream);
+
+                using (reader)
+                {
+                    // loading words
+                    string jsonstring = reader.ReadToEnd();
+                    wordList = JsonSerializer.Deserialize<List<string>>(jsonstring);
+                }
+
+                fetchSuccess = true;
+            }
+            catch (UnauthorizedAccessException) // don't have premission to open file
+            {
+                Console.WriteLine($" Access to the file is unauthorized : {filePath}");
+            }
+            catch (Exception ex) // another error
+            {
+                Console.WriteLine($"An unexpected error occurred : {ex.Message}");
+            }
+
+            if (!fetchSuccess) // if we failed to fetch from file, we will fetch via api
+            {
+                System.IO.File.Delete(wordfilePath); // deleting currupted data
+                fetchSaveApi();
+            }
+        }
+
     }
 }

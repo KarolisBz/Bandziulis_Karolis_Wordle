@@ -12,6 +12,7 @@ public partial class gamePage : ContentPage
     int currentEntery, enteryMaxSize;
     bool inputLocked, appOn;
     double maxSize;
+    wordleAttempt currentWordle;
 
 	public gamePage()
     {
