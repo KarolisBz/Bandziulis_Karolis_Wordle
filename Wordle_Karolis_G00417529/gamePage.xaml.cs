@@ -238,7 +238,7 @@ public partial class gamePage : ContentPage
             progressionBtn.HeightRequest = scaledHeight;
             progressionBtn.WidthRequest = scaledWidth;
             progressionImg.HeightRequest = scaledHeight;
-            progressionImg.WidthRequest = progressionImg.WidthRequest / 5;
+            progressionImg.WidthRequest = progressionBtn.WidthRequest / 5;
 
             settingsBtn.FontSize = btnFontSize;
             settingsBtn.HeightRequest = scaledHeight;

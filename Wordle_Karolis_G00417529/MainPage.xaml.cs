@@ -10,7 +10,7 @@ namespace Wordle_Karolis_G00417529
 
         public MainPage()
         {
-            InitializeComponent();
+            InitializeComponent(); // <- maui bug may prevent page from loading leaving it as a white / black screen
             setupUI(); // setting up ui
             swapPageContent(); // making sure we display the right content
         }
