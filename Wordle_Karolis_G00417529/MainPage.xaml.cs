@@ -52,8 +52,8 @@ namespace Wordle_Karolis_G00417529
         private void setupUI()
         {
             // hooking function to every time layout is changed
-            this.LayoutChanged += OnWindowChange;
             titleSize = fontPageTitle.FontSize;
+            this.LayoutChanged += OnWindowChange;
 
             // changing background more suited for mobile
             if (DeviceInfo.Current.Idiom == DeviceIdiom.Phone)

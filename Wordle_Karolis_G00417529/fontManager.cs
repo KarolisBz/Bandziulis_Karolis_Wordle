@@ -15,5 +15,15 @@
 
             return scaledFontSize;
         }
+
+        // this function returns the max size that would fit nicely in a box constraint of X,Y
+        static public double findFontSizeToConstraint(double height)
+        {
+            // function varibles 
+            double pixelDensity = DeviceDisplay.MainDisplayInfo.Density;
+            double scaledFontSize = (height / pixelDensity) / 2;
+
+            return scaledFontSize;
+        }
     }
 }

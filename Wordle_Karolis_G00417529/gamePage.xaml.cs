@@ -8,9 +8,10 @@ public partial class gamePage : ContentPage
 {
     // class fields
     List<Entry> entries;
+    Image refernce;
     int currentEntery, enteryMaxSize;
-    double maxSize;
     bool inputLocked, appOn;
+    double maxSize;
 
 	public gamePage()
     {
@@ -69,6 +70,8 @@ public partial class gamePage : ContentPage
                 newImage.SetValue(Grid.RowProperty, row);
                 newImage.SetValue(Grid.ColumnProperty, col);
                 gameGrid.Add(newImage);
+                // adding referance
+                refernce = newImage;
 
                 // creating text box's
                 Entry newEntry = new Entry();
@@ -77,10 +80,12 @@ public partial class gamePage : ContentPage
                 newEntry.FontSize = enteryMaxSize;
                 newEntry.FontFamily = "MerryDeer";
                 newEntry.TextColor = new Color(255, 255, 255);
-                newEntry.HorizontalTextAlignment = TextAlignment.Center;
-                newEntry.VerticalTextAlignment = TextAlignment.Center;
+                //newEntry.BackgroundColor = new Color(255, 0, 0);
+                newEntry.Rotation = 180;
                 newEntry.HorizontalOptions = LayoutOptions.Center;
                 newEntry.VerticalOptions = LayoutOptions.Center;
+                newEntry.HorizontalTextAlignment = TextAlignment.Center;
+                newEntry.VerticalTextAlignment = TextAlignment.Center;
                 newEntry.IsTextPredictionEnabled = false;
                 newEntry.IsSpellCheckEnabled = false;
                 newEntry.SetValue(Grid.RowProperty, row);
@@ -214,10 +219,11 @@ public partial class gamePage : ContentPage
 
         foreach (Entry currentEntery in entries)
         {
-            currentEntery.FontSize = enteryMaxSize * (percentChanged);
-            currentEntery.ScaleX = percentChanged;
-            currentEntery.ScaleY = percentChanged;
+            currentEntery.FontSize = enteryMaxSize * percentChanged;
+            currentEntery.ScaleX = refernce.WidthRequest * 0.85;
+            currentEntery.ScaleY = refernce.HeightRequest * 0.85;
         }
+        Debug.Print("Grid height: " + (gameGrid.HeightRequest  / 5).ToString() + ",Font Size: " + entries[0].FontSize.ToString() + ", Desired Size: " + entries[0].DesiredSize.ToString());
     }
 
     private void OnWindowChange(object sender, EventArgs e)
