@@ -27,6 +27,9 @@ public partial class gamePage : ContentPage
         // this is done asynchronously
         Thread focusingText = new Thread(focusAllTextBoxs);
         focusingText.Start();
+
+        // we sale all ui
+        scaleElements();
     }
 
     protected override void OnDisappearing()
@@ -56,6 +59,22 @@ public partial class gamePage : ContentPage
 
         // hooking function to every time layout is changed
         LayoutChanged += OnWindowChange;
+
+        // removing navigation buttons if on mobile
+        if (DeviceInfo.Current.Idiom == DeviceIdiom.Phone)
+        {
+            accountBtn.IsVisible = false;
+            accountImg.IsVisible = false;
+
+            wordleBtn.IsVisible = false;
+            WordleImg.IsVisible = false;
+
+            progressionBtn.IsVisible = false;
+            progressionImg.IsVisible = false;
+
+            settingsBtn.IsVisible = false;
+            settingsImg.IsVisible = false;
+        }
 
         // adding grid box's and text box's
         for (int row = 0; row < 6; row++) // 6 attempts
@@ -197,6 +216,40 @@ public partial class gamePage : ContentPage
         // scalling fonts
         pageTitle.FontSize = fontManager.scaleFontSize(180, windowHeight, windowWidth);
 
+        // scaling navigation buttons that are only visible on pc
+        if (DeviceInfo.Current.Idiom != DeviceIdiom.Phone)
+        {
+            double btnFontSize = fontManager.scaleFontSize(100, windowHeight, windowWidth) * 0.95;
+            double scaledHeight = (windowHeight / 1408) * 150;
+            double scaledWidth = (windowWidth / 2560) * 500;
+            accountBtn.FontSize = btnFontSize;
+            accountBtn.HeightRequest = scaledHeight;
+            accountBtn.WidthRequest = scaledWidth;
+            accountImg.HeightRequest = scaledHeight;
+            accountImg.WidthRequest = accountBtn.WidthRequest / 5;
+
+            wordleBtn.FontSize = btnFontSize;
+            wordleBtn.HeightRequest = scaledHeight;
+            wordleBtn.WidthRequest = scaledWidth;
+            WordleImg.HeightRequest = scaledHeight;
+            WordleImg.WidthRequest = wordleBtn.WidthRequest / 5;
+
+            progressionBtn.FontSize = btnFontSize;
+            progressionBtn.HeightRequest = scaledHeight;
+            progressionBtn.WidthRequest = scaledWidth;
+            progressionImg.HeightRequest = scaledHeight;
+            progressionImg.WidthRequest = progressionImg.WidthRequest / 5;
+
+            settingsBtn.FontSize = btnFontSize;
+            settingsBtn.HeightRequest = scaledHeight;
+            settingsBtn.WidthRequest = scaledWidth;
+            settingsImg.HeightRequest = scaledHeight;
+            settingsImg.WidthRequest = settingsBtn.WidthRequest / 5;
+
+            // scaling btn spacing
+            btnHolder.ColumnSpacing = (windowWidth / 2560) * 1555;
+        }
+      
         // scaling grid, we want it to always be square so we will take the smallest value ( width or height)
         // use it to make a square
         double SmallestLength;
@@ -219,11 +272,11 @@ public partial class gamePage : ContentPage
 
         foreach (Entry currentEntery in entries)
         {
-            currentEntery.FontSize = (enteryMaxSize * percentChanged) * 0.9;
+            currentEntery.FontSize = (enteryMaxSize * percentChanged) * 0.85;
             currentEntery.ScaleX = refernce.WidthRequest * 0.85;
             currentEntery.ScaleY = refernce.HeightRequest * 0.85;
         }
-        Debug.Print("Grid height: " + (gameGrid.HeightRequest  / 5).ToString() + ",Font Size: " + entries[0].FontSize.ToString() + ", Desired Size: " + entries[0].DesiredSize.ToString());
+        //Debug.Print("Grid height: " + (gameGrid.HeightRequest  / 5).ToString() + ",Font Size: " + entries[0].FontSize.ToString() + ", Desired Size: " + entries[0].DesiredSize.ToString());
     }
 
     private void OnWindowChange(object sender, EventArgs e)
