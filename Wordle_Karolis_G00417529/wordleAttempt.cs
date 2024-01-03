@@ -1,14 +1,18 @@
-﻿
+﻿using System.Diagnostics;
+
 namespace Wordle_Karolis_G00417529
 {
     // this class holds data for a wordle attempt
     public class wordleAttempt
     {
         // class fields ( keeping them private for preventing bugs )
-        private String correctWord;
+        private string correctWord;
         private DateTime attemptFinished;
         private int numberOfGuesses;
         private int[,,,,] attemptVisualData;
+        private Random random = new Random();
+        // public fields
+        public int currentAttempt;
 
         // constructor
         public wordleAttempt()
@@ -16,14 +20,13 @@ namespace Wordle_Karolis_G00417529
             // initializing fields 
             correctWord = "word test";
             numberOfGuesses = 6;
-
-            // fetching random word from cached api
+            currentAttempt = 0;
         }
 
         // getters and setters
-        public String CorrectWord
+        public string CorrectWord
         {
-            get { return CorrectWord; }
+            get { return correctWord; }
             // no setter, as correct word is generated only once at object creation
         }
 
@@ -67,6 +70,13 @@ namespace Wordle_Karolis_G00417529
         public void tryAttempt()
         {
 
+        }
+
+        public void setupGame()
+        {
+            // fetching random word from cached api
+            correctWord = DataHandler.wordList[random.Next(DataHandler.wordList.Count)];
+            Debug.Print("Chosen word is: " + correctWord);
         }
     }
 }

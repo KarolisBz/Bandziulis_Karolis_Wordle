@@ -31,6 +31,10 @@ public partial class gamePage : ContentPage
 
         // we sale all ui
         scaleElements();
+
+        // we create game and wordleAttempt, only save if the game is finished!
+        currentWordle = new wordleAttempt();
+        currentWordle.setupGame();
     }
 
     protected override void OnDisappearing()
@@ -43,9 +47,9 @@ public partial class gamePage : ContentPage
     {
         while (true && appOn)
         {
-            Thread.Sleep(1000); // slows down multithreaded loop
             // accessing function from the main thread
             MainThread.InvokeOnMainThreadAsync(() => { entries[currentEntery].Focus(); });
+            Thread.Sleep(1000); // slows down multithreaded loop
         }
     }
 
@@ -124,18 +128,19 @@ public partial class gamePage : ContentPage
         firstEntery.Focus();
     }
 
-    private void NewEntry_Unfocused(object sender, FocusEventArgs e)
-    {
-        // ensuring player does not click off entery
-        Debug.WriteLine("refocused \n");
-        entries[currentEntery].Focus();
-    }
-
     private void NewEntry_TextChanged(object sender, TextChangedEventArgs e)
     {
-        // creating dynamic entery box moving
-        switchFocus((Entry)sender);
-        inputLocked = false;
+        // finding which row entery is on
+        Entry castedObj = (Entry)sender;
+        int enteryRow = (int)castedObj.GetValue(Grid.RowProperty);
+
+        // if player is on the correct attempt
+        if (currentWordle.currentAttempt == enteryRow)
+        {
+            // creating dynamic entery box moving
+            switchFocus(castedObj);
+            inputLocked = false;
+        }
     }
 
     private void switchFocus(Entry sender)

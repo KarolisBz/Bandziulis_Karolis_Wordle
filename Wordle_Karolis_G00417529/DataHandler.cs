@@ -7,10 +7,10 @@ namespace Wordle_Karolis_G00417529
     public class DataHandler
     {
         // class fields //
-        static private String filePath = System.IO.Path.Combine(FileSystem.Current.AppDataDirectory, "wordleUserData.json");
-        static private String wordfilePath = System.IO.Path.Combine(FileSystem.Current.AppDataDirectory, "cachedWords.json");
+        static private string filePath = System.IO.Path.Combine(FileSystem.Current.AppDataDirectory, "wordleUserData.json");
+        static private string wordfilePath = System.IO.Path.Combine(FileSystem.Current.AppDataDirectory, "cachedWords.json");
         // player data //
-        static public String currentPlayer;
+        static public string currentPlayer;
         // settings data //
         static public bool darkMode;
         static public float fontSize;
@@ -42,6 +42,7 @@ namespace Wordle_Karolis_G00417529
             // creating client for http and wordlist
             client = new HttpClient();
             wordList = new List<string>();
+            Debug.Print("data directory: " + filePath);
 
             // requests api call to fetch words if it has not do so before
             if (!File.Exists(wordfilePath)) // if file doesn't exist
@@ -51,7 +52,7 @@ namespace Wordle_Karolis_G00417529
             }
             else // fetches words from saved file that was downloaded and saved before hand
             {
-                Debug.Print("fetching from file");
+                Debug.Print("fetching from file - " + wordfilePath);
                 fetchLocalWords();
             }
         }
@@ -63,7 +64,7 @@ namespace Wordle_Karolis_G00417529
         private class DataPackage
         {
             // wrapped variables
-            public String currentPlayerPacked { get; set; }
+            public string currentPlayerPacked { get; set; }
             public bool darkModePacked { get; set; }
             public float fontSizePacked { get; set; }
             public bool easyModePacked { get; set; }
@@ -96,12 +97,7 @@ namespace Wordle_Karolis_G00417529
                         timerOn = wrappedData.timerOnPacked;
                         attemptList = wrappedData.attemptListPacked;
                     }
-                    Debug.Print(currentPlayer);
                     status = true;
-                }
-               else
-                {
-                    status = false;
                 }
             }
             catch (UnauthorizedAccessException) // don't have premission to open file
@@ -190,6 +186,9 @@ namespace Wordle_Karolis_G00417529
                     {
                         wordList.Add(word);
                     }
+
+                    // last part of api list is a blank, so we will remove this
+                    wordList.Remove("");
                 }
 
                 fetchSuccess = true;
