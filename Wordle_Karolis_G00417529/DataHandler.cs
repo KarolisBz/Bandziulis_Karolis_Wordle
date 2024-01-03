@@ -8,20 +8,20 @@ namespace Wordle_Karolis_G00417529
     {
         // class fields //
         static private String filePath = System.IO.Path.Combine(FileSystem.Current.AppDataDirectory, "wordleUserData.json");
-        static private String wordfilePath = System.IO.Path.Combine(FileSystem.Current.AppDataDirectory, "cachedWords.txt");
-        // player data
+        static private String wordfilePath = System.IO.Path.Combine(FileSystem.Current.AppDataDirectory, "cachedWords.json");
+        // player data //
         static public String currentPlayer;
-        // settings data
+        // settings data //
         static public bool darkMode;
         static public float fontSize;
         static public bool easyMode;
         static public bool timerOn;
-        // api cached
+        // api cached //
         static HttpClient client;
         static public List<string> wordList;
-        // wordle attempt list
+        // wordle attempt list //
         static public List<wordleAttempt> attemptList;
-        // wrapped data
+        // wrapped data //
         static private DataPackage wrappedData = new DataPackage(); // creating data wrapper
 
         // constructor, don't call more then once in entire program
@@ -39,13 +39,19 @@ namespace Wordle_Karolis_G00417529
                 attemptList = new List<wordleAttempt>();
             }
 
+            // creating client for http and wordlist
+            client = new HttpClient();
+            wordList = new List<string>();
+
             // requests api call to fetch words if it has not do so before
             if (!File.Exists(wordfilePath)) // if file doesn't exist
             {
+                Debug.Print("fetching and saving from api");
                 fetchSaveApi();
             }
-            else
+            else // fetches words from saved file that was downloaded and saved before hand
             {
+                Debug.Print("fetching from file");
                 fetchLocalWords();
             }
         }
@@ -156,7 +162,7 @@ namespace Wordle_Karolis_G00417529
             return status;
         }
 
-        static public void Display()
+        static public void display()
         {
             Debug.Print("\nCurrent Player: " + currentPlayer + "\n" +
                         "Dark Mode: " + darkMode + "\n" +
@@ -173,11 +179,17 @@ namespace Wordle_Karolis_G00417529
             // fetching the data and storing it in a list
             try
             {
-                var serverResponse = await client.GetAsync("https://raw.githubusercontent.com/DonH-ITS/jsonfiles/main/words.txt");
+                HttpResponseMessage serverResponse = await client.GetAsync("https://raw.githubusercontent.com/DonH-ITS/jsonfiles/main/words.txt");
                 if (serverResponse.IsSuccessStatusCode)
                 {
+                    // requesting data from api
                     string content = await serverResponse.Content.ReadAsStringAsync();
-                    wordList = JsonSerializer.Deserialize<List<string>>(content);
+
+                    // Breaking content into seperate strings and then adding them one by one into list
+                    foreach (string word in content.Split('\n'))
+                    {
+                        wordList.Add(word);
+                    }
                 }
 
                 fetchSuccess = true;
@@ -207,6 +219,8 @@ namespace Wordle_Karolis_G00417529
                     Console.WriteLine($"An unexpected error occurred while saving api data : {ex.Message}");
                 }
             }
+
+            
         }
 
         static private void fetchLocalWords()
