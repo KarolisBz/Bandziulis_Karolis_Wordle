@@ -84,6 +84,7 @@ namespace Wordle_Karolis_G00417529
 
             // scalling fonts
             fontPageTitle.FontSize = fontManager.scaleFontSize(180, windowHeight, windowWidth);
+            titleSize = fontPageTitle.FontSize * 1.8;
 
             // scaling assests (from ratio of 2k monitor)
             if (windowWidth < 500 || windowHeight < (700 + titleSize)) // we only scale if screen is smaller then requested size
