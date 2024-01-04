@@ -119,6 +119,7 @@ public partial class gamePage : ContentPage
 
                 // adding functionality to each entery
                 newEntry.TextChanged += NewEntry_TextChanged;
+                newEntry.Completed += NewEntry_Completed;
             }
         }
 
@@ -128,19 +129,49 @@ public partial class gamePage : ContentPage
         firstEntery.Focus();
     }
 
+    // this function handels checking awnser and moving player onto next attempt
+    private void NewEntry_Completed(object sender, EventArgs e)
+    {
+        // calss varibales
+        Entry castedObj = (Entry)sender;
+        bool rowCompleted = false;
+        int objRow = (int)castedObj.GetValue(Grid.RowProperty);
+        int objCol = (int)castedObj.GetValue(Grid.ColumnProperty);
+        int rowStartIndex = objRow * 5;
+        string builtUpString = "";
+        
+        // checking if all the 5 character slots are filled
+        for (int i = 0; i < 5; i++)
+        {
+            if (entries[rowStartIndex + i].Text != "" && entries[rowStartIndex + i].Text != "\u00A0")
+            {
+                // building string while ignoring invisible character
+                builtUpString += entries[rowStartIndex + i].Text[0];
+
+                if (i == 4)
+                {
+                    rowCompleted = true;
+                }
+            }
+            else
+            {
+                break; // we break without setting value to true
+            }
+        }
+       
+        // check awnsers if row is completed
+        if (rowCompleted)
+        {
+            // removing all spaces from
+            Debug.Print("Player awnser: " + builtUpString);
+        }
+    }
+
     private void NewEntry_TextChanged(object sender, TextChangedEventArgs e)
     {
-        // finding which row entery is on
-        Entry castedObj = (Entry)sender;
-        int enteryRow = (int)castedObj.GetValue(Grid.RowProperty);
-
-        // if player is on the correct attempt
-        if (currentWordle.currentAttempt == enteryRow)
-        {
-            // creating dynamic entery box moving
-            switchFocus(castedObj);
-            inputLocked = false;
-        }
+        // creating dynamic entery box moving
+        switchFocus((Entry)sender);
+        inputLocked = false;
     }
 
     private void switchFocus(Entry sender)
@@ -166,8 +197,8 @@ public partial class gamePage : ContentPage
                 entreyIndex++;
             }
 
-            // finding next entery element
-            if (entreyIndex < 30)
+            // finding next entery element while making sure player doesnt pass further then the word row
+            if (entreyIndex < 30 && (currentWordle.currentAttempt * 5)+5 > entreyIndex)
             {
                 Entry nextEntery = entries[entreyIndex];
                 currentEntery = entreyIndex;
