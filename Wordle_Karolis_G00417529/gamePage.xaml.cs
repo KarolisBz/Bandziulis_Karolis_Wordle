@@ -13,6 +13,7 @@ public partial class gamePage : ContentPage
     bool inputLocked, appOn;
     double maxSize;
     wordleAttempt currentWordle;
+    Color[] colorArray = { new Color(0, 0, 0), new Color(0,255,0), new Color(155, 155, 0) };
 
 	public gamePage()
     {
@@ -106,8 +107,8 @@ public partial class gamePage : ContentPage
                 newEntry.TextColor = new Color(255, 255, 255);
                 //newEntry.BackgroundColor = new Color(255, 0, 0);
                 newEntry.Rotation = 180;
-                newEntry.HorizontalOptions = LayoutOptions.Center;
-                newEntry.VerticalOptions = LayoutOptions.Center;
+                newEntry.HorizontalOptions = LayoutOptions.Fill;
+                newEntry.VerticalOptions = LayoutOptions.Fill;
                 newEntry.HorizontalTextAlignment = TextAlignment.Center;
                 newEntry.VerticalTextAlignment = TextAlignment.Center;
                 newEntry.IsTextPredictionEnabled = false;
@@ -169,8 +170,43 @@ public partial class gamePage : ContentPage
         // check awnsers if row is completed
         if (rowCompleted)
         {
+            // we check anwser and prompt animation function
             Debug.Print("Player awnser: " + builtUpString);
-            currentWordle.tryAttempt(builtUpString);
+
+            animateAttempt(currentWordle.tryAttempt(builtUpString));
+
+            // moving up a row
+            Debug.Print(currentEntery.ToString());
+            if (currentEntery > 30) 
+            { 
+                currentEntery++; 
+                Debug.Print("enteryNext"); 
+            }
+            entries[currentEntery].Focus();
+        }
+    }
+
+    private async void animateAttempt(int[] attempt)
+    {
+        int startIndex = Math.Abs(currentEntery / 5) * 5;
+        int endIndex = startIndex + 5;
+        int counter = 0;
+
+        // animating all entries in that row
+        for (int i = startIndex; i < endIndex; i++)
+        {
+            await entries[i].RotateXTo(90, 250); // flip 90 degrees to hide colour change
+
+            // only color change if it's wrong position or correct
+            if (attempt[counter + 1] != 0)
+            {
+                entries[i].BackgroundColor = colorArray[attempt[counter + 1]];
+                entries[i].Opacity = 0.5;
+            }
+
+            await entries[i].RotateXTo(90, 250);
+            await entries[i].RotateXTo(360, 500);
+            counter++;
         }
     }
 
@@ -205,7 +241,7 @@ public partial class gamePage : ContentPage
             }
 
             // finding next entery element while making sure player doesnt pass further then the word row
-            if (entreyIndex < 30 && (currentWordle.currentAttempt * 5)+5 > entreyIndex)
+            if (entreyIndex < 30 && (currentWordle.currentAttempt * 5)+5 > entreyIndex && (currentWordle.currentAttempt * 5) - 1 < entreyIndex)
             {
                 Entry nextEntery = entries[entreyIndex];
                 currentEntery = entreyIndex;

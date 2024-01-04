@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 
 namespace Wordle_Karolis_G00417529
 {
@@ -9,7 +10,7 @@ namespace Wordle_Karolis_G00417529
         private string correctWord;
         private DateTime attemptFinished;
         private int numberOfGuesses;
-        private int[,,,,] attemptVisualData;
+        private List<int[]> attemptVisualData;
         private Random random = new Random();
         // public fields
         public int currentAttempt;
@@ -21,6 +22,7 @@ namespace Wordle_Karolis_G00417529
             correctWord = "word test";
             numberOfGuesses = 6;
             currentAttempt = 0;
+            attemptVisualData = new List<int[]>();
         }
 
         // getters and setters
@@ -56,6 +58,11 @@ namespace Wordle_Karolis_G00417529
             // no setter as it's set only when game is finished
         }
 
+        public List<int[]> AttemptVisualData
+        {
+            get { return attemptVisualData; }
+        }
+
         // object methods
         async public void finished()
         {
@@ -87,6 +94,7 @@ namespace Wordle_Karolis_G00417529
             {
                 if (correctWord[i] == playerAwnser[i])
                 {
+                    positionRecord = removeChar(i, positionRecord); // removing avalible match
                     correctCounter++;
                     compareResult[1 + i] = 1; // awnser is correct
                 }
@@ -97,9 +105,8 @@ namespace Wordle_Karolis_G00417529
                     {
                         if (playerAwnser[i] == positionRecord[index])
                         {
-                            positionRecord = positionRecord.Remove(index); // removing avalible match
+                            positionRecord = removeChar(index, positionRecord); // removing avalible match
                             compareResult[1 + i] = 2; // awnser is wrong position
-                            Debug.Print("2");
                             break;
                         }
                         else
@@ -123,17 +130,54 @@ namespace Wordle_Karolis_G00417529
             {
                 Debug.Write($"{compareResult[i]} |");
             }
-            Debug.Write("\n " + positionRecord + "\n");
+            Debug.Write("\n ");
 
+            // record attempt
+            numberOfGuesses -= 1;
+            attemptVisualData.Add(compareResult);
+
+            // checks if player looses, or wins
+            if (compareResult[0] == 1) // wins
+            {
+                finished();
+            }
+            else if (numberOfGuesses == 0)
+            {
+                finished();
+            }
+            else // move one row down and reveal result
+            {
+                currentAttempt++;
+            }
 
             return compareResult;
+        }
+
+        private string removeChar(int index, string target)
+        {
+            string finalString = "";
+
+            // we build the string while ignoring the index to remove the character
+            for (int i = 0; i < target.Length; i++)
+            {
+                if (i != index)
+                {
+                    finalString += target[i];
+                }
+                else
+                {
+                    finalString += ' '; // we add a space to keep the index the same
+                }
+            }
+
+            return finalString;
         }
 
         public void setupGame()
         {
             // fetching random word from cached api
             correctWord = DataHandler.wordList[random.Next(DataHandler.wordList.Count)];
-            Debug.Print("Chosen word is: " + correctWord);
+            Debug.Print("Chosen word is: " + correctWord); // for cheating / testing
         }
     }
 }
