@@ -72,13 +72,61 @@ namespace Wordle_Karolis_G00417529
 
         }
 
-        public bool tryAttempt(string playerAwnser)
+        public int[] tryAttempt(string playerAwnser)
         {
-            bool awnserIsCorrect = false;
+            // first int is true/false for attempt success
+            // 1 = true, 0 = false
+            // the rest are letters that where correct/false/wrong position
+            // 0 = wrong, 1 = correct, 2 = wrong position
+            int[] compareResult = {0, 0, 0, 0, 0, 0};
+            int correctCounter = 0;
+            string positionRecord = correctWord; // copying correct string
+
+            // comparing character by character
+            for (int i = 0; i < 5; i++)
+            {
+                if (correctWord[i] == playerAwnser[i])
+                {
+                    correctCounter++;
+                    compareResult[1 + i] = 1; // awnser is correct
+                }
+                else // word is not a perfect match
+                {
+                    // if one of the letters are correct but in wrong position
+                    for (int index = 0; index < positionRecord.Length; index++)
+                    {
+                        if (playerAwnser[i] == positionRecord[index])
+                        {
+                            positionRecord = positionRecord.Remove(index); // removing avalible match
+                            compareResult[1 + i] = 2; // awnser is wrong position
+                            Debug.Print("2");
+                            break;
+                        }
+                        else
+                        {
+                            // if we didn't find a match
+                            compareResult[1 + i] = 0;
+                        }
+                    }
+
+                }
+            }
+
+            // determining if all word is correct
+            if (correctCounter == 5)
+            {
+                compareResult[0] = 1; // setting match as correct
+            }
+
+            // printing result
+            for (int i = 0; i < 6; i++)
+            {
+                Debug.Write($"{compareResult[i]} |");
+            }
+            Debug.Write("\n " + positionRecord + "\n");
 
 
-
-            return awnserIsCorrect;
+            return compareResult;
         }
 
         public void setupGame()

@@ -145,8 +145,15 @@ public partial class gamePage : ContentPage
         {
             if (entries[rowStartIndex + i].Text != "" && entries[rowStartIndex + i].Text != "\u00A0")
             {
-                // building string while ignoring invisible character
-                builtUpString += entries[rowStartIndex + i].Text[0];
+                // building string
+               if (i > 0)
+                {
+                    builtUpString += entries[rowStartIndex + i].Text[1];
+                }
+                else
+                {
+                    builtUpString += entries[rowStartIndex + i].Text;
+                }
 
                 if (i == 4)
                 {
@@ -162,8 +169,8 @@ public partial class gamePage : ContentPage
         // check awnsers if row is completed
         if (rowCompleted)
         {
-            // removing all spaces from
             Debug.Print("Player awnser: " + builtUpString);
+            currentWordle.tryAttempt(builtUpString);
         }
     }
 
