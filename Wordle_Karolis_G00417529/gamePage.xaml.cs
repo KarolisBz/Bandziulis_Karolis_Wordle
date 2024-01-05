@@ -12,6 +12,7 @@ public partial class gamePage : ContentPage
     Image refernce;
     int currentEntery, enteryMaxSize;
     bool inputLocked, appOn, enteryLocked, lastInputLock;
+    bool gameOver;
     double maxSize;
     wordleAttempt currentWordle;
     Color[] colorArray = { new Color(0, 0, 0), new Color(0,255,0), new Color(155, 155, 0) };
@@ -22,7 +23,11 @@ public partial class gamePage : ContentPage
 
         // intilizing class fields
         entries = new List<Entry>();
-        enteryLocked = false;   
+        enteryLocked = false;
+        gameOver = false;
+        inputLocked = false;
+        appOn = true;
+        lastInputLock = true;
 
         // setting up ui elements
         setupUI();
@@ -61,10 +66,7 @@ public partial class gamePage : ContentPage
         // initializing class fields
         currentEntery = 0;
         maxSize = gameGrid.WidthRequest;
-        inputLocked = false;
-        appOn = true;
         enteryMaxSize = 50;
-        lastInputLock = true;
 
         // hooking function to every time layout is changed
         LayoutChanged += OnWindowChange;
@@ -139,7 +141,7 @@ public partial class gamePage : ContentPage
     // this function handels checking awnser and moving player onto next attempt
     private void NewEntry_Completed(object sender, EventArgs e)
     {
-        if (!enteryLocked)
+        if (!enteryLocked && !gameOver)
         {
             // class varibales
             Entry castedObj = (Entry)sender;
@@ -180,11 +182,24 @@ public partial class gamePage : ContentPage
             {
                 // we check anwser and prompt animation function
                 enteryLocked = true;
-                animateAttempt(currentWordle.tryAttempt(builtUpString));
+                inputLocked = false;
+                int[] result = currentWordle.tryAttempt(builtUpString);
+                animateAttempt(result);
 
                 // moving up a row
-                if (currentEntery < 30) currentEntery++;
-                entries[currentEntery].Focus();
+                if (currentEntery < 30) { currentEntery++; }
+                    entries[currentEntery].Focus();
+
+                // if game is lost or won, we lock inputs
+                if (result[0] == 1)
+                {
+                    gameOver = true;
+                    entries[currentEntery].IsReadOnly = true;
+                }
+                else if (currentEntery == 30) // game lost or won on last round
+                {
+                    entries[currentEntery].IsReadOnly = true;
+                }
             }
         }
     }
@@ -217,14 +232,17 @@ public partial class gamePage : ContentPage
 
     private void NewEntry_TextChanged(object sender, TextChangedEventArgs e)
     {
-        // creating dynamic entery box moving
-        Entry castedObj = (Entry)sender;
-        int objCol = (int)castedObj.GetValue(Grid.ColumnProperty);
-        switchFocus(castedObj);
+        if (!gameOver) // locks input if game is over
+        {
+            // creating dynamic entery box moving
+            Entry castedObj = (Entry)sender;
+            int objCol = (int)castedObj.GetValue(Grid.ColumnProperty);
+            switchFocus(castedObj);
 
-        // only unlock if not last col in row
-        if (objCol < 4 || !lastInputLock) inputLocked = false;
-        lastInputLock = !lastInputLock; // alternating lock
+            // only unlock if not last col in row
+            if (objCol < 4 || !lastInputLock) inputLocked = false;
+            lastInputLock = !lastInputLock; // alternating lock
+        }
     }
 
     private void switchFocus(Entry sender)
