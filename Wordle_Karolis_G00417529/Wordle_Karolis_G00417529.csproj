@@ -55,6 +55,7 @@
 	  <None Remove="Resources\Fonts\Playful Christmas-Personal Use.otf" />
 	  <None Remove="Resources\Images\background3.svg" />
 	  <None Remove="Resources\Images\flyoutDashboard.svg" />
+	  <None Remove="Resources\Images\howtoplayimg.svg" />
 	  <None Remove="Resources\Images\loginicon.svg" />
 	  <None Remove="Resources\Images\mobilebackground.svg" />
 	  <None Remove="Resources\Images\progressioniconv2.svg" />
@@ -77,6 +78,9 @@
 	  <Compile Update="gamePage.xaml.cs">
 	    <DependentUpon>gamePage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="howToPlayPage.xaml.cs">
+	    <DependentUpon>howToPlayPage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="progressionPage.xaml.cs">
 	    <DependentUpon>progressionPage.xaml</DependentUpon>
 	  </Compile>
@@ -87,6 +91,9 @@
 
 	<ItemGroup>
 	  <MauiXaml Update="gamePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="howToPlayPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="progressionPage.xaml">

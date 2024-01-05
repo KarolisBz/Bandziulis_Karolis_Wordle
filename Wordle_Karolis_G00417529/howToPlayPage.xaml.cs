@@ -2,11 +2,11 @@ using System.Diagnostics;
 
 namespace Wordle_Karolis_G00417529;
 
-public partial class SettingsPage : ContentPage
+public partial class howToPlayPage : ContentPage
 {
-	public SettingsPage()
+	public howToPlayPage()
 	{
-		InitializeComponent();
+        InitializeComponent();
         setupUI(); // setting up ui
     }
 
@@ -62,7 +62,7 @@ public partial class SettingsPage : ContentPage
         background.WidthRequest = windowWidth;
 
         // scalling fonts
-        if(!isMobile)
+        if (!isMobile)
         {
             pageTitle.FontSize = fontManager.scaleFontSize(180, windowHeight, windowWidth);
         }
@@ -131,9 +131,6 @@ public partial class SettingsPage : ContentPage
                 break;
             case "Settings":
                 await Navigation.PushAsync(new SettingsPage());
-                break;
-            case "How to play":
-                await Navigation.PushAsync(new howToPlayPage());
                 break;
         }
     }

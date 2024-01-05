@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Wordle_Karolis_G00417529.gamePage"
-             Title="game page"
+             x:Class="Wordle_Karolis_G00417529.howToPlayPage"
+             Title="howToPlayPage"
              BackgroundColor="White"
              Shell.NavBarIsVisible="False">
-
-    <!-- All the images belong and are made by me - Karolis Bandziulis -->
-    <!-- imported fonts do not belong to me, and are used under personal use, liscense is imported under licenses for fonts that had them provided -->
-    <!-- latest version, installed in new pc -->
-
+    
     <VerticalStackLayout>
         <!-- background image -->
         <Grid>
@@ -27,7 +23,7 @@
               FontSize="250"
               TextColor ="Black"
               HorizontalTextAlignment="Center"
-              Text="(Winter Worldle)"/>
+              Text="(How To Play)"/>
 
             <!-- button grid -->
             <Grid RowDefinitions="*,*,*,*,*,*,*,*,*,*,*,*" ColumnDefinitions="*,*" ColumnSpacing="1555" x:Name="btnHolder" ZIndex="5">
@@ -63,10 +59,10 @@
                   Grid.Column="9"
                   Style="{StaticResource buttonStyle1}"
                   Text="Wordle"
-                  Opacity="0.7"
                   HeightRequest="150"
                   WidthRequest="500"
                   FontSize="100"
+                  Clicked="navigationControl"
                   HorizontalOptions="Start"/>
 
                 <Image
@@ -77,7 +73,7 @@
                  Aspect="AspectFill"
                  Grid.Column="9"
                  Grid.Row="0"
-                 Opacity="0.1"
+                 Opacity="0.5"
                  HorizontalOptions="Start"/>
 
                 <!-- progression btn -->
@@ -130,16 +126,16 @@
 
                 <!-- how to play btn -->
                 <Button
-                x:Name="howToPlayBtn"
-                Grid.Row="2"
-                Grid.Column="0"
-                Style="{StaticResource buttonStyle1}"
-                Text="How to play"
-                HeightRequest="150"
-                WidthRequest="500"
-                FontSize="100"
-                Clicked="navigationControl"
-                HorizontalOptions="Start"/>
+                 x:Name="howToPlayBtn"
+                 Grid.Row="2"
+                 Grid.Column="0"
+                 Style="{StaticResource buttonStyle1}"
+                 Text="How to play"
+                 HeightRequest="150"
+                 WidthRequest="500"
+                 FontSize="100"
+                 Opacity="0.7"
+                 HorizontalOptions="Start"/>
 
                 <Image
                  x:Name="howToPlayImg"
@@ -149,25 +145,9 @@
                  Aspect="AspectFill"
                  Grid.Column="0"
                  Grid.Row="2"
-                 Opacity="0.5"
+                 Opacity="0.1"
                  HorizontalOptions="Start"/>
             </Grid>
-
-            <!-- wordle grid-->
-            <Grid x:Name="gameGrid" RowDefinitions="*,*,*,*,*,*" ColumnDefinitions="*,*,*,*,*" BackgroundColor="black"
-                  HeightRequest="468" WidthRequest="468" HorizontalOptions="Center" VerticalOptions="Center">
-                
-            </Grid>
-
-            <Button 
-             ZIndex="4"
-             x:Name="startGameBtn"
-             Style="{StaticResource buttonStyle1}"
-             Text="Restart"
-             FontSize="100"
-             VerticalOptions="End"
-             Clicked="navigationControl"
-             HorizontalOptions="Center"/>
         </Grid>
     </VerticalStackLayout>
 </ContentPage>

@@ -46,11 +46,17 @@
        ContentTemplate="{DataTemplate local:progressionPage}"
        Route="progressionPage"/>
 
-        <ShellContent FlyoutIcon="settingimage.png"
+       <ShellContent FlyoutIcon="settingimage.png"
        Icon="settingimage.png" 
        Title="Settings"
        ContentTemplate="{DataTemplate local:SettingsPage}"
        Route="SettingsPage"/>
+
+        <ShellContent FlyoutIcon="howtoplayimg.png"
+        Icon="howtoplayimg.png" 
+        Title="How to play"
+        ContentTemplate="{DataTemplate local:SettingsPage}"
+        Route="howToPlayPage"/>
     </FlyoutItem>
 
     <!-- adding content to flyout -->

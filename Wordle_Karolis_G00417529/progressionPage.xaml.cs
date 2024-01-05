@@ -29,6 +29,9 @@ public partial class progressionPage : ContentPage
 
             settingsBtn.IsVisible = false;
             settingsImg.IsVisible = false;
+
+            howToPlayBtn.IsVisible = false;
+            howToPlayImg.IsVisible = false;
         }
     }
 
@@ -98,6 +101,12 @@ public partial class progressionPage : ContentPage
             settingsImg.HeightRequest = scaledHeight;
             settingsImg.WidthRequest = settingsBtn.WidthRequest / 5;
 
+            howToPlayBtn.FontSize = btnFontSize;
+            howToPlayBtn.HeightRequest = scaledHeight;
+            howToPlayBtn.WidthRequest = scaledWidth;
+            howToPlayImg.HeightRequest = scaledHeight;
+            howToPlayImg.WidthRequest = howToPlayBtn.WidthRequest / 5;
+
             // scaling btn spacing
             btnHolder.ColumnSpacing = (windowWidth / 2560) * 1555;
         }
@@ -122,6 +131,9 @@ public partial class progressionPage : ContentPage
                 break;
             case "Settings":
                 await Navigation.PushAsync(new SettingsPage());
+                break;
+            case "How to play":
+                await Navigation.PushAsync(new howToPlayPage());
                 break;
         }
     }

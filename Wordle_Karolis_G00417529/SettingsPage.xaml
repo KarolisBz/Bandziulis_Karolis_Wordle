@@ -123,6 +123,30 @@
                  Grid.Row="1"
                  Opacity="0.1"
                  HorizontalOptions="Start"/>
+
+                <!-- how to play btn -->
+                <Button
+                 x:Name="howToPlayBtn"
+                 Grid.Row="2"
+                 Grid.Column="0"
+                 Style="{StaticResource buttonStyle1}"
+                 Text="How to play"
+                 HeightRequest="150"
+                 WidthRequest="500"
+                 FontSize="100"
+                 Clicked="navigationControl"
+                 HorizontalOptions="Start"/>
+
+                <Image
+                 x:Name="howToPlayImg"
+                 HeightRequest="150"
+                 WidthRequest="100"
+                 Source="howtoplayimg.png"
+                 Aspect="AspectFill"
+                 Grid.Column="0"
+                 Grid.Row="2"
+                 Opacity="0.5"
+                 HorizontalOptions="Start"/>
             </Grid>
         </Grid>
     </VerticalStackLayout>
