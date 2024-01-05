@@ -30,100 +30,103 @@
               Text="(Winter Worldle)"/>
 
             <!-- button grid -->
-            <Grid RowDefinitions="*,*,*,*,*,*,*,*,*,*,*,*" ColumnDefinitions="*,*" ColumnSpacing="1555" x:Name="btnHolder">
- 
-                 <!-- account btn -->
+            <Grid RowDefinitions="*,*,*,*,*,*,*,*,*,*,*,*" ColumnDefinitions="*,*" ColumnSpacing="1555" x:Name="btnHolder" ZIndex="5">
+
+                <!-- account btn -->
                 <Button 
-                 x:Name="accountBtn"
-                 Grid.Row="0"
-                 Grid.Column="0"
-                 Style="{StaticResource buttonStyle1}"
-                 Text="Account"
-                 HeightRequest="150"
-                 WidthRequest="500"
-                 FontSize="100"
-                 HorizontalOptions="Start"/>
+                  x:Name="accountBtn"
+                  Grid.Row="0"
+                  Grid.Column="0"
+                  Style="{StaticResource buttonStyle1}"
+                  Text="Account"
+                  HeightRequest="150"
+                  WidthRequest="500"
+                  FontSize="100"
+                  Clicked="navigationControl"
+                  HorizontalOptions="Start"/>
 
                 <Image
-                x:Name="accountImg"
-                HeightRequest="150"
-                WidthRequest="100"
-                Source="loginicon.png"
-                Aspect="AspectFill"
-                Grid.Column="0"
-                Grid.Row="0"
-                Opacity="0.5"
-                HorizontalOptions="Start"/>
+                 x:Name="accountImg"
+                 HeightRequest="150"
+                 WidthRequest="100"
+                 Source="loginicon.png"
+                 Aspect="AspectFill"
+                 Grid.Column="0"
+                 Grid.Row="0"
+                 Opacity="0.5"
+                 HorizontalOptions="Start"/>
 
                 <!-- wordle btn -->
                 <Button 
-                 x:Name="wordleBtn"
-                 Grid.Row="0"
-                 Grid.Column="9"
-                 Style="{StaticResource buttonStyle1}"
-                 Text="Wordle"
-                 Opacity="0.7"
-                 HeightRequest="150"
-                 WidthRequest="500"
-                 FontSize="100"
-                 HorizontalOptions="Start"/>
+                  x:Name="wordleBtn"
+                  Grid.Row="0"
+                  Grid.Column="9"
+                  Style="{StaticResource buttonStyle1}"
+                  Text="Wordle"
+                  Opacity="0.7"
+                  HeightRequest="150"
+                  WidthRequest="500"
+                  FontSize="100"
+                  HorizontalOptions="Start"/>
 
                 <Image
-                x:Name="WordleImg"
-                HeightRequest="150"
-                WidthRequest="100"
-                Source="wordleiconv2.png"
-                Aspect="AspectFill"
-                Grid.Column="9"
-                Grid.Row="0"
-                Opacity="0.1"
-                HorizontalOptions="Start"/>
+                 x:Name="WordleImg"
+                 HeightRequest="150"
+                 WidthRequest="100"
+                 Source="wordleiconv2.png"
+                 Aspect="AspectFill"
+                 Grid.Column="9"
+                 Grid.Row="0"
+                 Opacity="0.1"
+                 HorizontalOptions="Start"/>
 
                 <!-- progression btn -->
                 <Button 
-                 x:Name="progressionBtn"
-                 Grid.Row="1"
-                 Grid.Column="0"
-                 Style="{StaticResource buttonStyle1}"
-                 Text="Progression"
-                 HeightRequest="150"
-                 WidthRequest="500"
-                 FontSize="100"
-                 HorizontalOptions="Start"/>
+                  x:Name="progressionBtn"
+                  Grid.Row="1"
+                  Grid.Column="0"
+                  Style="{StaticResource buttonStyle1}"
+                  Text="Progression"
+                  HeightRequest="150"
+                  WidthRequest="500"
+                  FontSize="100"
+                  Clicked="navigationControl"
+                  HorizontalOptions="Start"/>
 
                 <Image
-                x:Name="progressionImg"
-                HeightRequest="150"
-                WidthRequest="100"
-                Source="progressioniconv2.png"
-                Aspect="AspectFill"
-                Grid.Column="0"
-                Grid.Row="1"
-                Opacity="0.5"
-                HorizontalOptions="Start"/>
+                 x:Name="progressionImg"
+                 HeightRequest="150"
+                 WidthRequest="100"
+                 Source="progressioniconv2.png"
+                 Aspect="AspectFill"
+                 Grid.Column="0"
+                 Grid.Row="1"
+                 Opacity="0.5"
+                 HorizontalOptions="Start"/>
 
                 <!-- Settings btn -->
-                <Button 
-                 x:Name="settingsBtn"
-                 Grid.Row="1"
-                 Grid.Column="10"
-                 Style="{StaticResource buttonStyle1}"
-                 Text="Settings"
-                 HeightRequest="150"
-                 WidthRequest="500"
-                 FontSize="100"
-                 HorizontalOptions="Start"/>
+                <Button
+                  x:Name="settingsBtn"
+                  Grid.Row="1"
+                  Grid.Column="10"
+                  Style="{StaticResource buttonStyle1}"
+                  Text="Settings"
+                  HeightRequest="150"
+                  WidthRequest="500"
+                  FontSize="100"
+                  Clicked="navigationControl"
+                  HorizontalOptions="Start"/>
 
                 <Image
-                x:Name="settingsImg"
-                HeightRequest="150"
-                WidthRequest="100"
-                Source="settingimage.png"
-                Aspect="AspectFill"
-                Grid.Column="10"
-                Grid.Row="1"
-                Opacity="0.5"
-                HorizontalOptions="Start"/>
+                 x:Name="settingsImg"
+                 HeightRequest="150"
+                 WidthRequest="100"
+                 Source="settingimage.png"
+                 Aspect="AspectFill"
+                 Grid.Column="10"
+                 Grid.Row="1"
+                 Opacity="0.5"
+                 HorizontalOptions="Start"/>
             </Grid>
 
             <!-- wordle grid-->
@@ -139,6 +142,7 @@
              Text="Restart"
              FontSize="100"
              VerticalOptions="End"
+             Clicked="navigationControl"
              HorizontalOptions="Center"/>
         </Grid>
     </VerticalStackLayout>

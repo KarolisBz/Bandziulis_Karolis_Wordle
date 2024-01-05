@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Threading;
 
 namespace Wordle_Karolis_G00417529;
-
+// important notice: ONLY USE ONSCREEN KEYBOARD WHILE USING MOBILE VERSION, as phones don't have keyboards and it can cause glitches.
 public partial class gamePage : ContentPage
 {
     // class fields
@@ -48,14 +48,17 @@ public partial class gamePage : ContentPage
     protected override void OnDisappearing()
     {
         // page is being removed, so we stop calling functions from another thread to the main thread to prevent bugs
+        base.OnDisappearing();
         appOn = false;
     }
 
     private void focusAllTextBoxs()
     {
+        // this function makes sure user is on the correct entery
         while (true && appOn)
         {
             // accessing function from the main thread
+            if (currentEntery > 29) currentEntery = 29;
             MainThread.InvokeOnMainThreadAsync(() => { entries[currentEntery].Focus(); });
             Thread.Sleep(1000); // slows down multithreaded loop
         }
@@ -63,6 +66,7 @@ public partial class gamePage : ContentPage
 
     private void setupUI()
     {
+        // this function setting up ui elements
         // initializing class fields
         currentEntery = 0;
         maxSize = gameGrid.WidthRequest;
@@ -138,9 +142,9 @@ public partial class gamePage : ContentPage
         firstEntery.Focus();
     }
 
-    // this function handels checking awnser and moving player onto next attempt
     private void NewEntry_Completed(object sender, EventArgs e)
     {
+        // this function handels checking awnser and moving player onto next attempt
         if (!enteryLocked && !gameOver)
         {
             // class varibales
@@ -222,6 +226,7 @@ public partial class gamePage : ContentPage
 
     private async void animateAttempt(int[] attempt)
     {
+        // this function animates the grid entries
         int startIndex = Math.Abs(currentEntery / 5) * 5;
         int endIndex = startIndex + 5;
         int counter = 0;
@@ -309,6 +314,7 @@ public partial class gamePage : ContentPage
 
     private string strReverse(string toReverse)
     {
+        // this function reverses a string
         string reversedString = "";
 
         for (int i = toReverse.Length-1; i > 0; i--)
@@ -321,6 +327,7 @@ public partial class gamePage : ContentPage
 
     private void scaleElements()
     {
+        // this function handles scaling of ui elements
         // function varibles
         double pixelDensity = DeviceDisplay.MainDisplayInfo.Density;
         double windowHeight = this.Height / pixelDensity;
@@ -426,12 +433,36 @@ public partial class gamePage : ContentPage
         if (isMobile)
         {
             gameGrid.TranslationY -= windowHeight * 0.1;
-            startGameBtn.TranslationY -= (windowHeight * 0.1) + gameGrid.HeightRequest;
+            startGameBtn.TranslationY -= (windowHeight * 0.1) + (gameGrid.HeightRequest * 0.5) - startGameBtn.HeightRequest;
+            startGameBtn.FontSize = fontManager.findFontSizeToConstraint(startGameBtn.HeightRequest * 3);
         }  
     }
 
     private void OnWindowChange(object sender, EventArgs e)
     {
         scaleElements();
+    }
+
+    private async void navigationControl(object sender, EventArgs e)
+    {
+        // this function handles navigation for all devices but phone
+        Button castedObj = (Button)sender;
+        Debug.Print(castedObj.Text);
+
+        switch (castedObj.Text)
+        {
+            case "Account":
+                await Navigation.PushAsync(new MainPage());
+                break;
+            case "Wordle":
+                await Navigation.PushAsync(new gamePage());
+                break;
+            case "Progression":
+                await Navigation.PushAsync(new progressionPage());
+                break;
+            case "Settings":
+                await Navigation.PushAsync(new SettingsPage());
+                break;
+        }
     }
 }
