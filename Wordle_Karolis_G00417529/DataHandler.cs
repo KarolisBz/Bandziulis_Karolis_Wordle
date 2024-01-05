@@ -18,6 +18,8 @@ namespace Wordle_Karolis_G00417529
         static public bool timerOn;
         // api cached //
         static HttpClient client;
+        // shell workaround
+        static public bool isInGamePage;
         static public List<string> wordList;
         // wordle attempt list //
         static public List<wordleAttempt> attemptList;
@@ -38,6 +40,9 @@ namespace Wordle_Karolis_G00417529
                 timerOn = true;
                 attemptList = new List<wordleAttempt>();
             }
+
+            // initializing shellworkaround
+            isInGamePage = false;
 
             // creating client for http and wordlist
             client = new HttpClient();

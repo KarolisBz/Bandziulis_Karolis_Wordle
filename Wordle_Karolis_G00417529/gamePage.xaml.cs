@@ -50,6 +50,9 @@ public partial class gamePage : ContentPage
         // this function makes sure loops starts up again
         base.OnAppearing();
         appOn = true;
+
+        // shell workaround
+        DataHandler.isInGamePage = true;
     }
 
     protected override void OnDisappearing()
@@ -466,25 +469,35 @@ public partial class gamePage : ContentPage
     {
         // this function handles navigation for all devices but phone
         Button castedObj = (Button)sender;
-        Debug.Print(castedObj.Text);
+        bool answer = true; // allow to pass by default
 
-        switch (castedObj.Text)
+        // prompt player if they want to leave their current game (if one is running)
+        if (!gameOver)
         {
-            case "Account":
-                await Navigation.PushAsync(new MainPage());
-                break;
-            case "Wordle":
-                await Navigation.PushAsync(new gamePage());
-                break;
-            case "Progression":
-                await Navigation.PushAsync(new progressionPage());
-                break;
-            case "Settings":
-                await Navigation.PushAsync(new SettingsPage());
-                break;
-            case "How to play":
-                await Navigation.PushAsync(new howToPlayPage());
-                break;
+            answer = await DisplayAlert("Do you want to leave the game?", "If you leave now, your progress will not be saved", "Yes", "No");
+        }
+
+        if (answer)
+        {
+            DataHandler.isInGamePage = false;
+            switch (castedObj.Text)
+            {
+                case "Account":
+                    await Navigation.PushAsync(new MainPage());
+                    break;
+                case "Wordle":
+                    await Navigation.PushAsync(new gamePage());
+                    break;
+                case "Progression":
+                    await Navigation.PushAsync(new progressionPage());
+                    break;
+                case "Settings":
+                    await Navigation.PushAsync(new SettingsPage());
+                    break;
+                case "How to play":
+                    await Navigation.PushAsync(new howToPlayPage());
+                    break;
+            }
         }
     }
 }
