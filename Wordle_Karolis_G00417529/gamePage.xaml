@@ -131,6 +131,15 @@
                   HeightRequest="468" WidthRequest="468" HorizontalOptions="Center" VerticalOptions="Center">
                 
             </Grid>
+
+            <Button 
+             ZIndex="4"
+             x:Name="startGameBtn"
+             Style="{StaticResource buttonStyle1}"
+             Text="Restart"
+             FontSize="100"
+             VerticalOptions="End"
+             HorizontalOptions="Center"/>
         </Grid>
     </VerticalStackLayout>
 </ContentPage>

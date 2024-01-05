@@ -141,7 +141,7 @@ public partial class gamePage : ContentPage
     // this function handels checking awnser and moving player onto next attempt
     private void NewEntry_Completed(object sender, EventArgs e)
     {
-        if (!enteryLocked && !gameOver)
+        if (!enteryLocked && !gameOver && DeviceInfo.Current.Idiom != DeviceIdiom.Phone)
         {
             // class varibales
             Entry castedObj = (Entry)sender;
@@ -310,12 +310,14 @@ public partial class gamePage : ContentPage
         double windowHeight = this.Height / pixelDensity;
         double windowWidth = this.Width / pixelDensity;
         double gridRatio = 0.65;
+        bool isMobile = false;
 
         // mobile devices don't have an accurate window, so we use full screen scale for more accurate scaling
         if (DeviceInfo.Current.Idiom == DeviceIdiom.Phone)
         {
             windowHeight = DeviceDisplay.MainDisplayInfo.Height / pixelDensity;
             windowWidth = DeviceDisplay.MainDisplayInfo.Width / pixelDensity;
+            isMobile = true;
 
             // phone has a larger grid
             gridRatio = 0.7;
@@ -327,6 +329,20 @@ public partial class gamePage : ContentPage
 
         // scalling fonts
         pageTitle.FontSize = fontManager.scaleFontSize(180, windowHeight, windowWidth);
+
+        // scaling start new game button
+        startGameBtn.FontSize = fontManager.scaleFontSize(80, windowHeight, windowWidth);
+        if (!isMobile) // windows scaling
+        {
+            startGameBtn.WidthRequest = windowWidth * 0.2;
+            startGameBtn.HeightRequest = windowHeight * 0.1;
+        }
+        else // mobile scaling
+        {
+            pageTitle.FontSize = fontManager.scaleFontSize(300, windowHeight, windowWidth);
+            startGameBtn.WidthRequest = windowWidth * 0.5;
+            startGameBtn.HeightRequest = windowHeight * 0.1;
+        }
 
         // scaling navigation buttons that are only visible on pc
         if (DeviceInfo.Current.Idiom != DeviceIdiom.Phone)
