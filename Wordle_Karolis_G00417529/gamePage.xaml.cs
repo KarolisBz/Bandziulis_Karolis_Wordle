@@ -1,6 +1,7 @@
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Platform;
 using System.Diagnostics;
+using System.Threading;
 
 namespace Wordle_Karolis_G00417529;
 
@@ -10,7 +11,7 @@ public partial class gamePage : ContentPage
     List<Entry> entries;
     Image refernce;
     int currentEntery, enteryMaxSize;
-    bool inputLocked, appOn;
+    bool inputLocked, appOn, enteryLocked, lastInputLock;
     double maxSize;
     wordleAttempt currentWordle;
     Color[] colorArray = { new Color(0, 0, 0), new Color(0,255,0), new Color(155, 155, 0) };
@@ -21,6 +22,7 @@ public partial class gamePage : ContentPage
 
         // intilizing class fields
         entries = new List<Entry>();
+        enteryLocked = false;   
 
         // setting up ui elements
         setupUI();
@@ -62,6 +64,7 @@ public partial class gamePage : ContentPage
         inputLocked = false;
         appOn = true;
         enteryMaxSize = 50;
+        lastInputLock = true;
 
         // hooking function to every time layout is changed
         LayoutChanged += OnWindowChange;
@@ -118,6 +121,9 @@ public partial class gamePage : ContentPage
                 gameGrid.Add(newEntry);
                 entries.Add(newEntry);
 
+                // making sure start entry of each row is length 1
+                if (col == 0) newEntry.MaxLength = 1;
+
                 // adding functionality to each entery
                 newEntry.TextChanged += NewEntry_TextChanged;
                 newEntry.Completed += NewEntry_Completed;
@@ -133,52 +139,53 @@ public partial class gamePage : ContentPage
     // this function handels checking awnser and moving player onto next attempt
     private void NewEntry_Completed(object sender, EventArgs e)
     {
-        // calss varibales
-        Entry castedObj = (Entry)sender;
-        bool rowCompleted = false;
-        int objRow = (int)castedObj.GetValue(Grid.RowProperty);
-        int objCol = (int)castedObj.GetValue(Grid.ColumnProperty);
-        int rowStartIndex = objRow * 5;
-        string builtUpString = "";
-        
-        // checking if all the 5 character slots are filled
-        for (int i = 0; i < 5; i++)
+        if (!enteryLocked)
         {
-            if (entries[rowStartIndex + i].Text != "" && entries[rowStartIndex + i].Text != "\u00A0")
+            // class varibales
+            Entry castedObj = (Entry)sender;
+            bool rowCompleted = false;
+            int objRow = (int)castedObj.GetValue(Grid.RowProperty);
+            int objCol = (int)castedObj.GetValue(Grid.ColumnProperty);
+            int rowStartIndex = objRow * 5;
+            string builtUpString = "";
+
+            // checking if all the 5 character slots are filled
+            for (int i = 0; i < 5; i++)
             {
-                // building string
-               if (i > 0)
+                if (entries[rowStartIndex + i].Text != "" && entries[rowStartIndex + i].Text != "\u00A0")
                 {
-                    builtUpString += entries[rowStartIndex + i].Text[1];
+                    // building string
+                    if (i > 0)
+                    {
+                        builtUpString += entries[rowStartIndex + i].Text[1];
+                    }
+                    else
+                    {
+                        builtUpString += entries[rowStartIndex + i].Text;
+                    }
+
+                    if (i == 4)
+                    {
+                        rowCompleted = true;
+                    }
                 }
                 else
                 {
-                    builtUpString += entries[rowStartIndex + i].Text;
-                }
-
-                if (i == 4)
-                {
-                    rowCompleted = true;
+                    break; // we break without setting value to true
                 }
             }
-            else
+
+            // check awnsers if row is completed
+            if (rowCompleted)
             {
-                break; // we break without setting value to true
+                // we check anwser and prompt animation function
+                enteryLocked = true;
+                animateAttempt(currentWordle.tryAttempt(builtUpString));
+
+                // moving up a row
+                if (currentEntery < 30) currentEntery++;
+                entries[currentEntery].Focus();
             }
-        }
-       
-        // check awnsers if row is completed
-        if (rowCompleted)
-        {
-            // we check anwser and prompt animation function
-            Debug.Print("Player awnser: " + builtUpString);
-
-            animateAttempt(currentWordle.tryAttempt(builtUpString));
-
-            // moving up a row
-            Debug.Print(currentEntery.ToString());
-            if (currentEntery < 30) currentEntery++;
-            entries[currentEntery].Focus();
         }
     }
 
@@ -191,7 +198,7 @@ public partial class gamePage : ContentPage
         // animating all entries in that row
         for (int i = startIndex; i < endIndex; i++)
         {
-            await entries[i].RotateXTo(90, 250); // flip 90 degrees to hide colour change
+            await entries[i].RotateXTo(90, 125); // flip 90 degrees to hide colour change
 
             // only color change if it's wrong position or correct
             if (attempt[counter + 1] != 0)
@@ -200,17 +207,24 @@ public partial class gamePage : ContentPage
                 entries[i].Opacity = 0.5;
             }
 
-            await entries[i].RotateXTo(90, 250);
-            await entries[i].RotateXTo(360, 500);
+            await entries[i].RotateXTo(90, 125);
+            await entries[i].RotateXTo(360, 250);
             counter++;
         }
+
+        enteryLocked = false;
     }
 
     private void NewEntry_TextChanged(object sender, TextChangedEventArgs e)
     {
         // creating dynamic entery box moving
-        switchFocus((Entry)sender);
-        inputLocked = false;
+        Entry castedObj = (Entry)sender;
+        int objCol = (int)castedObj.GetValue(Grid.ColumnProperty);
+        switchFocus(castedObj);
+
+        // only unlock if not last col in row
+        if (objCol < 4 || !lastInputLock) inputLocked = false;
+        lastInputLock = !lastInputLock; // alternating lock
     }
 
     private void switchFocus(Entry sender)
@@ -244,9 +258,13 @@ public partial class gamePage : ContentPage
 
                 // adding invisible character, so you can go foward and backwords with textchanged which
                 // is alot more userfriendly then having to press enter every time
-                if (entreyIndex != 0) // people don't need to be able to go back, on the last entery of the board
+                if (entreyIndex != currentWordle.currentAttempt*5) // people don't need to be able to go back, on the last entery of the board
                 {
                     nextEntery.Text = "\u00A0";
+                }
+                else
+                {
+                    nextEntery.Text = "";
                 }
 
                 // focusing on entery 
