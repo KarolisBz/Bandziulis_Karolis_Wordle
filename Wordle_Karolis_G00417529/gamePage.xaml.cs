@@ -56,7 +56,7 @@ public partial class gamePage : ContentPage
         while (true && appOn)
         {
             // accessing function from the main thread
-            MainThread.InvokeOnMainThreadAsync(() => { entries[currentEntery - 1].Focus(); });
+            MainThread.InvokeOnMainThreadAsync(() => { entries[currentEntery].Focus(); });
             Thread.Sleep(1000); // slows down multithreaded loop
         }
     }
