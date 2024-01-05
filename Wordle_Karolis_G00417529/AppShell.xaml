@@ -55,7 +55,7 @@
         <ShellContent FlyoutIcon="howtoplayimg.png"
         Icon="howtoplayimg.png" 
         Title="How to play"
-        ContentTemplate="{DataTemplate local:SettingsPage}"
+        ContentTemplate="{DataTemplate local:howToPlayPage}"
         Route="howToPlayPage"/>
     </FlyoutItem>
 

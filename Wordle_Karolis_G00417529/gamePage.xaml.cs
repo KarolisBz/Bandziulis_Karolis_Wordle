@@ -99,6 +99,9 @@ public partial class gamePage : ContentPage
 
             settingsBtn.IsVisible = false;
             settingsImg.IsVisible = false;
+
+            howToPlayBtn.IsVisible = false;
+            howToPlayImg.IsVisible = false;
         }
 
         // adding grid box's and text box's
