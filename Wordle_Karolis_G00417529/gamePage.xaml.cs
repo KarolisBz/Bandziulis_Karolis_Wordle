@@ -141,7 +141,7 @@ public partial class gamePage : ContentPage
     // this function handels checking awnser and moving player onto next attempt
     private void NewEntry_Completed(object sender, EventArgs e)
     {
-        if (!enteryLocked && !gameOver && DeviceInfo.Current.Idiom != DeviceIdiom.Phone)
+        if (!enteryLocked && !gameOver)
         {
             // class varibales
             Entry castedObj = (Entry)sender;
@@ -184,6 +184,8 @@ public partial class gamePage : ContentPage
                 enteryLocked = true;
                 inputLocked = false;
                 int[] result = currentWordle.tryAttempt(builtUpString);
+
+                // animating the grid
                 animateAttempt(result);
 
                 // moving up a row
