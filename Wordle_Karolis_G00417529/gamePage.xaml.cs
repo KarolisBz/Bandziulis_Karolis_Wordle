@@ -130,7 +130,7 @@ public partial class gamePage : ContentPage
                 newEntry.FontSize = enteryMaxSize;
                 newEntry.FontFamily = "MerryDeer";
                 newEntry.TextColor = new Color(255, 255, 255);
-                //newEntry.BackgroundColor = new Color(255, 0, 0);
+                newEntry.TextTransform = TextTransform.Lowercase;
                 newEntry.Rotation = 180;
                 newEntry.HorizontalOptions = LayoutOptions.Fill;
                 newEntry.VerticalOptions = LayoutOptions.Fill;
@@ -221,6 +221,7 @@ public partial class gamePage : ContentPage
                 if (result[0] == 1)
                 {
                     setGameIsOver(true);
+
                 }
                 else if (currentWordle.NumberOfGuesses == 0) // game lost
                 {
@@ -264,6 +265,12 @@ public partial class gamePage : ContentPage
             counter++;
         }
 
+        // prompting message
+        if (attempt[0] == 1) 
+            await DisplayAlert("You won!", "well done!, progress has been saved.", "Lets go!");
+        else if (currentWordle.NumberOfGuesses == 0)
+            await DisplayAlert("You lost!", $"Correct word was: {currentWordle.CorrectWord}, better luck next time :)", "alright :(");
+
         enteryLocked = false;
     }
 
@@ -273,12 +280,18 @@ public partial class gamePage : ContentPage
         {
             // creating dynamic entery box moving
             Entry castedObj = (Entry)sender;
+            int objRow = (int)castedObj.GetValue(Grid.RowProperty);
             int objCol = (int)castedObj.GetValue(Grid.ColumnProperty);
-            switchFocus(castedObj);
+            int entreyIndex = (objRow * 5) + objCol;
 
-            // only unlock if not last col in row
-            if (objCol < 4 || !lastInputLock) inputLocked = false;
-            lastInputLock = !lastInputLock; // alternating lock
+            if ((currentWordle.currentAttempt * 5) + 5 > entreyIndex && (currentWordle.currentAttempt * 5) - 1 < entreyIndex)
+            {
+                switchFocus(castedObj);
+
+                // only unlock if not last col in row
+                if (objCol < 4 || !lastInputLock) inputLocked = false;
+                lastInputLock = !lastInputLock; // alternating lock
+            }
         }
     }
 
@@ -306,7 +319,7 @@ public partial class gamePage : ContentPage
             }
 
             // finding next entery element while making sure player doesnt pass further then the word row
-            if (entreyIndex < 30 && (currentWordle.currentAttempt * 5)+5 > entreyIndex && (currentWordle.currentAttempt * 5) - 1 < entreyIndex)
+            if (entreyIndex < 30 && (currentWordle.currentAttempt * 5) + 5 > entreyIndex && (currentWordle.currentAttempt * 5) - 1 < entreyIndex)
             {
                 Entry nextEntery = entries[entreyIndex];
                 currentEntery = entreyIndex;
@@ -326,6 +339,47 @@ public partial class gamePage : ContentPage
                 nextEntery.Focus();
             }
         }
+    }
+
+    private async void startGameBtn_Clicked(object sender, EventArgs e)
+    {
+        // this function handels restarting the game on button click
+        bool answer = true;
+
+        if (!gameOver)
+        {
+            answer = await DisplayAlert("Do you want to restart the game?", "data will not be saved for uncompleted wordles", "Yes", "No");
+        }
+        
+        if (answer) 
+        {
+            resetGame();
+        }
+    }
+
+    private void resetGame()
+    {
+        // reseting all class fields back to default
+        gameOver = true; // Locks loop
+        appOn = true;
+        enteryLocked = false;
+        inputLocked = false;
+        lastInputLock = true;
+        currentEntery = 0;
+        entries[currentEntery].Focus();
+
+        // wiping grid
+        foreach (Entry entry in entries)
+        {
+            entry.Text = "";
+            entry.Opacity = 1;
+            entry.BackgroundColor = new Color(0,0,0,0);
+        }
+
+        // spawning new game
+        currentWordle = new wordleAttempt();
+        currentWordle.setupGame();
+        setGameIsOver(false);
     }
 
     private string strReverse(string toReverse)

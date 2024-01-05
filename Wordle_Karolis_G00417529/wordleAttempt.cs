@@ -74,11 +74,6 @@ namespace Wordle_Karolis_G00417529
             await DataHandler.saveDataAsync(); // saving game progress so far
         }
 
-        public void inputAttemptTurnData()
-        {
-
-        }
-
         public int[] tryAttempt(string playerAwnser)
         {
             // first int is true/false for attempt success

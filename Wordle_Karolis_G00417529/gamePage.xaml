@@ -8,7 +8,7 @@
 
     <!-- All the images belong and are made by me - Karolis Bandziulis -->
     <!-- imported fonts do not belong to me, and are used under personal use, liscense is imported under licenses for fonts that had them provided -->
-    <!-- latest version, installed in new pc -->
+    <!-- ALL CODE HAS BEEN TESTED AND WORKING, if it does not compile email me at G00417529@atu.ie, or attempt to download code from submission or github and try again  -->
 
     <VerticalStackLayout>
         <!-- background image -->
@@ -166,7 +166,7 @@
              Text="Restart"
              FontSize="100"
              VerticalOptions="End"
-             Clicked="navigationControl"
+             Clicked="startGameBtn_Clicked"
              HorizontalOptions="Center"/>
         </Grid>
     </VerticalStackLayout>
