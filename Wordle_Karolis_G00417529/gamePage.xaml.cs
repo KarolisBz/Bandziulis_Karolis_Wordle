@@ -56,7 +56,7 @@ public partial class gamePage : ContentPage
         while (true && appOn)
         {
             // accessing function from the main thread
-            MainThread.InvokeOnMainThreadAsync(() => { entries[currentEntery].Focus(); });
+            MainThread.InvokeOnMainThreadAsync(() => { entries[currentEntery - 1].Focus(); });
             Thread.Sleep(1000); // slows down multithreaded loop
         }
     }
@@ -157,7 +157,7 @@ public partial class gamePage : ContentPage
                 if (entries[rowStartIndex + i].Text != "" && entries[rowStartIndex + i].Text != "\u00A0")
                 {
                     // building string
-                    if (i > 0)
+                    if (i > objRow*5)
                     {
                         builtUpString += entries[rowStartIndex + i].Text[1];
                     }
@@ -189,20 +189,34 @@ public partial class gamePage : ContentPage
                 animateAttempt(result);
 
                 // moving up a row
-                if (currentEntery < 30) { currentEntery++; }
-                    entries[currentEntery].Focus();
+                int currentRow = (int)entries[currentEntery].GetValue(Grid.RowProperty);
+                int currentCol = (int)entries[currentEntery].GetValue(Grid.ColumnProperty);
+                if (currentRow < 6) 
+                {
+                    currentEntery = ((currentRow + 1) * 5);
+                }
+                entries[currentEntery-1].Focus();
 
                 // if game is lost or won, we lock inputs
                 if (result[0] == 1)
                 {
-                    gameOver = true;
-                    entries[currentEntery].IsReadOnly = true;
+                    setGameIsOver(true);
                 }
-                else if (currentEntery == 30) // game lost or won on last round
+                else if (currentWordle.NumberOfGuesses == 0) // game lost
                 {
-                    entries[currentEntery].IsReadOnly = true;
+                    setGameIsOver(true);
                 }
             }
+        }
+    }
+
+    private void setGameIsOver(bool status)
+    {
+        // this function locks / unlocks the game mechanics
+        gameOver = status;
+        foreach (Entry entry in entries)
+        {
+            entry.IsReadOnly = status;
         }
     }
 
@@ -331,9 +345,9 @@ public partial class gamePage : ContentPage
 
         // scalling fonts
         pageTitle.FontSize = fontManager.scaleFontSize(180, windowHeight, windowWidth);
+        startGameBtn.FontSize = fontManager.scaleFontSize(100, windowHeight, windowWidth) * 0.95;
 
         // scaling start new game button
-        startGameBtn.FontSize = fontManager.scaleFontSize(80, windowHeight, windowWidth);
         if (!isMobile) // windows scaling
         {
             startGameBtn.WidthRequest = windowWidth * 0.2;
@@ -347,7 +361,7 @@ public partial class gamePage : ContentPage
         }
 
         // scaling navigation buttons that are only visible on pc
-        if (DeviceInfo.Current.Idiom != DeviceIdiom.Phone)
+        if (!isMobile)
         {
             double btnFontSize = fontManager.scaleFontSize(100, windowHeight, windowWidth) * 0.95;
             double scaledHeight = (windowHeight / 1408) * 150;
@@ -400,13 +414,20 @@ public partial class gamePage : ContentPage
         // PS: There is a weird glitch that stops you from scaling entries correctly
         double percentChanged = gameGrid.WidthRequest / maxSize;
 
+        // overshadowed "currentEntery"
         foreach (Entry currentEntery in entries)
         {
             currentEntery.FontSize = (enteryMaxSize * percentChanged) * 0.85;
             currentEntery.ScaleX = refernce.WidthRequest * 0.85;
             currentEntery.ScaleY = refernce.HeightRequest * 0.85;
         }
-        //Debug.Print("Grid height: " + (gameGrid.HeightRequest  / 5).ToString() + ",Font Size: " + entries[0].FontSize.ToString() + ", Desired Size: " + entries[0].DesiredSize.ToString());
+
+        // moving grid up on mobile
+        if (isMobile)
+        {
+            gameGrid.TranslationY -= windowHeight * 0.1;
+            startGameBtn.TranslationY -= (windowHeight * 0.1) + gameGrid.HeightRequest;
+        }  
     }
 
     private void OnWindowChange(object sender, EventArgs e)
