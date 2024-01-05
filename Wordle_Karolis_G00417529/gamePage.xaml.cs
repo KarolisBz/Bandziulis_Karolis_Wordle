@@ -45,6 +45,13 @@ public partial class gamePage : ContentPage
         currentWordle.setupGame();
     }
 
+    protected override void OnAppearing()
+    {
+        // this function makes sure loops starts up again
+        base.OnAppearing();
+        appOn = true;
+    }
+
     protected override void OnDisappearing()
     {
         // page is being removed, so we stop calling functions from another thread to the main thread to prevent bugs
@@ -55,11 +62,14 @@ public partial class gamePage : ContentPage
     private void focusAllTextBoxs()
     {
         // this function makes sure user is on the correct entery
-        while (true && appOn)
+        while (true)
         {
             // accessing function from the main thread
-            if (currentEntery > 29) currentEntery = 29;
-            MainThread.InvokeOnMainThreadAsync(() => { entries[currentEntery].Focus(); });
+            if (appOn)
+            {
+                if (currentEntery > 29) currentEntery = 29;
+                MainThread.InvokeOnMainThreadAsync(() => { entries[currentEntery].Focus(); });
+            }
             Thread.Sleep(1000); // slows down multithreaded loop
         }
     }
@@ -161,7 +171,7 @@ public partial class gamePage : ContentPage
                 if (entries[rowStartIndex + i].Text != "" && entries[rowStartIndex + i].Text != "\u00A0")
                 {
                     // building string
-                    if (i > objRow*5)
+                    if (i > 0)
                     {
                         builtUpString += entries[rowStartIndex + i].Text[1];
                     }
@@ -362,7 +372,7 @@ public partial class gamePage : ContentPage
         }
         else // mobile scaling
         {
-            pageTitle.FontSize = fontManager.scaleFontSize(300, windowHeight, windowWidth);
+            pageTitle.FontSize = fontManager.scaleFontSize(360, windowHeight, windowWidth);
             startGameBtn.WidthRequest = windowWidth * 0.5;
             startGameBtn.HeightRequest = windowHeight * 0.1;
         }

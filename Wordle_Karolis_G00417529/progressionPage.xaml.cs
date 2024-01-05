@@ -7,12 +7,32 @@ public partial class progressionPage : ContentPage
 	public progressionPage()
 	{
 		InitializeComponent();
-
-        // hooking function to every time layout is changed
-        LayoutChanged += OnWindowChange;
+        setupUI(); // setting up ui
     }
 
-    private void OnWindowChange(object sender, EventArgs e)
+    private void setupUI()
+    {
+        // hooking function to every time layout is changed
+        LayoutChanged += OnWindowChange;
+
+        // removing navigation buttons if on mobile
+        if (DeviceInfo.Current.Idiom == DeviceIdiom.Phone)
+        {
+            accountBtn.IsVisible = false;
+            accountImg.IsVisible = false;
+
+            wordleBtn.IsVisible = false;
+            WordleImg.IsVisible = false;
+
+            progressionBtn.IsVisible = false;
+            progressionImg.IsVisible = false;
+
+            settingsBtn.IsVisible = false;
+            settingsImg.IsVisible = false;
+        }
+    }
+
+        private void OnWindowChange(object sender, EventArgs e)
     {
         scaleElements();
     }
@@ -39,7 +59,14 @@ public partial class progressionPage : ContentPage
         background.WidthRequest = windowWidth;
 
         // scalling fonts
-        pageTitle.FontSize = fontManager.scaleFontSize(180, windowHeight, windowWidth);
+        if (!isMobile)
+        {
+            pageTitle.FontSize = fontManager.scaleFontSize(180, windowHeight, windowWidth);
+        }
+        else
+        {
+            pageTitle.FontSize = fontManager.scaleFontSize(360, windowHeight, windowWidth);
+        }
 
         // scaling navigation buttons that are only visible on pc
         if (!isMobile)
