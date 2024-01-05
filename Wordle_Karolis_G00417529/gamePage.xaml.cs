@@ -177,11 +177,7 @@ public partial class gamePage : ContentPage
 
             // moving up a row
             Debug.Print(currentEntery.ToString());
-            if (currentEntery > 30) 
-            { 
-                currentEntery++; 
-                Debug.Print("enteryNext"); 
-            }
+            if (currentEntery < 30) currentEntery++;
             entries[currentEntery].Focus();
         }
     }
