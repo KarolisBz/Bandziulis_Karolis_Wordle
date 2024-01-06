@@ -36,7 +36,7 @@ public partial class progressionPage : ContentPage
             holder.Opacity = 0.25;
             holderShadow.Opacity = 0.25;
             holder.CornerRadius = 5;
-            holderShadow.CornerRadius = 5;
+            holderShadow.CornerRadius = 0;
         }
     }
 
@@ -52,6 +52,7 @@ public partial class progressionPage : ContentPage
         double pixelDensity = DeviceDisplay.MainDisplayInfo.Density;
         double windowHeight = this.Height / pixelDensity;
         double windowWidth = this.Width / pixelDensity;
+        double mobileExtra = 0, boarderSize = 10;
         bool isMobile = false;
 
         // mobile devices don't have an accurate window, so we use full screen scale for more accurate scaling
@@ -59,6 +60,8 @@ public partial class progressionPage : ContentPage
         {
             windowHeight = DeviceDisplay.MainDisplayInfo.Height / pixelDensity;
             windowWidth = DeviceDisplay.MainDisplayInfo.Width / pixelDensity;
+            mobileExtra = 10;
+            boarderSize = 5;
             isMobile = true;
         }
 
@@ -123,22 +126,22 @@ public partial class progressionPage : ContentPage
             double relativeWidth = 2560 * (windowWidth / 500);
             double relativeHeight = 1408;
 
-            holder.WidthRequest = windowWidth - 10;
-            holder.HeightRequest = windowHeight - (pageTitle.FontSize * 1.1);
-            scroller.HeightRequest = windowHeight - (pageTitle.FontSize * 1.1);
+            holder.WidthRequest = windowWidth - (boarderSize * 2);
+            holder.HeightRequest = windowHeight - (pageTitle.FontSize * 1.1) - mobileExtra;
+            scroller.HeightRequest = windowHeight - (pageTitle.FontSize * 1.1) - mobileExtra;
 
 
-            holderShadow.HeightRequest = holder.HeightRequest + 10;
-            holderShadow.WidthRequest = holder.WidthRequest + 10;
+            holderShadow.HeightRequest = holder.HeightRequest + boarderSize;
+            holderShadow.WidthRequest = holder.WidthRequest + (boarderSize * 2);
 
         }
         else // return to original size
         {
-            holder.HeightRequest = windowHeight - (pageTitle.FontSize * 1.1);
-            scroller.HeightRequest = windowHeight - (pageTitle.FontSize * 1.1);
+            holder.HeightRequest = windowHeight - (pageTitle.FontSize * 1.1) - mobileExtra;
+            scroller.HeightRequest = windowHeight - (pageTitle.FontSize * 1.1) - mobileExtra;
             holder.WidthRequest = 630;
-            holderShadow.HeightRequest = holder.HeightRequest + 10;
-            holderShadow.WidthRequest = holder.WidthRequest + 10;
+            holderShadow.HeightRequest = holder.HeightRequest + boarderSize;
+            holderShadow.WidthRequest = holder.WidthRequest + (boarderSize * 2);
         }
     }
 
