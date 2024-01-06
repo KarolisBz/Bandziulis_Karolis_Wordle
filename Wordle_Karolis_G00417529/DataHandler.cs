@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
@@ -19,15 +20,14 @@ namespace Wordle_Karolis_G00417529
         static public bool easyMode;
         static public bool timerOn;
         // api cached //
-        static HttpClient client;
+        static private HttpClient client;
         static public List<string> wordList;
         // shell workaround
         static public bool isInGamePage;
         static public ShellVeiwModel shellVeiwModel = new ShellVeiwModel(); // creating shellViewmodel
-        // wordle attempt list veiwModel //
-        static public ProgressionVeiwModel progressionVeiwModel = new ProgressionVeiwModel();
         // wrapped data //
-        static private DataPackage wrappedData = new DataPackage(); // creating data wrapper
+        static public DataPackage wrappedData = new DataPackage(); // creating data wrapper
+        static public progressionVeiwModel cachedProgressViewModel = new progressionVeiwModel();
 
         // constructor, don't call more then once in entire program
         public DataHandler()
@@ -41,7 +41,7 @@ namespace Wordle_Karolis_G00417529
                 fontSize = 20;
                 easyMode = false;
                 timerOn = true;
-                progressionVeiwModel.AttemptList = new List<wordleAttempt>();
+                cachedProgressViewModel.AttemptList = new ObservableCollection<wordleAttempt>();
             }
 
             // initializing shellworkaround
@@ -66,10 +66,10 @@ namespace Wordle_Karolis_G00417529
         }
 
         // creating an internal class that contains all the required data
-        // so we can read it and write it all at once while keeping all the varibles in the class static
+        // so we can read it and write it all at once while keeping all the varibles in the class static, and use it as a veiwmodel in the future
         // normally storing data like this will cause very easy cheating as all the data is static and public, but since it's a client only game cheats can never be prevented
         // as memory on the client can be changed
-        private class DataPackage
+        public class DataPackage
         {
             // wrapped variables
             public string currentPlayerPacked { get; set; }
@@ -77,7 +77,7 @@ namespace Wordle_Karolis_G00417529
             public float fontSizePacked { get; set; }
             public bool easyModePacked { get; set; }
             public bool timerOnPacked { get; set; }
-            public List<wordleAttempt> attemptListPacked { get; set; }
+            public ObservableCollection<wordleAttempt> attemptListPacked { get; set; }
         }
 
         // is the veiwModel for shell, it's a very small class so we will just keep it in dataHandler
@@ -92,31 +92,6 @@ namespace Wordle_Karolis_G00417529
                 set 
                 { 
                     flyoutPageStatus = value;
-                    OnPropertyChanged();
-                }
-            }
-
-            public event PropertyChangedEventHandler PropertyChanged;
-
-            // credits to Donny Hurley for this function
-            protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-            {
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
-        // same as above, this viewModel only has 1 value so we'll keep it with data managment
-        public class ProgressionVeiwModel : INotifyPropertyChanged
-        {
-            private List<wordleAttempt> attemptList;
-
-            // get and set
-            public List<wordleAttempt> AttemptList
-            {
-                get { return attemptList; }
-                set
-                {
-                    attemptList = value;
                     OnPropertyChanged();
                 }
             }
@@ -154,7 +129,7 @@ namespace Wordle_Karolis_G00417529
                         fontSize = wrappedData.fontSizePacked;
                         easyMode = wrappedData.easyModePacked;
                         timerOn = wrappedData.timerOnPacked;
-                        attemptList = wrappedData.attemptListPacked;
+                        cachedProgressViewModel.AttemptList = wrappedData.attemptListPacked;
                     }
                     status = true;
                 }
@@ -194,7 +169,7 @@ namespace Wordle_Karolis_G00417529
                 wrappedData.fontSizePacked = fontSize;
                 wrappedData.easyModePacked = easyMode;
                 wrappedData.timerOnPacked = timerOn;
-                wrappedData.attemptListPacked = attemptList;
+                wrappedData.attemptListPacked = cachedProgressViewModel.AttemptList;
 
                 string JsonString = JsonSerializer.Serialize(wrappedData);
                 using (streamWriter)

@@ -8,6 +8,7 @@ namespace Wordle_Karolis_G00417529
     {
         // class fields ( keeping them private for preventing bugs )
         private string correctWord;
+        private string player;
         private DateTime attemptFinished;
         private int numberOfGuesses;
         private List<int[]> attemptVisualData;
@@ -23,6 +24,7 @@ namespace Wordle_Karolis_G00417529
             numberOfGuesses = 6;
             currentAttempt = 0;
             attemptVisualData = new List<int[]>();
+            player = DataHandler.currentPlayer;
         }
 
         // getters and setters
@@ -70,7 +72,7 @@ namespace Wordle_Karolis_G00417529
             attemptFinished = DateTime.Now;
 
             // saving data
-            DataHandler.attemptList.Add(this); // adds itself into list to save
+            DataHandler.cachedProgressViewModel.AttemptList.Add(this); // adds itself into list to save
             await DataHandler.saveDataAsync(); // saving game progress so far
         }
 

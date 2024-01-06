@@ -7,7 +7,7 @@ public partial class progressionPage : ContentPage
 	public progressionPage()
 	{
 		InitializeComponent();
-        BindingContext = DataHandler;
+        BindingContext = DataHandler.cachedProgressViewModel;
         setupUI(); // setting up ui
     }
 
