@@ -23,10 +23,12 @@ namespace Wordle_Karolis_G00417529
             {
                 userDisplay.Text = "You're logged out";
                 actionDisplay.Text = "Press login to login!";
+                startBtn.IsVisible = true;
                 startBtn.Text = "Login";
                 logoutBtn.IsVisible = false;
                 mobileUserDisplay.IsVisible = false;
                 Grid.SetRow(actionDisplay, 7);
+                DataHandler.shellVeiwModel.FlyoutPageStatus = FlyoutBehavior.Disabled;
             }
             else
             {
@@ -35,9 +37,11 @@ namespace Wordle_Karolis_G00417529
                     // mobile word wrap doesn't work well for layout, so we use extra label
                     userDisplay.Text = "Welcome back";
                     mobileUserDisplay.Text = (DataHandler.currentPlayer + "!");
-                    actionDisplay.Text = "Press start to play!";
+                    actionDisplay.Text = "Use the flyout page to navigate!";
+                    startBtn.IsVisible = false;
                     mobileUserDisplay.IsVisible = true;
                     Grid.SetRow(actionDisplay, 8);
+                    DataHandler.shellVeiwModel.FlyoutPageStatus = FlyoutBehavior.Flyout;
                 }
                 else
                 {
@@ -61,6 +65,12 @@ namespace Wordle_Karolis_G00417529
                 background.Source = "mobilebackground.png";
                 holder.Opacity = 0.25;
                 holderShadow.Opacity = 0.25;
+
+                // only show flyout navigation if player is logged in
+                if (loggedIn)
+                {
+                    DataHandler.shellVeiwModel.FlyoutPageStatus = FlyoutBehavior.Flyout;
+                }
             }
         }
 
@@ -141,14 +151,14 @@ namespace Wordle_Karolis_G00417529
         private void logout()
         {
             DataHandler.currentPlayer = "Default_User";
-            saveData(); // saves new data now that user logged out
-            swapPageContent(); // swaps to logged out page
+            saveData(); // saves new data now that user logged out 
             loggedIn = false;
+            swapPageContent(); // swaps to logged out page
         }
 
         private async void toPage2()
         {
-           await Navigation.PushAsync(new gamePage()); // going to new page
+            await Navigation.PushAsync(new gamePage()); // going to new page
         }
 
         private void startBtn_Clicked(object sender, EventArgs e)

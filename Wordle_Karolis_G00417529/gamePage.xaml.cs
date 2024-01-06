@@ -158,6 +158,14 @@ public partial class gamePage : ContentPage
         firstEntery.Focus();
     }
 
+    private void refreshEntrys()
+    {
+        foreach (var entry in entries)
+        {
+         
+        }
+    }
+
     private void NewEntry_Completed(object sender, EventArgs e)
     {
         // this function handels checking awnser and moving player onto next attempt
@@ -267,7 +275,7 @@ public partial class gamePage : ContentPage
 
         // prompting message
         if (attempt[0] == 1) 
-            await DisplayAlert("You won!", $"well done!, Correct word was: {currentWordle.CorrectWord}, progress has been saved.", "Lets go!");
+            await DisplayAlert("You won!", $"well done!, progress has been saved, Correct word was: {currentWordle.CorrectWord}.", "Lets go!");
         else if (currentWordle.NumberOfGuesses == 0)
             await DisplayAlert("You lost!", $"Correct word was: {currentWordle.CorrectWord}, better luck next time :)", "alright :(");
 
@@ -372,10 +380,11 @@ public partial class gamePage : ContentPage
         foreach (Entry entry in entries)
         {
             entry.Text = "";
-            entry.Opacity = 1;
             entry.CancelAnimations();
             entry.Rotation = 180;
             entry.BackgroundColor = new Color(0,0,0,0);
+            entry.Background = Brush.Transparent;
+            entry.Opacity = 1;
         }
 
         // spawning new game

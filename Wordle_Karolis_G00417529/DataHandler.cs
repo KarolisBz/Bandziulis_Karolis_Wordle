@@ -1,10 +1,12 @@
-﻿using System.Diagnostics;
+﻿using System.ComponentModel;
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 
 namespace Wordle_Karolis_G00417529
 {
     // this class handles most of loading, saving and storing of data
-    public class DataHandler
+    public class DataHandler 
     {
         // class fields //
         static private string filePath = System.IO.Path.Combine(FileSystem.Current.AppDataDirectory, "wordleUserData.json");
@@ -18,9 +20,10 @@ namespace Wordle_Karolis_G00417529
         static public bool timerOn;
         // api cached //
         static HttpClient client;
+        static public List<string> wordList;
         // shell workaround
         static public bool isInGamePage;
-        static public List<string> wordList;
+        static public ShellVeiwModel shellVeiwModel = new ShellVeiwModel(); // creating shellViewmodel
         // wordle attempt list //
         static public List<wordleAttempt> attemptList;
         // wrapped data //
@@ -76,6 +79,32 @@ namespace Wordle_Karolis_G00417529
             public bool timerOnPacked { get; set; }
             public List<wordleAttempt> attemptListPacked { get; set; }
         }
+
+        // is the veiwModel for shell, it's a very small class so we will just keep it in dataHandler
+        public class ShellVeiwModel : INotifyPropertyChanged
+        {
+            FlyoutBehavior flyoutPageStatus = FlyoutBehavior.Disabled;
+
+            // get and set
+            public FlyoutBehavior FlyoutPageStatus
+            {
+                get { return flyoutPageStatus; }
+                set 
+                { 
+                    flyoutPageStatus = value;
+                    OnPropertyChanged();
+                }
+            }
+
+            public event PropertyChangedEventHandler PropertyChanged;
+
+            // credits to Donny Hurley for this function
+            protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
         static public bool loadData()
         {
             bool status = false; // false if failed, true if success in loading data

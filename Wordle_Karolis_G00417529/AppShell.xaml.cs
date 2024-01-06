@@ -7,13 +7,7 @@ namespace Wordle_Karolis_G00417529
         public AppShell()
         {
             InitializeComponent();
-
-            // disable flyout if on pc
-            if (DeviceInfo.Current.Idiom == DeviceIdiom.Desktop)
-            {
-                Shell.SetFlyoutBehavior(this, Microsoft.Maui.FlyoutBehavior.Disabled);
-                Shell.SetFlyoutItemIsVisible(this, false);
-            }
+            BindingContext = DataHandler.shellVeiwModel;
         }
 
         protected override async void OnNavigating(ShellNavigatingEventArgs args)
