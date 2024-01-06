@@ -267,7 +267,7 @@ public partial class gamePage : ContentPage
 
         // prompting message
         if (attempt[0] == 1) 
-            await DisplayAlert("You won!", "well done!, progress has been saved.", "Lets go!");
+            await DisplayAlert("You won!", $"well done!, Correct word was: {currentWordle.CorrectWord}, progress has been saved.", "Lets go!");
         else if (currentWordle.NumberOfGuesses == 0)
             await DisplayAlert("You lost!", $"Correct word was: {currentWordle.CorrectWord}, better luck next time :)", "alright :(");
 
@@ -373,6 +373,8 @@ public partial class gamePage : ContentPage
         {
             entry.Text = "";
             entry.Opacity = 1;
+            entry.CancelAnimations();
+            entry.Rotation = 180;
             entry.BackgroundColor = new Color(0,0,0,0);
         }
 

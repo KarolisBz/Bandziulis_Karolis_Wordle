@@ -84,7 +84,7 @@ namespace Wordle_Karolis_G00417529
             int correctCounter = 0;
             string positionRecord = correctWord; // copying correct string
 
-            // comparing character by character
+            // comparing character by character, removng correct characters from position record
             for (int i = 0; i < 5; i++)
             {
                 if (correctWord[i] == playerAwnser[i])
@@ -93,7 +93,13 @@ namespace Wordle_Karolis_G00417529
                     correctCounter++;
                     compareResult[1 + i] = 1; // awnser is correct
                 }
-                else // word is not a perfect match
+            }
+
+            // comparing each wrong position character
+            // we do this in 2 loops instead of 1, so we don't duplicate a found and unfound character
+            for (int i = 0; i < 5; i++)
+            {
+                if (correctWord[i] != playerAwnser[i])
                 {
                     // if one of the letters are correct but in wrong position
                     for (int index = 0; index < positionRecord.Length; index++)
@@ -110,7 +116,6 @@ namespace Wordle_Karolis_G00417529
                             compareResult[1 + i] = 0;
                         }
                     }
-
                 }
             }
 
