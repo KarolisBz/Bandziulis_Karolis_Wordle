@@ -25,6 +25,46 @@
               HorizontalTextAlignment="Center"
               Text="(Progression)"/>
 
+            <BoxView
+             ZIndex="0"
+             Grid.Row="0"
+             x:Name = "holderShadow"
+             HeightRequest = "720"
+             WidthRequest = "650"
+             VerticalOptions="End"
+             HorizontalOptions="Center"
+             CornerRadius="40"
+             Color="black"
+             Opacity="0.95"/>
+
+            <BoxView
+             Grid.Row="0"
+             x:Name = "holder"
+             HeightRequest = "700"
+             WidthRequest = "630"
+             VerticalOptions="End"
+             HorizontalOptions="Center"
+             CornerRadius="40"
+             Color="white"
+             Opacity="0.95"/>
+
+            <ScrollView x:Name="scroller" ZIndex="5" VerticalScrollBarVisibility="Always" HeightRequest = "700" WidthRequest = "630" VerticalOptions="End">
+                <VerticalStackLayout>
+                    <Label FontSize="100" Text="yes" HorizontalOptions="Center"></Label>
+                    <Label FontSize="100" Text="yes" HorizontalOptions="Center"></Label>
+                    <Label FontSize="100" Text="yes" HorizontalOptions="Center"></Label>
+                    <Label FontSize="100" Text="yes" HorizontalOptions="Center"></Label>
+                    <Label FontSize="100" Text="yes" HorizontalOptions="Center"></Label>
+                    <Label FontSize="100" Text="yes" HorizontalOptions="Center"></Label>
+                    <Label FontSize="100" Text="yes" HorizontalOptions="Center"></Label>
+                    <Label FontSize="100" Text="yes" HorizontalOptions="Center"></Label>
+                    <Label FontSize="100" Text="yes" HorizontalOptions="Center"></Label>
+                    <Label FontSize="100" Text="yes" HorizontalOptions="Center"></Label>
+                    <Label FontSize="100" Text="yes" HorizontalOptions="Center"></Label>
+                    <Label FontSize="100" Text="yes" HorizontalOptions="Center"></Label>
+                </VerticalStackLayout>
+            </ScrollView>
+
             <!-- button grid -->
             <Grid RowDefinitions="*,*,*,*,*,*,*,*,*,*,*,*" ColumnDefinitions="*,*" ColumnSpacing="1555" x:Name="btnHolder" ZIndex="5">
 

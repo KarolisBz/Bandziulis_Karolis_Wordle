@@ -1,4 +1,6 @@
+using Microsoft.UI.Xaml.Controls.Primitives;
 using System.Diagnostics;
+using Windows.UI.StartScreen;
 
 namespace Wordle_Karolis_G00417529;
 
@@ -109,6 +111,31 @@ public partial class progressionPage : ContentPage
 
             // scaling btn spacing
             btnHolder.ColumnSpacing = (windowWidth / 2560) * 1555;
+
+            // scaling scrolling page (from ratio of 2k monitor)
+            if (windowWidth < 630) // we only scale if screen is smaller then requested size
+            {
+                // scaling fonts relative to box, not screen
+                double relativeWidth = 2560 * (windowWidth / 500);
+                double relativeHeight = 1408;
+
+                holder.WidthRequest = windowWidth - 10;
+                holder.HeightRequest = windowHeight - (pageTitle.FontSize * 1.1);
+                scroller.HeightRequest = windowHeight - (pageTitle.FontSize * 1.1);
+
+
+                holderShadow.HeightRequest = holder.HeightRequest + 10;
+                holderShadow.WidthRequest = holder.WidthRequest + 10;
+
+            }
+            else // return to original size
+            {
+                holder.HeightRequest = windowHeight - (pageTitle.FontSize * 1.1);
+                scroller.HeightRequest = windowHeight - (pageTitle.FontSize * 1.1);
+                holder.WidthRequest = 630;
+                holderShadow.HeightRequest = holder.HeightRequest + 10;
+                holderShadow.WidthRequest = holder.WidthRequest + 10;
+            }
         }
     }
 
