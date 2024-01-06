@@ -24,8 +24,8 @@ namespace Wordle_Karolis_G00417529
         // shell workaround
         static public bool isInGamePage;
         static public ShellVeiwModel shellVeiwModel = new ShellVeiwModel(); // creating shellViewmodel
-        // wordle attempt list //
-        static public List<wordleAttempt> attemptList;
+        // wordle attempt list veiwModel //
+        static public ProgressionVeiwModel progressionVeiwModel = new ProgressionVeiwModel();
         // wrapped data //
         static private DataPackage wrappedData = new DataPackage(); // creating data wrapper
 
@@ -41,7 +41,7 @@ namespace Wordle_Karolis_G00417529
                 fontSize = 20;
                 easyMode = false;
                 timerOn = true;
-                attemptList = new List<wordleAttempt>();
+                progressionVeiwModel.AttemptList = new List<wordleAttempt>();
             }
 
             // initializing shellworkaround
@@ -92,6 +92,31 @@ namespace Wordle_Karolis_G00417529
                 set 
                 { 
                     flyoutPageStatus = value;
+                    OnPropertyChanged();
+                }
+            }
+
+            public event PropertyChangedEventHandler PropertyChanged;
+
+            // credits to Donny Hurley for this function
+            protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        // same as above, this viewModel only has 1 value so we'll keep it with data managment
+        public class ProgressionVeiwModel : INotifyPropertyChanged
+        {
+            private List<wordleAttempt> attemptList;
+
+            // get and set
+            public List<wordleAttempt> AttemptList
+            {
+                get { return attemptList; }
+                set
+                {
+                    attemptList = value;
                     OnPropertyChanged();
                 }
             }

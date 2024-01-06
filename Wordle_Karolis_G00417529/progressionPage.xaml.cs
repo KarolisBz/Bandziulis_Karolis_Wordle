@@ -7,6 +7,7 @@ public partial class progressionPage : ContentPage
 	public progressionPage()
 	{
 		InitializeComponent();
+        BindingContext = DataHandler;
         setupUI(); // setting up ui
     }
 
