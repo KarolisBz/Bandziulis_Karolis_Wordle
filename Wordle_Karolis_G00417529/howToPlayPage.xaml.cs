@@ -32,6 +32,10 @@ public partial class howToPlayPage : ContentPage
 
             howToPlayBtn.IsVisible = false;
             howToPlayImg.IsVisible = false;
+
+            background.Source = "mobilebackground.png";
+            holder.Opacity = 0.25;
+            holderShadow.Opacity = 0.25;
         }
     }
 
@@ -109,6 +113,77 @@ public partial class howToPlayPage : ContentPage
 
             // scaling btn spacing
             btnHolder.ColumnSpacing = (windowWidth / 2560) * 1555;
+        }
+
+        // scaling assests (from ratio of 2k monitor)
+        double titleSize = pageTitle.FontSize * 1.8;
+        if (windowWidth < 500 || windowHeight < (700 + titleSize)) // we only scale if screen is smaller then requested size
+        {
+            // scaling fonts relative to box, not screen
+            double relativeWidth = 2560 * (windowWidth / 500);
+            double relativeHeight = 1408 * ((windowHeight - titleSize) / 700); // we use titleSize as an offset, so the title always stays above text box
+
+            if (windowWidth < 500) { holder.WidthRequest = windowWidth; } else { holder.WidthRequest = 500; relativeWidth = 2560; }
+            if (windowHeight < (700 + titleSize)) { holder.HeightRequest = (windowHeight - titleSize); } else { holder.HeightRequest = 700; relativeHeight = 1408; }
+
+            holderShadow.HeightRequest = holder.HeightRequest + 10;
+            holderShadow.WidthRequest = holder.WidthRequest + 10;
+
+            // scaling grid
+            contentGrid.HeightRequest = holder.HeightRequest;
+            contentGrid.WidthRequest = holder.WidthRequest;
+
+            // scaling boxveiws
+            double boxSize = fontManager.scaleFontSize(75, relativeHeight, relativeWidth);
+            box1.HeightRequest = boxSize;
+            box1.WidthRequest = boxSize;
+            box2.HeightRequest = boxSize;
+            box2.WidthRequest = boxSize;
+            box3.HeightRequest = boxSize;
+            box3.WidthRequest = boxSize;
+
+            // scalling fonts relative to holder
+            double baseTextSize = fontManager.scaleFontSize(25, relativeHeight, relativeWidth);
+            titleText0.FontSize = fontManager.scaleFontSize(35, relativeHeight, relativeWidth);
+            text1.FontSize = baseTextSize;
+            text2.FontSize = baseTextSize;
+            text3.FontSize = baseTextSize;
+            text4.FontSize = baseTextSize;
+            text5.FontSize = baseTextSize;
+            text6.FontSize = baseTextSize;
+            text7.FontSize = baseTextSize;
+
+        }
+        else // return to original size
+        {
+            holder.HeightRequest = 700;
+            holder.WidthRequest = 500;
+            holderShadow.HeightRequest = holder.HeightRequest + 10;
+            holderShadow.WidthRequest = holder.WidthRequest + 10;
+
+            // scaling grid
+            contentGrid.HeightRequest = holder.HeightRequest;
+            contentGrid.WidthRequest = holder.WidthRequest;
+
+            // scaling boxveiws
+            double boxSize = 75;
+            box1.HeightRequest = boxSize;
+            box1.WidthRequest = boxSize;
+            box2.HeightRequest = boxSize;
+            box2.WidthRequest = boxSize;
+            box3.HeightRequest = boxSize;
+            box3.WidthRequest = boxSize;
+
+            // scalling fonts relative to holder
+            double baseTextSize = 25;
+            titleText0.FontSize = 35;
+            text1.FontSize = baseTextSize;
+            text2.FontSize = baseTextSize;
+            text3.FontSize = baseTextSize;
+            text4.FontSize = baseTextSize;
+            text5.FontSize = baseTextSize;
+            text6.FontSize = baseTextSize;
+            text7.FontSize = baseTextSize;
         }
     }
 

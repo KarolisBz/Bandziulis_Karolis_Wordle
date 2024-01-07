@@ -10,7 +10,7 @@ namespace Wordle_Karolis_G00417529
     public class DataHandler 
     {
         // class fields //
-        static private string filePath = System.IO.Path.Combine(FileSystem.Current.AppDataDirectory, "wordleUserData.json");
+        static private string filePath = System.IO.Path.Combine(FileSystem.Current.AppDataDirectory, "wordleUserData2.json");
         static private string wordfilePath = System.IO.Path.Combine(FileSystem.Current.AppDataDirectory, "cachedWords.json");
         // player data //
         static public string currentPlayer;

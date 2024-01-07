@@ -25,6 +25,95 @@
               HorizontalTextAlignment="Center"
               Text="(How To Play)"/>
 
+            <!-- background page img -->
+            <BoxView
+             ZIndex="0"
+             Grid.Row="0"
+             x:Name = "holderShadow"
+             HeightRequest = "720"
+             WidthRequest = "430"
+             VerticalOptions="Center"
+             HorizontalOptions="Center"
+             CornerRadius="40"
+             Color="black"
+             Opacity="0.95"/>
+
+            <BoxView
+            Grid.Row="0"
+            x:Name = "holder"
+            HeightRequest = "700"
+            WidthRequest = "500"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            CornerRadius="40"
+            Color="white"
+            Opacity="0.95"/>
+
+            <!-- content grid -->
+            <Grid RowDefinitions="*,*,*,*,*,*,*,*,*,*,*,*" x:Name="contentGrid" ZIndex="10" HeightRequest="700" WidthRequest="500" HorizontalOptions="Center" VerticalOptions="Center">
+                <Label Text="Guess the wordle in six attempts" x:Name="titleText0"
+                       Grid.Row="0" FontSize="35" TextColor = "Black" 
+                       HorizontalOptions="Center" FontFamily="LittleSanta"/>
+                
+                <VerticalStackLayout Grid.Row="1">
+                    <Label Text="To submit an attempt press the enter key." 
+                           FontSize="25" TextColor = "Black" x:Name="text1"
+                           HorizontalOptions="Center" FontFamily="LittleSanta"/>
+                    
+                    <Label Text="Once sumbmitted, the text box's will change colour." 
+                           FontSize="25" TextColor = "Black" x:Name="text2"
+                           HorizontalOptions="Center" FontFamily="LittleSanta"/>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Row="3" x:Name="stack1">
+                    <HorizontalStackLayout HorizontalOptions="Start" Padding="20">
+                        <BoxView x:Name="box1"
+                         HeightRequest="75"
+                         WidthRequest="75"
+                         CornerRadius="10"
+                         Color="White"/>
+
+                        <Label Text="   X   wrong letter" VerticalOptions="Center"
+                               FontSize="25" TextColor = "Black" x:Name="text3"
+                               HorizontalOptions="Center" FontFamily="LittleSanta"/>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout HorizontalOptions="Start" Padding="20" x:Name="stack2">
+                        <BoxView x:Name="box2"
+                         HeightRequest="75"
+                         WidthRequest="75"
+                         CornerRadius="10"
+                         Color="Yellow"/>
+
+                        <Label Text="   X   correct letter, wrong position" VerticalOptions="Center"
+                               FontSize="25" TextColor = "Black" x:Name="text4"
+                               HorizontalOptions="Center" FontFamily="LittleSanta"/>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout HorizontalOptions="Start" Padding="20" x:Name="stack3">
+                        <BoxView x:Name="box3"
+                         HeightRequest="75"
+                         WidthRequest="75"
+                         CornerRadius="10"
+                         Color="Green"/>
+
+                        <Label Text="   X   correct letter, correct position" VerticalOptions="Center"
+                               FontSize="25" TextColor = "Black" x:Name="text5"
+                               HorizontalOptions="Center" FontFamily="LittleSanta"/>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Row="10">
+                    <Label Text="The progression page shows all past games" 
+                           FontSize="25" TextColor = "Black" x:Name="text6"
+                           HorizontalOptions="Center" FontFamily="LittleSanta"/>
+
+                    <Label Text="Go to the settings page to change game difficulty." 
+                           FontSize="25" TextColor = "Black" x:Name="text7"
+                           HorizontalOptions="Center" FontFamily="LittleSanta"/>
+                </VerticalStackLayout>
+            </Grid>
+
             <!-- button grid -->
             <Grid RowDefinitions="*,*,*,*,*,*,*,*,*,*,*,*" ColumnDefinitions="*,*" ColumnSpacing="1555" x:Name="btnHolder" ZIndex="5">
 
