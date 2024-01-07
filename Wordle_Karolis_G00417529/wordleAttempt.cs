@@ -15,6 +15,7 @@ namespace Wordle_Karolis_G00417529
         private Random random = new Random();
         // public fields
         public int currentAttempt;
+        static public Color[] colorArray = { new Color(0, 0, 0), new Color(0, 255, 0), new Color(155, 155, 0) };
 
         // constructor
         public wordleAttempt()

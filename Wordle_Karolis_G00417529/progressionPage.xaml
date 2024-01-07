@@ -58,41 +58,44 @@
              Color="white"
              Opacity="0.95"/>
 
+            <!-- all collectionview content -->
             <ScrollView x:Name="scroller" ZIndex="5" VerticalScrollBarVisibility="Always" HeightRequest = "700" WidthRequest = "630" VerticalOptions="End">
                 <VerticalStackLayout>
-                    <CollectionView ItemsSource="{Binding AttemptList}" x:Name="collectionVeiwLoc">
-                        
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate x:DataType="model:wordleAttempt">
-                                <VerticalStackLayout Spacing="50">
+                    <Grid x:Name="collectionVeiwStart">
+                        <CollectionView ItemsSource="{Binding AttemptList}">
 
-                                    <Grid HeightRequest="350" WidthRequest="630">
-                                        <StackLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="model:wordleAttempt">
+                                    <VerticalStackLayout Spacing="50">
 
-                                            <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
-                                                <Label Style="{StaticResource templateLabel}" FontSize="{DynamicResource templateFontSize}"
-                                                    Text="{Binding AtemptFinished, StringFormat='Date of game: {0:d}, Time: {0:t},'}"/>
+                                        <Grid HeightRequest="350" WidthRequest="630">
+                                            <StackLayout>
 
-                                                <Label Style="{StaticResource templateLabel}" FontSize="{DynamicResource templateFontSize}"
-                                                    Text="{Binding Player, StringFormat='Player Name: {0},'}"/>
-                                            </HorizontalStackLayout>
+                                                <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                                                    <Label Style="{StaticResource templateLabel}" FontSize="{DynamicResource templateFontSize}"
+                                                        Text="{Binding AtemptFinished, StringFormat='Date of game: {0:d}, Time: {0:t},'}"/>
 
-                                            <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
-                                                <Label Style="{StaticResource templateLabel}" FontSize="{DynamicResource templateFontSize}"
-                                                    Text="{Binding NumberOfGuesses, StringFormat='Game Remaining guesses: {0},'}"/>
+                                                    <Label Style="{StaticResource templateLabel}" FontSize="{DynamicResource templateFontSize}"
+                                                        Text="{Binding Player, StringFormat='Player Name: {0},'}"/>
+                                                </HorizontalStackLayout>
 
-                                                <Label Style="{StaticResource templateLabel}" FontSize="{DynamicResource templateFontSize}"
-                                                    Text="{Binding CorrectWord, StringFormat='Correct Awnser: {0}'}"/>
-                                            </HorizontalStackLayout>
-                                           
-                                        </StackLayout>
-                                    </Grid>
-                                    
-                                </VerticalStackLayout>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                        
-                    </CollectionView>
+                                                <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                                                    <Label Style="{StaticResource templateLabel}" FontSize="{DynamicResource templateFontSize}"
+                                                        Text="{Binding NumberOfGuesses, StringFormat='Game Remaining guesses: {0},'}"/>
+
+                                                    <Label Style="{StaticResource templateLabel}" FontSize="{DynamicResource templateFontSize}"
+                                                        Text="{Binding CorrectWord, StringFormat='Correct Awnser: {0}'}"/>
+                                                </HorizontalStackLayout>
+
+                                            </StackLayout>
+                                        </Grid>
+
+                                    </VerticalStackLayout>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+
+                        </CollectionView>
+                    </Grid>
                 </VerticalStackLayout>
             </ScrollView>
 

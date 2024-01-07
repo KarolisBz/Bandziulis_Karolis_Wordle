@@ -5,7 +5,6 @@ namespace Wordle_Karolis_G00417529;
 public partial class progressionPage : ContentPage
 {
     // class Fields
-    Color[] colorArray = { new Color(0, 0, 0), new Color(0, 255, 0), new Color(155, 155, 0) };
     List<Grid> generatedGrids = new List<Grid>();
 
     public progressionPage()
@@ -44,6 +43,24 @@ public partial class progressionPage : ContentPage
             holder.CornerRadius = 5;
             holderShadow.CornerRadius = 0;
         }
+
+        // generating emoji grids
+        int gridCounter = 0;
+
+        foreach (var instance in collectionVeiwStart.items)
+        { 
+            // each grid has its own instances that needs scaling
+            if (instance.GetType() == typeof(Grid))
+            {
+                generateEmojiGrid((Grid)instance, DataHandler.cachedProgressViewModel.AttemptList[gridCounter].AttemptVisualData);
+                gridCounter++;
+            }
+        }
+    }
+
+    private void generateEmojiGrid(IView instance, List<int[]> attemptVisualData)
+    {
+        throw new NotImplementedException();
     }
 
     private void generateEmojiGrid(Grid targetGrid, List<int[]> attemptVisualData)
@@ -78,7 +95,7 @@ public partial class progressionPage : ContentPage
                 newBoxVeiw.HeightRequest = boxHeight;
                 newBoxVeiw.HeightRequest = boxWidth;
                 newBoxVeiw.CornerRadius = 10;
-                newBoxVeiw.BackgroundColor = colorArray[currentVisualData];
+                newBoxVeiw.BackgroundColor = wordleAttempt.colorArray[currentVisualData];
                 emojiGrid.Add(newBoxVeiw);
             }
         }

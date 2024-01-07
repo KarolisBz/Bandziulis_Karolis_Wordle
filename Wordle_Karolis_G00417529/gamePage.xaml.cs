@@ -15,7 +15,6 @@ public partial class gamePage : ContentPage
     bool gameOver;
     double maxSize;
     wordleAttempt currentWordle;
-    Color[] colorArray = { new Color(0, 0, 0), new Color(0,255,0), new Color(155, 155, 0) };
 
 	public gamePage()
     {
@@ -264,7 +263,7 @@ public partial class gamePage : ContentPage
             // only color change if it's wrong position or correct
             if (attempt[counter + 1] != 0)
             {
-                entries[i].BackgroundColor = colorArray[attempt[counter + 1]];
+                entries[i].BackgroundColor = wordleAttempt.colorArray[attempt[counter + 1]];
                 entries[i].Opacity = 0.5;
             }
 
