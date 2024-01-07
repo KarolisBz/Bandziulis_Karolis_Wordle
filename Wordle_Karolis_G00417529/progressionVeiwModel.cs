@@ -17,6 +17,13 @@ namespace Wordle_Karolis_G00417529
             set
             {
                 attemptList = value;
+
+                // generating emoji grid data
+                foreach (wordleAttempt attempt in attemptList)
+                {
+                    attempt.createColorGridData();
+                }
+
                 OnPropertyChanged();
             }
         }

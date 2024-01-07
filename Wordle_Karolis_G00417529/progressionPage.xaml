@@ -13,6 +13,9 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <x:Double x:Key="templateFontSize">20</x:Double>
+            <x:Double x:Key="boxHeight">42</x:Double>
+            <x:Double x:Key="boxWidth">50</x:Double>
+            <x:Double x:Key="boxRad">1</x:Double>
         </ResourceDictionary>
     </ContentPage.Resources>
     
@@ -61,41 +64,312 @@
             <!-- all collectionview content -->
             <ScrollView x:Name="scroller" ZIndex="5" VerticalScrollBarVisibility="Always" HeightRequest = "700" WidthRequest = "630" VerticalOptions="End">
                 <VerticalStackLayout>
-                    <Grid x:Name="collectionVeiwStart">
-                        <CollectionView ItemsSource="{Binding AttemptList}">
 
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate x:DataType="model:wordleAttempt">
-                                    <VerticalStackLayout Spacing="50">
+                    <CollectionView ItemsSource="{Binding AttemptList}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="model:wordleAttempt">
+                                <VerticalStackLayout Spacing="100">
 
-                                        <Grid HeightRequest="350" WidthRequest="630">
-                                            <StackLayout>
+                                    <Grid HeightRequest="350" WidthRequest="630">
+                                        <StackLayout>
 
-                                                <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
-                                                    <Label Style="{StaticResource templateLabel}" FontSize="{DynamicResource templateFontSize}"
+                                            <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                                                <Label Style="{StaticResource templateLabel}" FontSize="{DynamicResource templateFontSize}"
                                                         Text="{Binding AtemptFinished, StringFormat='Date of game: {0:d}, Time: {0:t},'}"/>
 
-                                                    <Label Style="{StaticResource templateLabel}" FontSize="{DynamicResource templateFontSize}"
+                                                <Label Style="{StaticResource templateLabel}" FontSize="{DynamicResource templateFontSize}"
                                                         Text="{Binding Player, StringFormat='Player Name: {0},'}"/>
-                                                </HorizontalStackLayout>
+                                            </HorizontalStackLayout>
 
-                                                <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
-                                                    <Label Style="{StaticResource templateLabel}" FontSize="{DynamicResource templateFontSize}"
+                                            <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                                                <Label Style="{StaticResource templateLabel}" FontSize="{DynamicResource templateFontSize}"
                                                         Text="{Binding NumberOfGuesses, StringFormat='Game Remaining guesses: {0},'}"/>
 
-                                                    <Label Style="{StaticResource templateLabel}" FontSize="{DynamicResource templateFontSize}"
+                                                <Label Style="{StaticResource templateLabel}" FontSize="{DynamicResource templateFontSize}"
                                                         Text="{Binding CorrectWord, StringFormat='Correct Awnser: {0}'}"/>
-                                                </HorizontalStackLayout>
+                                            </HorizontalStackLayout>
+                                             
+                                            <!-- manual emoji grid -->
+                                            <Grid HorizontalOptions="Center" HeightRequest="250" WidthRequest="250" ColumnDefinitions="*,*,*,*,*" RowDefinitions="*,*,*,*,*,*" ZIndex="4">
+                                                <BoxView
+                                                 HeightRequest="{DynamicResource boxHeight}"
+                                                 WidthRequest="{DynamicResource boxWidth}"
+                                                 CornerRadius="{StaticResource boxRad}"
+                                                 ZIndex="10"
+                                                 Grid.Row="0"
+                                                 Grid.Column="0"
+                                                 Color="{Binding VisualData[0]}"/>
 
-                                            </StackLayout>
-                                        </Grid>
+                                                <BoxView
+                                                 HeightRequest="{DynamicResource boxHeight}"
+                                                 WidthRequest="{DynamicResource boxWidth}"
+                                                 CornerRadius="{StaticResource boxRad}"
+                                                 ZIndex="5"
+                                                 Grid.Row="0"
+                                                 Grid.Column="1"
+                                                 Color="{Binding VisualData[1]}"/>
 
-                                    </VerticalStackLayout>
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>
+                                                <BoxView
+                                                 HeightRequest="{DynamicResource boxHeight}"
+                                                 WidthRequest="{DynamicResource boxWidth}"
+                                                 CornerRadius="{StaticResource boxRad}"
+                                                 ZIndex="5"
+                                                 Grid.Row="0"
+                                                 Grid.Column="2"
+                                                 Color="{Binding VisualData[2]}"/>
 
-                        </CollectionView>
-                    </Grid>
+                                                <BoxView
+                                                 HeightRequest="{DynamicResource boxHeight}"
+                                                 WidthRequest="{DynamicResource boxWidth}"
+                                                 CornerRadius="{StaticResource boxRad}"
+                                                 ZIndex="5"
+                                                 Grid.Row="0"
+                                                 Grid.Column="3"
+                                                 Color="{Binding VisualData[3]}"/>
+
+                                                <BoxView
+                                                 HeightRequest="{DynamicResource boxHeight}"
+                                                 WidthRequest="{DynamicResource boxWidth}"
+                                                 CornerRadius="{StaticResource boxRad}"
+                                                 ZIndex="5"
+                                                 Grid.Row="0"
+                                                 Grid.Column="4"
+                                                 Color="{Binding VisualData[4]}"/>
+
+                                                <BoxView
+                                                 HeightRequest="{DynamicResource boxHeight}"
+                                                 WidthRequest="{DynamicResource boxWidth}"
+                                                 CornerRadius="{StaticResource boxRad}"
+                                                 ZIndex="5"
+                                                 Grid.Row="1"
+                                                 Grid.Column="0"
+                                                 Color="{Binding VisualData[5]}"/>
+
+                                                <BoxView
+                                                 HeightRequest="{DynamicResource boxHeight}"
+                                                 WidthRequest="{DynamicResource boxWidth}"
+                                                 CornerRadius="{StaticResource boxRad}"
+                                                 ZIndex="5"
+                                                 Grid.Row="1"
+                                                 Grid.Column="1"
+                                                 Color="{Binding VisualData[6]}"/>
+
+                                                <BoxView
+                                                 HeightRequest="{DynamicResource boxHeight}"
+                                                 WidthRequest="{DynamicResource boxWidth}"
+                                                 CornerRadius="{StaticResource boxRad}"
+                                                 ZIndex="5"
+                                                 Grid.Row="1"
+                                                 Grid.Column="2"
+                                                 Color="{Binding VisualData[7]}"/>
+
+                                                <BoxView
+                                                 HeightRequest="{DynamicResource boxHeight}"
+                                                 WidthRequest="{DynamicResource boxWidth}"
+                                                 CornerRadius="{StaticResource boxRad}"
+                                                 ZIndex="5"
+                                                 Grid.Row="1"
+                                                 Grid.Column="3"
+                                                 Color="{Binding VisualData[8]}"/>
+
+                                                <BoxView
+                                                 HeightRequest="{DynamicResource boxHeight}"
+                                                 WidthRequest="{DynamicResource boxWidth}"
+                                                 CornerRadius="{StaticResource boxRad}"
+                                                 ZIndex="5"
+                                                 Grid.Row="1"
+                                                 Grid.Column="4"
+                                                 Color="{Binding VisualData[9]}"/>
+
+                                                <BoxView
+                                                 HeightRequest="{DynamicResource boxHeight}"
+                                                 WidthRequest="{DynamicResource boxWidth}"
+                                                 CornerRadius="{StaticResource boxRad}"
+                                                 ZIndex="5"
+                                                 Grid.Row="2"
+                                                 Grid.Column="0"
+                                                 Color="{Binding VisualData[10]}"/>
+
+                                                <BoxView
+                                                 HeightRequest="{DynamicResource boxHeight}"
+                                                 WidthRequest="{DynamicResource boxWidth}"
+                                                 CornerRadius="{StaticResource boxRad}"
+                                                 ZIndex="5"
+                                                 Grid.Row="2"
+                                                 Grid.Column="1"
+                                                 Color="{Binding VisualData[11]}"/>
+
+                                                <BoxView
+                                                 HeightRequest="{DynamicResource boxHeight}"
+                                                 WidthRequest="{DynamicResource boxWidth}"
+                                                 CornerRadius="{StaticResource boxRad}"
+                                                 ZIndex="5"
+                                                 Grid.Row="2"
+                                                 Grid.Column="2"
+                                                 Color="{Binding VisualData[12]}"/>
+
+                                                <BoxView
+                                                 HeightRequest="{DynamicResource boxHeight}"
+                                                 WidthRequest="{DynamicResource boxWidth}"
+                                                 CornerRadius="{StaticResource boxRad}"
+                                                 ZIndex="5"
+                                                 Grid.Row="2"
+                                                 Grid.Column="3"
+                                                 Color="{Binding VisualData[13]}"/>
+
+                                                <BoxView
+                                                 HeightRequest="{DynamicResource boxHeight}"
+                                                 WidthRequest="{DynamicResource boxWidth}"
+                                                 CornerRadius="{StaticResource boxRad}"
+                                                 ZIndex="5"
+                                                 Grid.Row="2"
+                                                 Grid.Column="4"
+                                                 Color="{Binding VisualData[14]}"/>
+
+                                                <BoxView
+                                                 HeightRequest="{DynamicResource boxHeight}"
+                                                 WidthRequest="{DynamicResource boxWidth}"
+                                                 CornerRadius="{StaticResource boxRad}"
+                                                 ZIndex="5"
+                                                 Grid.Row="3"
+                                                 Grid.Column="0"
+                                                 Color="{Binding VisualData[15]}"/>
+
+                                                <BoxView
+                                                 HeightRequest="{DynamicResource boxHeight}"
+                                                 WidthRequest="{DynamicResource boxWidth}"
+                                                 CornerRadius="{StaticResource boxRad}"
+                                                 ZIndex="5"
+                                                 Grid.Row="3"
+                                                 Grid.Column="1"
+                                                 Color="{Binding VisualData[16]}"/>
+
+                                                <BoxView
+                                                 HeightRequest="{DynamicResource boxHeight}"
+                                                 WidthRequest="{DynamicResource boxWidth}"
+                                                 CornerRadius="{StaticResource boxRad}"
+                                                 ZIndex="5"
+                                                 Grid.Row="3"
+                                                 Grid.Column="2"
+                                                 Color="{Binding VisualData[17]}"/>
+
+                                                <BoxView
+                                                 HeightRequest="{DynamicResource boxHeight}"
+                                                 WidthRequest="{DynamicResource boxWidth}"
+                                                 CornerRadius="{StaticResource boxRad}"
+                                                 ZIndex="5"
+                                                 Grid.Row="3"
+                                                 Grid.Column="3"
+                                                 Color="{Binding VisualData[18]}"/>
+
+                                                <BoxView
+                                                 HeightRequest="{DynamicResource boxHeight}"
+                                                 WidthRequest="{DynamicResource boxWidth}"
+                                                 CornerRadius="{StaticResource boxRad}"
+                                                 ZIndex="5"
+                                                 Grid.Row="3"
+                                                 Grid.Column="4"
+                                                 Color="{Binding VisualData[19]}"/>
+
+                                                <BoxView
+                                                 HeightRequest="{DynamicResource boxHeight}"
+                                                 WidthRequest="{DynamicResource boxWidth}"
+                                                 CornerRadius="{StaticResource boxRad}"
+                                                 ZIndex="5"
+                                                 Grid.Row="4"
+                                                 Grid.Column="0"
+                                                 Color="{Binding VisualData[20]}"/>
+
+                                                <BoxView
+                                                 HeightRequest="{DynamicResource boxHeight}"
+                                                 WidthRequest="{DynamicResource boxWidth}"
+                                                 CornerRadius="{StaticResource boxRad}"
+                                                 ZIndex="5"
+                                                 Grid.Row="4"
+                                                 Grid.Column="1"
+                                                 Color="{Binding VisualData[21]}"/>
+
+                                                <BoxView
+                                                 HeightRequest="{DynamicResource boxHeight}"
+                                                 WidthRequest="{DynamicResource boxWidth}"
+                                                 CornerRadius="{StaticResource boxRad}"
+                                                 ZIndex="5"
+                                                 Grid.Row="4"
+                                                 Grid.Column="2"
+                                                 Color="{Binding VisualData[22]}"/>
+
+                                                <BoxView
+                                                 HeightRequest="{DynamicResource boxHeight}"
+                                                 WidthRequest="{DynamicResource boxWidth}"
+                                                 CornerRadius="{StaticResource boxRad}"
+                                                 ZIndex="5"
+                                                 Grid.Row="4"
+                                                 Grid.Column="3"
+                                                 Color="{Binding VisualData[23]}"/>
+
+                                                <BoxView
+                                                 HeightRequest="{DynamicResource boxHeight}"
+                                                 WidthRequest="{DynamicResource boxWidth}"
+                                                 CornerRadius="{StaticResource boxRad}"
+                                                 ZIndex="5"
+                                                 Grid.Row="4"
+                                                 Grid.Column="4"
+                                                 Color="{Binding VisualData[24]}"/>
+
+                                                <BoxView
+                                                 HeightRequest="{DynamicResource boxHeight}"
+                                                 WidthRequest="{DynamicResource boxWidth}"
+                                                 CornerRadius="{StaticResource boxRad}"
+                                                 ZIndex="5"
+                                                 Grid.Row="5"
+                                                 Grid.Column="0"
+                                                 Color="{Binding VisualData[25]}"/>
+
+                                                <BoxView
+                                                 HeightRequest="{DynamicResource boxHeight}"
+                                                 WidthRequest="{DynamicResource boxWidth}"
+                                                 CornerRadius="{StaticResource boxRad}"
+                                                 ZIndex="5"
+                                                 Grid.Row="5"
+                                                 Grid.Column="1"
+                                                 Color="{Binding VisualData[26]}"/>
+
+                                                <BoxView
+                                                 HeightRequest="{DynamicResource boxHeight}"
+                                                 WidthRequest="{DynamicResource boxWidth}"
+                                                 CornerRadius="{StaticResource boxRad}"
+                                                 ZIndex="5"
+                                                 Grid.Row="5"
+                                                 Grid.Column="2"
+                                                 Color="{Binding VisualData[27]}"/>
+
+                                                <BoxView
+                                                 HeightRequest="{DynamicResource boxHeight}"
+                                                 WidthRequest="{DynamicResource boxWidth}"
+                                                 CornerRadius="{StaticResource boxRad}"
+                                                 ZIndex="5"
+                                                 Grid.Row="5"
+                                                 Grid.Column="3"
+                                                 Color="{Binding VisualData[28]}"/>
+
+                                                <BoxView
+                                                 HeightRequest="{DynamicResource boxHeight}"
+                                                 WidthRequest="{DynamicResource boxWidth}"
+                                                 CornerRadius="{StaticResource boxRad}"
+                                                 ZIndex="5"
+                                                 Grid.Row="5"
+                                                 Grid.Column="4"
+                                                 Color="{Binding VisualData[29]}"/>
+                                            </Grid>
+
+                                        </StackLayout>
+                                    </Grid>
+
+                                </VerticalStackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+
+                    </CollectionView>
                 </VerticalStackLayout>
             </ScrollView>
 

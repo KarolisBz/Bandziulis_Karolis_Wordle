@@ -12,6 +12,7 @@ namespace Wordle_Karolis_G00417529
         private DateTime attemptFinished;
         private int numberOfGuesses;
         private List<int[]> attemptVisualData;
+        private List<Color> visualData;
         private Random random = new Random();
         // public fields
         public int currentAttempt;
@@ -70,7 +71,16 @@ namespace Wordle_Karolis_G00417529
         public List<int[]> AttemptVisualData
         {
             get { return attemptVisualData; }
-            set { attemptVisualData = value; }
+            set 
+            { 
+                attemptVisualData = value;
+            }
+        }
+
+        public List<Color> VisualData
+        {
+            get { return visualData; }
+            set { visualData = value; }
         }
 
         // object methods
@@ -181,6 +191,20 @@ namespace Wordle_Karolis_G00417529
             // fetching random word from cached api
             correctWord = DataHandler.wordList[random.Next(DataHandler.wordList.Count)];
             Debug.Print("Chosen word is: " + correctWord); // for cheating / testing
+        }
+
+        public void createColorGridData()
+        {
+            // creates emoji grid
+            visualData = new List<Color>();
+            for (int row = 0; row < 6; row++)
+            {
+                for (int col = 0; col < 5; col++)
+                {
+                    visualData.Add(colorArray[AttemptVisualData[0][0]]);
+                }
+            }
+
         }
     }
 }

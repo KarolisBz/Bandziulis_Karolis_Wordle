@@ -10,7 +10,6 @@ public partial class progressionPage : ContentPage
     public progressionPage()
 	{
 		InitializeComponent();
-
         BindingContext = DataHandler.cachedProgressViewModel;
         setupUI(); // setting up ui
     }
@@ -42,19 +41,6 @@ public partial class progressionPage : ContentPage
             holderShadow.Opacity = 0.25;
             holder.CornerRadius = 5;
             holderShadow.CornerRadius = 0;
-        }
-
-        // generating emoji grids
-        int gridCounter = 0;
-
-        foreach (var instance in collectionVeiwStart.items)
-        { 
-            // each grid has its own instances that needs scaling
-            if (instance.GetType() == typeof(Grid))
-            {
-                generateEmojiGrid((Grid)instance, DataHandler.cachedProgressViewModel.AttemptList[gridCounter].AttemptVisualData);
-                gridCounter++;
-            }
         }
     }
 
