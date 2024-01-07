@@ -51,6 +51,7 @@ public partial class howToPlayPage : ContentPage
         double pixelDensity = DeviceDisplay.MainDisplayInfo.Density;
         double windowHeight = this.Height / pixelDensity;
         double windowWidth = this.Width / pixelDensity;
+        int BoxSizePreset = 75, baseTextSizePreset = 25, titletTextSizePreset = 35;
         bool isMobile = false;
 
         // mobile devices don't have an accurate window, so we use full screen scale for more accurate scaling
@@ -73,6 +74,9 @@ public partial class howToPlayPage : ContentPage
         else
         {
             pageTitle.FontSize = fontManager.scaleFontSize(360, windowHeight, windowWidth);
+            BoxSizePreset = 175;
+            baseTextSizePreset = 60;
+            titletTextSizePreset = 85;
         }
 
         // scaling navigation buttons that are only visible on pc
@@ -134,7 +138,7 @@ public partial class howToPlayPage : ContentPage
             contentGrid.WidthRequest = holder.WidthRequest;
 
             // scaling boxveiws
-            double boxSize = fontManager.scaleFontSize(75, relativeHeight, relativeWidth);
+            double boxSize = fontManager.scaleFontSize(BoxSizePreset, relativeHeight, relativeWidth);
             box1.HeightRequest = boxSize;
             box1.WidthRequest = boxSize;
             box2.HeightRequest = boxSize;
@@ -143,8 +147,8 @@ public partial class howToPlayPage : ContentPage
             box3.WidthRequest = boxSize;
 
             // scalling fonts relative to holder
-            double baseTextSize = fontManager.scaleFontSize(25, relativeHeight, relativeWidth);
-            titleText0.FontSize = fontManager.scaleFontSize(35, relativeHeight, relativeWidth);
+            double baseTextSize = fontManager.scaleFontSize(baseTextSizePreset, relativeHeight, relativeWidth);
+            titleText0.FontSize = fontManager.scaleFontSize(titletTextSizePreset, relativeHeight, relativeWidth);
             text1.FontSize = baseTextSize;
             text2.FontSize = baseTextSize;
             text3.FontSize = baseTextSize;
