@@ -23,6 +23,11 @@
                 <Setter Property="FontSize" Value="50"/>
                 <Setter Property="LineBreakMode" Value="WordWrap"/>
             </Style>
+
+            <Style x:Key="templateLabel" TargetType="Label">
+                <Setter Property="TextColor" Value="Black"/>
+                <Setter Property="FontFamily" Value="OpenSansSemibold"/>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

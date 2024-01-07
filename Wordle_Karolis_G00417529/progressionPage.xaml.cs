@@ -72,8 +72,6 @@ public partial class progressionPage : ContentPage
         background.WidthRequest = windowWidth;
 
         // scalling fonts
-        DataHandler.cachedProgressViewModel.TemplateFontSize = fontManager.scaleFontSize(20, windowHeight, windowWidth);
-
         if (!isMobile)
         {
             pageTitle.FontSize = fontManager.scaleFontSize(180, windowHeight, windowWidth);
@@ -126,18 +124,15 @@ public partial class progressionPage : ContentPage
         // scaling scrolling page (from ratio of 2k monitor)
         if (windowWidth < 630) // we only scale if screen is smaller then requested size
         {
-            // scaling fonts relative to box, not screen
-            double relativeWidth = 2560 * (windowWidth / 500);
-            double relativeHeight = 1408;
-
             holder.WidthRequest = windowWidth - (boarderSize * 2);
             holder.HeightRequest = windowHeight - (pageTitle.FontSize * 1.1) - mobileExtra;
             scroller.HeightRequest = windowHeight - (pageTitle.FontSize * 1.1) - mobileExtra;
 
-
             holderShadow.HeightRequest = holder.HeightRequest + boarderSize;
             holderShadow.WidthRequest = holder.WidthRequest + (boarderSize * 2);
 
+            // scaling data template fonts
+            this.Resources["templateFontSize"] = 20 * (windowWidth / 630);
         }
         else // return to original size
         {
@@ -146,6 +141,7 @@ public partial class progressionPage : ContentPage
             holder.WidthRequest = 630;
             holderShadow.HeightRequest = holder.HeightRequest + boarderSize;
             holderShadow.WidthRequest = holder.WidthRequest + (boarderSize * 2);
+            this.Resources["templateFontSize"] = 20;
         }
     }
 

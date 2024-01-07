@@ -8,6 +8,13 @@
              Title="progressionPage"
              BackgroundColor="White"
              Shell.NavBarIsVisible="False">
+
+    <!-- here we will set resources for data templates that we cannot directly access-->
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <x:Double x:Key="templateFontSize">20</x:Double>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     
     <VerticalStackLayout>
         <!-- background image -->
@@ -62,19 +69,19 @@
                                     <Grid HeightRequest="350" WidthRequest="630">
                                         <StackLayout>
 
-                                            <HorizontalStackLayout Spacing="{Binding Source={model:progressionVeiwModel}, Path=TemplateFontSpacing}" HorizontalOptions="Center">
-                                                <Label FontSize="{Binding Source={model:progressionVeiwModel}, Path=TemplateFontSize}" TextColor="Black" 
+                                            <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                                                <Label Style="{StaticResource templateLabel}" FontSize="{DynamicResource templateFontSize}"
                                                     Text="{Binding AtemptFinished, StringFormat='Date of game: {0:d}, Time: {0:t},'}"/>
 
-                                                <Label FontSize="{Binding Source={model:progressionVeiwModel}, Path=TemplateFontSize}" TextColor="Black"
+                                                <Label Style="{StaticResource templateLabel}" FontSize="{DynamicResource templateFontSize}"
                                                     Text="{Binding Player, StringFormat='Player Name: {0},'}"/>
                                             </HorizontalStackLayout>
 
-                                            <HorizontalStackLayout Spacing="{Binding Source={model:progressionVeiwModel}, Path=TemplateFontSpacing}" HorizontalOptions="Center">
-                                                <Label FontSize="{Binding Source={model:progressionVeiwModel}, Path=TemplateFontSize}" TextColor="Black"
+                                            <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                                                <Label Style="{StaticResource templateLabel}" FontSize="{DynamicResource templateFontSize}"
                                                     Text="{Binding NumberOfGuesses, StringFormat='Game Remaining guesses: {0},'}"/>
 
-                                                <Label FontSize="{Binding Source={model:progressionVeiwModel}, Path=TemplateFontSize}" TextColor="Black"
+                                                <Label Style="{StaticResource templateLabel}" FontSize="{DynamicResource templateFontSize}"
                                                     Text="{Binding CorrectWord, StringFormat='Correct Awnser: {0}'}"/>
                                             </HorizontalStackLayout>
                                            
