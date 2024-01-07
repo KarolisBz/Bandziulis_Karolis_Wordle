@@ -16,7 +16,7 @@
             return scaledFontSize;
         }
 
-        // this function returns the max size that would fit nicely in a box constraint of X,Y
+        // this function returns the max size that would fit nicely in a box constraint of size Y
         static public double findFontSizeToConstraint(double height)
         {
             // function varibles 

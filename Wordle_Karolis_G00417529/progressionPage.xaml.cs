@@ -4,7 +4,11 @@ namespace Wordle_Karolis_G00417529;
 
 public partial class progressionPage : ContentPage
 {
-	public progressionPage()
+    // class Fields
+    Color[] colorArray = { new Color(0, 0, 0), new Color(0, 255, 0), new Color(155, 155, 0) };
+    List<Grid> generatedGrids = new List<Grid>();
+
+    public progressionPage()
 	{
 		InitializeComponent();
 
@@ -42,7 +46,49 @@ public partial class progressionPage : ContentPage
         }
     }
 
-        private void OnWindowChange(object sender, EventArgs e)
+    private void generateEmojiGrid(Grid targetGrid, List<int[]> attemptVisualData)
+    {
+        Grid emojiGrid = new Grid();
+        emojiGrid.HeightRequest = 250;
+        emojiGrid.WidthRequest = 250;
+
+        // adding rows to grid
+        for (int i = 0; i < 6; i++)
+        {
+            emojiGrid.RowDefinitions.Add(new RowDefinition());
+        }
+
+        // adding cols to grid
+        for (int i = 0; i < 5; i++)
+        {
+            emojiGrid.ColumnDefinitions.Add(new ColumnDefinition());
+        }
+
+        // adding boxveiws to grid
+        double boxHeight = 250 / 6;
+        double boxWidth = 250 / 5;
+        for (int row = 0; row < 6; row++)
+        {
+            for (int col = 0; col < 5; col++)
+            {
+                int currentVisualData = attemptVisualData[row][col];
+                BoxView newBoxVeiw = new BoxView();
+                newBoxVeiw.SetValue(Grid.RowProperty, row);
+                newBoxVeiw.SetValue(Grid.ColumnProperty, col);
+                newBoxVeiw.HeightRequest = boxHeight;
+                newBoxVeiw.HeightRequest = boxWidth;
+                newBoxVeiw.CornerRadius = 10;
+                newBoxVeiw.BackgroundColor = colorArray[currentVisualData];
+                emojiGrid.Add(newBoxVeiw);
+            }
+        }
+
+        // adding grid to list
+        targetGrid.Add(emojiGrid);
+        generatedGrids.Add(emojiGrid);
+    }
+
+    private void OnWindowChange(object sender, EventArgs e)
     {
         scaleElements();
     }
@@ -131,7 +177,7 @@ public partial class progressionPage : ContentPage
             holderShadow.HeightRequest = holder.HeightRequest + boarderSize;
             holderShadow.WidthRequest = holder.WidthRequest + (boarderSize * 2);
 
-            // scaling data template fonts
+            // scaling data template fonts relative to box width
             this.Resources["templateFontSize"] = 20 * (windowWidth / 630);
         }
         else // return to original size
