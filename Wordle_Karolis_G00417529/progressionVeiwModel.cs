@@ -19,6 +19,8 @@ namespace Wordle_Karolis_G00417529
                 attemptList = value;
 
                 // generating emoji grid data
+                // we do this instead of saving it as it saves more space,
+                // also saving color values can be tricky and not worth the pros and cons
                 foreach (wordleAttempt attempt in attemptList)
                 {
                     attempt.createColorGridData();

@@ -89,6 +89,9 @@ namespace Wordle_Karolis_G00417529
             // setting finish time of wordle
             attemptFinished = DateTime.Now;
 
+            // creating temp
+            createColorGridData();
+
             // saving data
             DataHandler.cachedProgressViewModel.AttemptList.Add(this); // adds itself into list to save
             await DataHandler.saveDataAsync(); // saving game progress so far
@@ -197,14 +200,22 @@ namespace Wordle_Karolis_G00417529
         {
             // creates emoji grid
             visualData = new List<Color>();
-            for (int row = 0; row < 6; row++)
+            for (int row = 0; row < AttemptVisualData.Count; row++)
             {
                 for (int col = 0; col < 5; col++)
                 {
-                    visualData.Add(colorArray[AttemptVisualData[0][0]]);
+                    visualData.Add(colorArray[AttemptVisualData[row][col + 1]]);
                 }
             }
-
+            Debug.Print("----------------- added color -----------------");
+            // adding empty unfinished data
+            for (int row = AttemptVisualData.Count; row < 6; row++)
+            {
+                for (int col = 0; col < 5; col++)
+                {
+                    visualData.Add(colorArray[0]);
+                }
+            }
         }
     }
 }
