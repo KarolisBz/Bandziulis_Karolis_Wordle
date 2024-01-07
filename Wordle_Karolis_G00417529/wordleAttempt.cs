@@ -31,7 +31,7 @@ namespace Wordle_Karolis_G00417529
         public string CorrectWord
         {
             get { return correctWord; }
-            // no setter, as correct word is generated only once at object creation
+            set { correctWord = value; }
         }
 
         public int NumberOfGuesses
@@ -54,15 +54,22 @@ namespace Wordle_Karolis_G00417529
             } 
         }
 
+        public string Player
+        {
+            get { return player; }
+            set { player = value; }
+        }
+
         public DateTime AtemptFinished
         {
-            get { return attemptFinished; } 
-            // no setter as it's set only when game is finished
+            get { return attemptFinished; }
+            set { attemptFinished = value; }
         }
 
         public List<int[]> AttemptVisualData
         {
             get { return attemptVisualData; }
+            set { attemptVisualData = value; }
         }
 
         // object methods
@@ -126,13 +133,6 @@ namespace Wordle_Karolis_G00417529
             {
                 compareResult[0] = 1; // setting match as correct
             }
-
-            // printing result
-            for (int i = 0; i < 6; i++)
-            {
-                Debug.Write($"{compareResult[i]} |");
-            }
-            Debug.Write("\n ");
 
             // record attempt
             numberOfGuesses -= 1;

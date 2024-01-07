@@ -7,6 +7,7 @@ public partial class progressionPage : ContentPage
 	public progressionPage()
 	{
 		InitializeComponent();
+
         BindingContext = DataHandler.cachedProgressViewModel;
         setupUI(); // setting up ui
     }
@@ -71,6 +72,8 @@ public partial class progressionPage : ContentPage
         background.WidthRequest = windowWidth;
 
         // scalling fonts
+        DataHandler.cachedProgressViewModel.TemplateFontSize = fontManager.scaleFontSize(20, windowHeight, windowWidth);
+
         if (!isMobile)
         {
             pageTitle.FontSize = fontManager.scaleFontSize(180, windowHeight, windowWidth);

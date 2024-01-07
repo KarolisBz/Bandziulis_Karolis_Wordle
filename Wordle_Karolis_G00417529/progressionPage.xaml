@@ -4,6 +4,7 @@
              x:Class="Wordle_Karolis_G00417529.progressionPage"
              xmlns:model="clr-namespace:Wordle_Karolis_G00417529"
              xmlns:viewmodel="clr-namespace:Wordle_Karolis_G00417529"
+             x:DataType="viewmodel:progressionVeiwModel"
              Title="progressionPage"
              BackgroundColor="White"
              Shell.NavBarIsVisible="False">
@@ -52,15 +53,35 @@
 
             <ScrollView x:Name="scroller" ZIndex="5" VerticalScrollBarVisibility="Always" HeightRequest = "700" WidthRequest = "630" VerticalOptions="End">
                 <VerticalStackLayout>
-                    <CollectionView ItemsSource="{Binding AttemptList}">
+                    <CollectionView ItemsSource="{Binding AttemptList}" x:Name="collectionVeiwLoc">
                         
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="model:wordleAttempt">
-                                <FormattedString>
-                                    <Span Text="Number of guesses: " FontAttributes="Bold" FontSize="16" />
-                                    <Span Text="{Binding NumberOfGuesses}" FontSize="100" />
-                                </FormattedString>
-                                
+                                <VerticalStackLayout Spacing="50">
+
+                                    <Grid HeightRequest="350" WidthRequest="630">
+                                        <StackLayout>
+
+                                            <HorizontalStackLayout Spacing="{Binding Source={model:progressionVeiwModel}, Path=TemplateFontSpacing}" HorizontalOptions="Center">
+                                                <Label FontSize="{Binding Source={model:progressionVeiwModel}, Path=TemplateFontSize}" TextColor="Black" 
+                                                    Text="{Binding AtemptFinished, StringFormat='Date of game: {0:d}, Time: {0:t},'}"/>
+
+                                                <Label FontSize="{Binding Source={model:progressionVeiwModel}, Path=TemplateFontSize}" TextColor="Black"
+                                                    Text="{Binding Player, StringFormat='Player Name: {0},'}"/>
+                                            </HorizontalStackLayout>
+
+                                            <HorizontalStackLayout Spacing="{Binding Source={model:progressionVeiwModel}, Path=TemplateFontSpacing}" HorizontalOptions="Center">
+                                                <Label FontSize="{Binding Source={model:progressionVeiwModel}, Path=TemplateFontSize}" TextColor="Black"
+                                                    Text="{Binding NumberOfGuesses, StringFormat='Game Remaining guesses: {0},'}"/>
+
+                                                <Label FontSize="{Binding Source={model:progressionVeiwModel}, Path=TemplateFontSize}" TextColor="Black"
+                                                    Text="{Binding CorrectWord, StringFormat='Correct Awnser: {0}'}"/>
+                                            </HorizontalStackLayout>
+                                           
+                                        </StackLayout>
+                                    </Grid>
+                                    
+                                </VerticalStackLayout>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                         

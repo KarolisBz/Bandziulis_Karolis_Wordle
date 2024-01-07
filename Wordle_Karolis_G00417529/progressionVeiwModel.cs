@@ -8,6 +8,8 @@ namespace Wordle_Karolis_G00417529
     {
         // class fields
         private ObservableCollection<wordleAttempt> attemptList;
+        private double templateFontSize = 15;
+        private double templateFontSpacing = 5;
 
         // getters and setters
         public ObservableCollection<wordleAttempt> AttemptList
@@ -16,6 +18,26 @@ namespace Wordle_Karolis_G00417529
             set
             {
                 attemptList = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public double TemplateFontSize
+        {
+            get { return templateFontSize; }
+            set
+            {
+                templateFontSize = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public double TemplateFontSpacing
+        {
+            get { return templateFontSize; }
+            set
+            {
+                templateFontSpacing = value;
                 OnPropertyChanged();
             }
         }
