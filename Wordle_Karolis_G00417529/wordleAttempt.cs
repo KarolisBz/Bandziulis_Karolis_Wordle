@@ -207,7 +207,7 @@ namespace Wordle_Karolis_G00417529
                     visualData.Add(colorArray[AttemptVisualData[row][col + 1]]);
                 }
             }
-            Debug.Print("----------------- added color -----------------");
+
             // adding empty unfinished data
             for (int row = AttemptVisualData.Count; row < 6; row++)
             {

@@ -231,11 +231,12 @@ public partial class gamePage : ContentPage
             // checking if all the 5 character slots are filled
             for (int i = 0; i < 5; i++)
             {
-                if (entries[rowStartIndex + i].Text != "" && entries[rowStartIndex + i].Text != "\u00A0")
+                if (entries[rowStartIndex + i].Text != "" && entries[rowStartIndex + i].Text != "\u00A0" && entries[rowStartIndex + i].Text != null)
                 {
                     // building string
                     if (i > 0)
                     {
+                        Debug.Print(entries[rowStartIndex + i].Text);
                         builtUpString += entries[rowStartIndex + i].Text[1];
                     }
                     else
