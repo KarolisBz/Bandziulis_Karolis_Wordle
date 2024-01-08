@@ -39,6 +39,92 @@ public partial class howToPlayPage : ContentPage
         }
     }
 
+    protected override void OnAppearing()
+    {
+        // handles changes
+        base.OnAppearing();
+        checkDarkMode();
+    }
+
+    private void checkDarkMode()
+    {
+        // this function handles colour changing between light and dark mode
+        if (DataHandler.DataHandlerObject.DarkMode)
+        {
+            BackgroundColor = Colors.Black;
+            background.Opacity = 0.1;
+            holder.Color = new Color(77, 77, 77);
+            holderShadow.Color = new Color(43, 43, 43);
+
+            // changing font colours
+            pageTitle.TextColor = Colors.LightGray;
+            titleText0.TextColor = Colors.LightGray;
+            text1.TextColor = Colors.LightGray;
+            text2.TextColor = Colors.LightGray;
+            text3.TextColor = Colors.LightGray;
+            text4.TextColor = Colors.LightGray;
+            text5.TextColor = Colors.LightGray;
+            text6.TextColor = Colors.LightGray;
+            text7.TextColor = Colors.LightGray;
+
+            // changing navigation btn colours
+            if (DeviceInfo.Current.Idiom != DeviceIdiom.Phone)
+            {
+                accountBtn.BackgroundColor = new Color(44, 44, 44);
+                accountBtn.TextColor = Colors.LightGray;
+
+                wordleBtn.BackgroundColor = new Color(44, 44, 44);
+                wordleBtn.TextColor = Colors.LightGray;
+
+                progressionBtn.BackgroundColor = new Color(44, 44, 44);
+                progressionBtn.TextColor = Colors.LightGray;
+
+                settingsBtn.BackgroundColor = new Color(44, 44, 44);
+                settingsBtn.TextColor = Colors.LightGray;
+
+                howToPlayBtn.BackgroundColor = new Color(44, 44, 44);
+                howToPlayBtn.TextColor = Colors.LightGray;
+            }
+        }
+        else
+        {
+            BackgroundColor = Colors.White;
+            background.Opacity = 1;
+            holder.Color = new Color(255, 255, 255);
+            holderShadow.Color = new Color(0, 0, 0);
+
+            // changing font colours
+            pageTitle.TextColor = Colors.Black;
+            titleText0.TextColor = Colors.Black;
+            text1.TextColor = Colors.Black;
+            text2.TextColor = Colors.Black;
+            text3.TextColor = Colors.Black;
+            text4.TextColor = Colors.Black;
+            text5.TextColor = Colors.Black;
+            text6.TextColor = Colors.Black;
+            text7.TextColor = Colors.Black;
+
+            // changing navigation btn colours
+            if (DeviceInfo.Current.Idiom != DeviceIdiom.Phone)
+            {
+                accountBtn.BackgroundColor = new Color(0, 0, 0);
+                accountBtn.TextColor = Colors.White;
+
+                wordleBtn.BackgroundColor = new Color(0, 0, 0);
+                wordleBtn.TextColor = Colors.White;
+
+                progressionBtn.BackgroundColor = new Color(0, 0, 0);
+                progressionBtn.TextColor = Colors.White;
+
+                settingsBtn.BackgroundColor = new Color(0, 0, 0);
+                settingsBtn.TextColor = Colors.White;
+
+                howToPlayBtn.BackgroundColor = new Color(0, 0, 0);
+                howToPlayBtn.TextColor = Colors.White;
+            }
+        }
+    }
+
     private void OnWindowChange(object sender, EventArgs e)
     {
         scaleElements();

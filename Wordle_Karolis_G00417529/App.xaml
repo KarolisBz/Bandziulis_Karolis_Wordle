@@ -25,10 +25,10 @@
             </Style>
 
             <Style x:Key="templateLabel" TargetType="Label">
-                <Setter Property="TextColor" Value="Black"/>
                 <Setter Property="FontFamily" Value="OpenSansSemibold"/>
                 <Setter Property="LineBreakMode" Value="WordWrap"/>
             </Style>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

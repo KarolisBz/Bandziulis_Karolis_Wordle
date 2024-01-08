@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using Microsoft.Maui.Controls.PlatformConfiguration.TizenSpecific;
+using System.Diagnostics;
 
 namespace Wordle_Karolis_G00417529
 {
@@ -6,6 +7,7 @@ namespace Wordle_Karolis_G00417529
     {
         bool loggedIn = false;
         DataHandler data = new DataHandler(); // setup data ONCE, when program is opened
+        string cachedBackground;
         double titleSize;
 
         public MainPage()
@@ -59,10 +61,14 @@ namespace Wordle_Karolis_G00417529
             titleSize = fontPageTitle.FontSize;
             this.LayoutChanged += OnWindowChange;
 
+            // other devices background
+            cachedBackground = "background3.png";
+
             // changing background more suited for mobile
             if (DeviceInfo.Current.Idiom == DeviceIdiom.Phone)
             {
                 background.Source = "mobilebackground.png";
+                cachedBackground = "mobilebackground.png";
                 holder.Opacity = 0.25;
                 holderShadow.Opacity = 0.25;
 
@@ -70,6 +76,62 @@ namespace Wordle_Karolis_G00417529
                 if (loggedIn)
                 {
                     DataHandler.shellVeiwModel.FlyoutPageStatus = FlyoutBehavior.Flyout;
+                }
+            }
+
+            checkDarkMode();
+        }
+
+        protected override void OnAppearing()
+        {
+            // handles changes
+            base.OnAppearing();
+            checkDarkMode();
+        }
+
+        private void checkDarkMode()
+        {
+            // this function handles colour changing between light and dark mode
+            if (DataHandler.DataHandlerObject.DarkMode)
+            {
+                BackgroundColor = Colors.Black;
+                background.Opacity = 0.1;
+                holder.Color = new Color(77, 77, 77);
+                holderShadow.Color = new Color(43, 43, 43);
+
+                startBtn.Style = (Style)this.Resources["DarkModeButton"];
+                logoutBtn.Style = (Style)this.Resources["DarkModeButton"];
+
+                fontPageTitle.TextColor = Colors.LightGray;
+                subTitle.TextColor = Colors.LightGray;
+
+                userDisplay.Style = (Style)this.Resources["DarkModeLabel"];
+                actionDisplay.Style = (Style)this.Resources["DarkModeLabel"];
+                mobileUserDisplay.Style = (Style)this.Resources["DarkModeLabel"];
+                fontPageTitle.Style = (Style)this.Resources["DarkModeLabel"];
+            }
+            else
+            {
+                BackgroundColor = Colors.White;
+                background.Opacity = 1;
+                holder.Color = new Color(255, 255, 255);
+                holderShadow.Color = new Color(0, 0, 0);
+
+                // fetching keys
+                if (Resources.TryGetValue("buttonStyle1", out object buttonStyle1))
+                {
+                    startBtn.Style = (Style)buttonStyle1;
+                    logoutBtn.Style = (Style)buttonStyle1;
+                }
+                if (Resources.TryGetValue("labelStyle1", out object labelStyle1))
+                {
+                    fontPageTitle.TextColor = Colors.Black;
+                    subTitle.TextColor = Colors.Black;
+                    userDisplay.Style = (Style)labelStyle1;
+                    userDisplay.Style = (Style)labelStyle1;
+                    actionDisplay.Style = (Style)labelStyle1;
+                    mobileUserDisplay.Style = (Style)labelStyle1;
+                    fontPageTitle.Style = (Style)labelStyle1;
                 }
             }
         }

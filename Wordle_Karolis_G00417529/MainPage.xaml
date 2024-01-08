@@ -11,6 +11,24 @@
     <!-- important notice: -->
     <!-- Mobile devices use flyout pages, to activate it hold down for 1 second on the left hand side of the mobile screen, then swipe -->
 
+    <!-- here is the local darkmode styles, as the fonts may differ across pages -->
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="DarkModeLabel" TargetType="Label" >
+                <Setter Property="TextColor" Value="LightGrey"/>
+                <Setter Property="FontFamily" Value="LittleSanta"/>
+                <Setter Property="FontSize" Value="50"/>
+                <Setter Property="LineBreakMode" Value="WordWrap"/>
+            </Style>
+
+            <Style x:Key="DarkModeButton" TargetType="Button" >
+                <Setter Property="BackgroundColor" Value="LightGrey"/>
+                <Setter Property="TextColor" Value="Black"/>
+                <Setter Property="FontFamily" Value="HeavenlyChristmas"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
     <VerticalStackLayout>
         <!-- background image -->
         <Grid>

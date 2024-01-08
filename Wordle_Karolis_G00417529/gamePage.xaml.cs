@@ -101,6 +101,72 @@ public partial class gamePage : ContentPage
         {
             resetGame();
         }
+
+        // handles darkmode changes
+        checkDarkMode();
+    }
+
+    private void checkDarkMode()
+    {
+        // this function handles colour changing between light and dark mode
+        if (DataHandler.DataHandlerObject.DarkMode)
+        {
+            BackgroundColor = Colors.Black;
+            background.Opacity = 0.1;
+
+            // changing font colours
+            pageTitle.TextColor = Colors.LightGray;
+            startGameBtn.BackgroundColor = new Color(44, 44, 44);
+            startGameBtn.TextColor = Colors.LightGray;
+
+            // changing navigation btn colours
+            if (DeviceInfo.Current.Idiom != DeviceIdiom.Phone)
+            {
+                accountBtn.BackgroundColor = new Color(44, 44, 44);
+                accountBtn.TextColor = Colors.LightGray;
+
+                wordleBtn.BackgroundColor = new Color(44, 44, 44);
+                wordleBtn.TextColor = Colors.LightGray;
+
+                progressionBtn.BackgroundColor = new Color(44, 44, 44);
+                progressionBtn.TextColor = Colors.LightGray;
+
+                settingsBtn.BackgroundColor = new Color(44, 44, 44);
+                settingsBtn.TextColor = Colors.LightGray;
+
+                howToPlayBtn.BackgroundColor = new Color(44, 44, 44);
+                howToPlayBtn.TextColor = Colors.LightGray;
+            }
+        }
+        else
+        {
+            BackgroundColor = Colors.White;
+            background.Opacity = 1;
+
+            // changing font colours
+            pageTitle.TextColor = Colors.Black;
+            startGameBtn.BackgroundColor = new Color(0, 0, 0);
+            startGameBtn.TextColor = Colors.White;
+
+            // changing navigation btn colours
+            if (DeviceInfo.Current.Idiom != DeviceIdiom.Phone)
+            {
+                accountBtn.BackgroundColor = new Color(0, 0, 0);
+                accountBtn.TextColor = Colors.White;
+
+                wordleBtn.BackgroundColor = new Color(0, 0, 0);
+                wordleBtn.TextColor = Colors.White;
+
+                progressionBtn.BackgroundColor = new Color(0, 0, 0);
+                progressionBtn.TextColor = Colors.White;
+
+                settingsBtn.BackgroundColor = new Color(0, 0, 0);
+                settingsBtn.TextColor = Colors.White;
+
+                howToPlayBtn.BackgroundColor = new Color(0, 0, 0);
+                howToPlayBtn.TextColor = Colors.White;
+            }
+        }
     }
 
     protected override void OnDisappearing()

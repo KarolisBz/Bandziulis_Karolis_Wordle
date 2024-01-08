@@ -10,8 +10,72 @@ public partial class progressionPage : ContentPage
     public progressionPage()
 	{
 		InitializeComponent();
+        this.Resources["dynamicTextColour"] = Colors.Black; // setting text color
         BindingContext = DataHandler.cachedProgressViewModel;
         setupUI(); // setting up ui
+    }
+
+    private void checkDarkMode()
+    {
+        // this function handles colour changing between light and dark mode
+        if (DataHandler.DataHandlerObject.DarkMode)
+        {
+            // setting to dark mode
+            BackgroundColor = Colors.Black;
+            background.Opacity = 0.1;
+            holder.Color = new Color(77, 77, 77);
+            holderShadow.Color = new Color(43, 43, 43);
+            pageTitle.TextColor = Colors.LightGray;
+            this.Resources["dynamicTextColour"] = Colors.LightGray;
+
+            // changing navigation btn colours
+            if (DeviceInfo.Current.Idiom != DeviceIdiom.Phone)
+            {
+                accountBtn.BackgroundColor = new Color(44, 44, 44);
+                accountBtn.TextColor = Colors.LightGray;
+
+                wordleBtn.BackgroundColor = new Color(44, 44, 44);
+                wordleBtn.TextColor = Colors.LightGray;
+
+                progressionBtn.BackgroundColor = new Color(44, 44, 44);
+                progressionBtn.TextColor = Colors.LightGray;
+
+                settingsBtn.BackgroundColor = new Color(44, 44, 44);
+                settingsBtn.TextColor = Colors.LightGray;
+
+                howToPlayBtn.BackgroundColor = new Color(44, 44, 44);
+                howToPlayBtn.TextColor = Colors.LightGray;
+            }
+        }
+        else
+        {
+            // setting to light mode
+            BackgroundColor = Colors.White;
+            background.Opacity = 1;
+            holder.Color = new Color(255, 255, 255);
+            holderShadow.Color = new Color(0, 0, 0);
+            pageTitle.TextColor = Colors.Black;
+            this.Resources["dynamicTextColour"] = Colors.Black;
+
+            // changing navigation btn colours
+            if (DeviceInfo.Current.Idiom != DeviceIdiom.Phone)
+            {
+                accountBtn.BackgroundColor = new Color(0, 0, 0);
+                accountBtn.TextColor = Colors.White;
+
+                wordleBtn.BackgroundColor = new Color(0, 0, 0);
+                wordleBtn.TextColor = Colors.White;
+
+                progressionBtn.BackgroundColor = new Color(0, 0, 0);
+                progressionBtn.TextColor = Colors.White;
+
+                settingsBtn.BackgroundColor = new Color(0, 0, 0);
+                settingsBtn.TextColor = Colors.White;
+
+                howToPlayBtn.BackgroundColor = new Color(0, 0, 0);
+                howToPlayBtn.TextColor = Colors.White;
+            }
+        }
     }
 
     private void setupUI()
@@ -42,8 +106,16 @@ public partial class progressionPage : ContentPage
             holder.CornerRadius = 5;
             holderShadow.CornerRadius = 0;
         }
+
+        checkDarkMode();
     }
 
+    protected override void OnAppearing()
+    {
+        // handles dark mode switching
+        base.OnAppearing();
+        checkDarkMode();
+    }
     private void OnWindowChange(object sender, EventArgs e)
     {
         scaleElements();

@@ -63,7 +63,7 @@
                     </HorizontalStackLayout>
 
                     <HorizontalStackLayout>
-                        <CheckBox IsChecked="{Binding DarkMode}" Color="MediumPurple" x:Name="checkBox2"/>
+                        <CheckBox IsChecked="{Binding DarkMode}" Color="MediumPurple" x:Name="checkBox2" CheckedChanged="checkBox2_CheckedChanged"/>
                         <Label Style="{StaticResource labelStyle1}" FontSize="25" Text="Dark Mode" HorizontalTextAlignment="Center" x:Name="lbl3"/>
                     </HorizontalStackLayout>
 

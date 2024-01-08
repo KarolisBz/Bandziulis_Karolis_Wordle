@@ -17,6 +17,7 @@
             <x:Double x:Key="boxRad">10</x:Double>
             <x:Double x:Key="templateGridWidth">250</x:Double>
             <x:Double x:Key="templateGridHeight">300</x:Double>
+            <x:Object x:Key="dynamicTextColour"></x:Object>
         </ResourceDictionary>
     </ContentPage.Resources>
     
@@ -75,17 +76,17 @@
                                         <StackLayout>
 
                                             <Label Style="{StaticResource templateLabel}" FontSize="{DynamicResource templateFontSize}" HorizontalOptions="Center"
-                                                    Text="{Binding AtemptFinished, StringFormat='Date of game: {0:d}, Time: {0:t},'}"/>
+                                                    Text="{Binding AtemptFinished, StringFormat='Date of game: {0:d}, Time: {0:t},'}" TextColor="{DynamicResource dynamicTextColour}"/>
 
                                             <Label Style="{StaticResource templateLabel}" FontSize="{DynamicResource templateFontSize}"
-                                                    Text="{Binding Player, StringFormat='Player Name: {0},'}" HorizontalOptions="Center"/> 
+                                                    Text="{Binding Player, StringFormat='Player Name: {0},'}" HorizontalOptions="Center" TextColor="{DynamicResource dynamicTextColour}"/> 
 
                                             <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
                                                 <Label Style="{StaticResource templateLabel}" FontSize="{DynamicResource templateFontSize}"
-                                                        Text="{Binding NumberOfGuesses, StringFormat='Game Remaining guesses: {0},'}"/>
+                                                        Text="{Binding NumberOfGuesses, StringFormat='Game Remaining guesses: {0},'}" TextColor="{DynamicResource dynamicTextColour}"/>
 
                                                 <Label Style="{StaticResource templateLabel}" FontSize="{DynamicResource templateFontSize}"
-                                                        Text="{Binding CorrectWord, StringFormat='Correct Awnser: {0}'}"/>
+                                                        Text="{Binding CorrectWord, StringFormat='Correct Awnser: {0}'}" TextColor="{DynamicResource dynamicTextColour}"/>
                                             </HorizontalStackLayout>
 
                                             <!-- label acts like a spacer-->
