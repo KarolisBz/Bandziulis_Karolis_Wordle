@@ -138,7 +138,7 @@ public partial class howToPlayPage : ContentPage
             contentGrid.WidthRequest = holder.WidthRequest;
 
             // scaling boxveiws
-            double boxSize = fontManager.scaleFontSize(BoxSizePreset, relativeHeight, relativeWidth);
+            double boxSize = fontManager.scaleFontSize(BoxSizePreset, relativeHeight * 0.25, relativeWidth * 0.5);
             box1.HeightRequest = boxSize;
             box1.WidthRequest = boxSize;
             box2.HeightRequest = boxSize;
