@@ -9,6 +9,7 @@ namespace Wordle_Karolis_G00417529
         // class fields ( keeping them private for preventing bugs )
         private string correctWord;
         private string player;
+        private string modeSelected;
         private DateTime attemptFinished;
         private int numberOfGuesses;
         private List<int[]> attemptVisualData;
@@ -27,6 +28,20 @@ namespace Wordle_Karolis_G00417529
             currentAttempt = 0;
             attemptVisualData = new List<int[]>();
             player = DataHandler.currentPlayer;
+            
+            // setting mode to be recorded
+            if (DataHandler.DataHandlerObject.Cheats)
+            {
+                modeSelected = "Cheating";
+            }
+            else if(DataHandler.DataHandlerObject.EasyMode)
+            {
+                modeSelected = "Easy";
+            }
+            else
+            {
+                modeSelected = "Normal";
+            }
         }
 
         // getters and setters
@@ -81,6 +96,12 @@ namespace Wordle_Karolis_G00417529
         {
             get { return visualData; }
             set { visualData = value; }
+        }
+
+        public string ModeSelected
+        {
+            get { return modeSelected; }
+            set { modeSelected = value; }
         }
 
         // object methods

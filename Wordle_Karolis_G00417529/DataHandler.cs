@@ -27,6 +27,7 @@ namespace Wordle_Karolis_G00417529
         static public bool isInGamePage;
         static public bool gameFinished;
         static public ShellVeiwModel shellVeiwModel = new ShellVeiwModel(); // creating shellViewmodel
+        static public App appCache;
         // wrapped data //
         static public DataPackage wrappedData = new DataPackage(); // creating data wrapper
         static public progressionVeiwModel cachedProgressViewModel = new progressionVeiwModel();
@@ -150,6 +151,9 @@ namespace Wordle_Karolis_G00417529
                 Console.WriteLine($"An unexpected error occurred : {ex.Message}");
             }
 
+            // loading theme
+            setTheme(darkMode);
+
             return status;
         }
 
@@ -201,6 +205,7 @@ namespace Wordle_Karolis_G00417529
 
         static public void display()
         {
+            // displays data
             Debug.Print("\nCurrent Player: " + currentPlayer.ToString() + "\n" +
                         "Dark Mode: " + darkMode.ToString() + "\n" +
                         "Animation Speed: " + animationSpeed.ToString() + "\n" +
@@ -298,12 +303,34 @@ namespace Wordle_Karolis_G00417529
             }
         }
 
+        static private void setTheme(bool isDarkMode)
+        {
+            // selects and loads correc theme
+            if (isDarkMode)
+            {
+                appCache.UserAppTheme = AppTheme.Dark;
+            }
+            else
+            {
+                appCache.UserAppTheme = AppTheme.Light;
+            }
+        }
+
         // DATA veiwmodel - used for settings page
         // getters and setters
         public bool DarkMode
         {
             get { return darkMode; }
-            set { darkMode = value; OnPropertyChanged(); savingExtender(); }
+            set 
+            { 
+                darkMode = value;
+
+                // setting theme
+                setTheme(value);
+
+                OnPropertyChanged();
+                savingExtender();
+            }
         }
         public bool EasyMode
         {

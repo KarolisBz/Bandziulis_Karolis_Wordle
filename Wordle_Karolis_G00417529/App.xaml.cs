@@ -6,6 +6,9 @@
         {
             InitializeComponent();
             MainPage = new AppShell();
+
+            // chacing app
+            DataHandler.appCache = this;
         }
     }
 }

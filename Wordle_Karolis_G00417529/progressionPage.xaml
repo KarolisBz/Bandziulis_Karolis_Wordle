@@ -78,6 +78,9 @@
                                             <Label Style="{StaticResource templateLabel}" FontSize="{DynamicResource templateFontSize}" HorizontalOptions="Center"
                                                     Text="{Binding AtemptFinished, StringFormat='Date of game: {0:d}, Time: {0:t},'}" TextColor="{DynamicResource dynamicTextColour}"/>
 
+                                            <Label Style="{StaticResource templateLabel}" FontSize="{DynamicResource templateFontSize}" HorizontalOptions="Center"
+                                                    Text="{Binding ModeSelected, StringFormat='Game Mode: {0},'}" TextColor="{DynamicResource dynamicTextColour}"/>
+
                                             <Label Style="{StaticResource templateLabel}" FontSize="{DynamicResource templateFontSize}"
                                                     Text="{Binding Player, StringFormat='Player Name: {0},'}" HorizontalOptions="Center" TextColor="{DynamicResource dynamicTextColour}"/> 
 
