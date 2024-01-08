@@ -19,8 +19,14 @@ namespace Wordle_Karolis_G00417529
             if (DataHandler.isInGamePage)
             {
                 ShellNavigatingDeferral token = args.GetDeferral();
+                bool result = true;
 
-                bool result = await DisplayAlert("Do you want to leave the game?", "If you leave now, your progress will not be saved", "Yes", "No");
+                // only prompt if game is over
+                if (!DataHandler.gameFinished)
+                {
+                    result = await DisplayAlert("Do you want to leave the game?", "If you leave now, your progress will not be saved", "Yes", "No");
+                }
+                
                 if (!result)
                 {
                     args.Cancel();

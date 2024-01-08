@@ -12,7 +12,6 @@ public partial class gamePage : ContentPage
     Image refernce;
     int currentEntery, enteryMaxSize;
     bool inputLocked, appOn, enteryLocked, lastInputLock;
-    bool gameOver;
     double maxSize;
     wordleAttempt currentWordle;
 
@@ -23,7 +22,7 @@ public partial class gamePage : ContentPage
         // intilizing class fields
         entries = new List<Entry>();
         enteryLocked = false;
-        gameOver = false;
+        DataHandler.gameFinished = false;
         inputLocked = false;
         appOn = true;
         lastInputLock = true;
@@ -168,7 +167,7 @@ public partial class gamePage : ContentPage
     private void NewEntry_Completed(object sender, EventArgs e)
     {
         // this function handels checking awnser and moving player onto next attempt
-        if (!enteryLocked && !gameOver)
+        if (!enteryLocked && !DataHandler.gameFinished)
         {
             // class varibales
             Entry castedObj = (Entry)sender;
@@ -241,7 +240,7 @@ public partial class gamePage : ContentPage
     private void setGameIsOver(bool status)
     {
         // this function locks / unlocks the game mechanics
-        gameOver = status;
+        DataHandler.gameFinished = status;
         foreach (Entry entry in entries)
         {
             entry.IsReadOnly = status;
@@ -283,7 +282,7 @@ public partial class gamePage : ContentPage
 
     private void NewEntry_TextChanged(object sender, TextChangedEventArgs e)
     {
-        if (!gameOver) // locks input if game is over
+        if (!DataHandler.gameFinished) // locks input if game is over
         {
             // creating dynamic entery box moving
             Entry castedObj = (Entry)sender;
@@ -353,7 +352,7 @@ public partial class gamePage : ContentPage
         // this function handels restarting the game on button click
         bool answer = true;
 
-        if (!gameOver)
+        if (!DataHandler.gameFinished)
         {
             answer = await DisplayAlert("Do you want to restart the game?", "data will not be saved for uncompleted wordles", "Yes", "No");
         }
@@ -367,7 +366,7 @@ public partial class gamePage : ContentPage
     private void resetGame()
     {
         // reseting all class fields back to default
-        gameOver = true; // Locks loop
+        DataHandler.gameFinished = true; // Locks loop
         appOn = true;
         enteryLocked = false;
         inputLocked = false;
@@ -536,7 +535,7 @@ public partial class gamePage : ContentPage
         bool answer = true; // allow to pass by default
 
         // prompt player if they want to leave their current game (if one is running)
-        if (!gameOver)
+        if (!DataHandler.gameFinished)
         {
             answer = await DisplayAlert("Do you want to leave the game?", "If you leave now, your progress will not be saved", "Yes", "No");
         }

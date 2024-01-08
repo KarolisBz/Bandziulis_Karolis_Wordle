@@ -24,6 +24,7 @@ namespace Wordle_Karolis_G00417529
         static public List<string> wordList;
         // shell workaround
         static public bool isInGamePage;
+        static public bool gameFinished;
         static public ShellVeiwModel shellVeiwModel = new ShellVeiwModel(); // creating shellViewmodel
         // wrapped data //
         static public DataPackage wrappedData = new DataPackage(); // creating data wrapper
@@ -41,6 +42,7 @@ namespace Wordle_Karolis_G00417529
                 fontSize = 20;
                 easyMode = false;
                 timerOn = true;
+                gameFinished = false;
                 cachedProgressViewModel.AttemptList = new ObservableCollection<wordleAttempt>();
             }
 
