@@ -120,9 +120,18 @@ public partial class SettingsPage : ContentPage
             lbl4.TextColor = Colors.Black;
 
             // changing widget colours
-            checkBox1.Color = new Color(100, 100, 100);
-            checkBox2.Color = new Color(100, 100, 100);
-            checkBox3.Color = new Color(100, 100, 100);
+            if (DeviceInfo.Current.Idiom == DeviceIdiom.Phone)
+            {
+                checkBox1.Color = Colors.Black;
+                checkBox2.Color = Colors.Black;
+                checkBox3.Color = Colors.Black;
+            }
+            else
+            {
+                checkBox1.Color = new Color(100, 100, 100);
+                checkBox2.Color = new Color(100, 100, 100);
+                checkBox3.Color = new Color(100, 100, 100);
+            } 
             slider1.ThumbColor = Colors.Black;
             slider1.MinimumTrackColor = Colors.Black;
             slider1.MaximumTrackColor = new Color(100,100,100);
