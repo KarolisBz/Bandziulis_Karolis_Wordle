@@ -43,7 +43,7 @@ namespace Wordle_Karolis_G00417529
             {
                 // if we failed to load data, then we will give it default values
                 currentPlayer = "Default_User";
-                animationSpeed = 1;
+                animationSpeed = 0;
                 darkMode = false;
                 easyMode = false;
                 cheats = false;
@@ -315,12 +315,23 @@ namespace Wordle_Karolis_G00417529
             get { return cheats; }
             set { cheats = value; OnPropertyChanged(); savingExtender(); }
         }
-        public double AnimationSpeed
+        public double AnimationSpeed // allows for up to x10 animation speed
         {
             get { return animationSpeed; }
-            set { animationSpeed = value; OnPropertyChanged(); savingExtender(); }
+            set 
+            {
+                if (value == 0) value = 0.001; // we don't allow a value of 0
+                animationSpeed = value * 10;
+                OnPropertyChanged();
+                savingExtender(); 
+            }
         }
 
+        public double SliderValue // makes sure slide stays between 0 - 1
+        {
+            get { return animationSpeed / 10; }
+            set { AnimationSpeed = value; }
+        }
         // veiwModel functions
         private async void savingExtender()
         {

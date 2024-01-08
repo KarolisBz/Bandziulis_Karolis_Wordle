@@ -303,6 +303,7 @@ public partial class gamePage : ContentPage
     private async void animateAttempt(int[] attempt)
     {
         // this function animates the grid entries
+        uint newAnimationSpeed = (uint)Math.Floor(125 / DataHandler.DataHandlerObject.AnimationSpeed);
         int startIndex = Math.Abs(currentEntery / 5) * 5;
         int endIndex = startIndex + 5;
         int counter = 0;
@@ -310,7 +311,7 @@ public partial class gamePage : ContentPage
         // animating all entries in that row
         for (int i = startIndex; i < endIndex; i++)
         {
-            await entries[i].RotateXTo(90, 125); // flip 90 degrees to hide colour change
+            await entries[i].RotateXTo(90, newAnimationSpeed); // flip 90 degrees to hide colour change
 
             // only color change if it's wrong position or correct
             if (attempt[counter + 1] != 0)
@@ -319,8 +320,8 @@ public partial class gamePage : ContentPage
                 entries[i].Opacity = 0.5;
             }
 
-            await entries[i].RotateXTo(90, 125);
-            await entries[i].RotateXTo(360, 250);
+            await entries[i].RotateXTo(90, newAnimationSpeed);
+            await entries[i].RotateXTo(360, newAnimationSpeed * 2);
             counter++;
         }
 
