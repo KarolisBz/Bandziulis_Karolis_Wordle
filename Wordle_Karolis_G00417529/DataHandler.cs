@@ -43,7 +43,7 @@ namespace Wordle_Karolis_G00417529
             {
                 // if we failed to load data, then we will give it default values
                 currentPlayer = "Default_User";
-                animationSpeed = 0;
+                animationSpeed = 1;
                 darkMode = false;
                 easyMode = false;
                 cheats = false;

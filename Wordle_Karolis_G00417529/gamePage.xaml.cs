@@ -1,4 +1,3 @@
-using ABI.System.Collections.Generic;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Platform;
 using System.Diagnostics;
@@ -13,8 +12,8 @@ public partial class gamePage : ContentPage
     Image refernce;
     int currentEntery, enteryMaxSize;
     bool inputLocked, appOn, enteryLocked, lastInputLock;
-    bool notResetScaling = true;
-    double maxSize, mobileGridY;
+    bool notResetScaling = true, firstLoad = true;
+    double maxSize;
     wordleAttempt currentWordle;
 
 	public gamePage()
@@ -42,6 +41,9 @@ public partial class gamePage : ContentPage
 
         // setting up new game
         setupLocalGame();
+
+        // first load complete
+        firstLoad = false;
     }
 
     private void setupLocalGame()
@@ -92,6 +94,13 @@ public partial class gamePage : ContentPage
 
         // shell workaround
         DataHandler.isInGamePage = true;
+
+        // if we are on mobile, we have to reset the game everytime,
+        // otherwise glitches occur
+        if (DeviceInfo.Current.Idiom == DeviceIdiom.Phone && !firstLoad)
+        {
+            resetGame();
+        }
     }
 
     protected override void OnDisappearing()
@@ -123,7 +132,6 @@ public partial class gamePage : ContentPage
         currentEntery = 0;
         maxSize = gameGrid.WidthRequest;
         enteryMaxSize = 50;
-        mobileGridY = gameGrid.TranslationY;
 
         // hooking function to every time layout is changed
         LayoutChanged += OnWindowChange;
@@ -621,8 +629,8 @@ public partial class gamePage : ContentPage
         // moving grid up on mobile
         if (isMobile && notResetScaling)
         {
-            gameGrid.TranslationY -= windowHeight * 0.12;
-            startGameBtn.TranslationY -= (windowHeight * 0.12) + (gameGrid.HeightRequest * 0.5) - startGameBtn.HeightRequest;
+            gameGrid.TranslationY -= windowHeight * 0.22;
+            startGameBtn.TranslationY -= (windowHeight * 0.32) + (gameGrid.HeightRequest * 0.5) - startGameBtn.HeightRequest;
             startGameBtn.FontSize = fontManager.findFontSizeToConstraint(startGameBtn.HeightRequest * 3);
         }
         else if (isMobile) 
