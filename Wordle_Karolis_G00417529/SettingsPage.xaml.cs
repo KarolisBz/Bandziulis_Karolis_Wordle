@@ -62,11 +62,29 @@ public partial class SettingsPage : ContentPage
             holder.Color = new Color(77, 77, 77);
             holderShadow.Color = new Color(43, 43, 43);
 
+            // changing font colours
             pageTitle.TextColor = Colors.LightGray;
             lbl1.TextColor = Colors.LightGray;
             lbl2.TextColor = Colors.LightGray;
             lbl3.TextColor = Colors.LightGray;
             lbl4.TextColor = Colors.LightGray;
+
+            // changing widget colours
+            checkBox1.Color = Colors.White;
+            checkBox2.Color = Colors.White;
+            checkBox3.Color = Colors.White;
+            if (DeviceInfo.Current.Idiom == DeviceIdiom.Phone)
+            {
+                slider1.MaximumTrackColor = Colors.White;
+                slider1.MinimumTrackColor = Colors.LightGray;
+                slider1.ThumbColor = Colors.LightGray;
+            }
+            else
+            {
+                slider1.MaximumTrackColor = new Color(115, 115, 115);
+                slider1.MinimumTrackColor = Colors.White;
+                slider1.ThumbColor = Colors.White;
+            }
 
             // changing navigation btn colours
             if (DeviceInfo.Current.Idiom != DeviceIdiom.Phone)
@@ -94,11 +112,20 @@ public partial class SettingsPage : ContentPage
             holder.Color = new Color(255, 255, 255);
             holderShadow.Color = new Color(0, 0, 0);
 
+            // changing font colours
             pageTitle.TextColor = Colors.Black;
             lbl1.TextColor = Colors.Black;
             lbl2.TextColor = Colors.Black;
             lbl3.TextColor = Colors.Black;
             lbl4.TextColor = Colors.Black;
+
+            // changing widget colours
+            checkBox1.Color = new Color(100, 100, 100);
+            checkBox2.Color = new Color(100, 100, 100);
+            checkBox3.Color = new Color(100, 100, 100);
+            slider1.ThumbColor = Colors.Black;
+            slider1.MinimumTrackColor = Colors.Black;
+            slider1.MaximumTrackColor = new Color(100,100,100);
 
             // changing navigation btn colours
             if (DeviceInfo.Current.Idiom != DeviceIdiom.Phone)

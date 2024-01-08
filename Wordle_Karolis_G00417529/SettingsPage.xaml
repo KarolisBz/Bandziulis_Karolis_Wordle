@@ -55,7 +55,7 @@
             <Grid  x:Name="contentGrid" ZIndex="5" HeightRequest="700" WidthRequest="500" HorizontalOptions="Center" VerticalOptions="Center">
                 <VerticalStackLayout HorizontalOptions="Center" Padding="35">
                     <Label Style="{StaticResource labelStyle1}" FontSize="25" Text="{Binding AnimationSpeed, StringFormat='animation speed: x{0:F2}'}" HorizontalTextAlignment="Center" x:Name="lbl1"/>
-                    <Slider WidthRequest="250" MinimumTrackColor="MediumPurple" MaximumTrackColor="Black" x:Name="slider1" Value="{Binding SliderValue}"/>
+                    <Slider WidthRequest="250" MinimumTrackColor="LightGray" MaximumTrackColor="Black" ThumbColor="Black" x:Name="slider1" Value="{Binding SliderValue}"/>
 
                     <HorizontalStackLayout>
                         <CheckBox IsChecked="{Binding EasyMode}" Color="MediumPurple" x:Name="checkBox1"/>
