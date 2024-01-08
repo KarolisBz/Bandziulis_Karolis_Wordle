@@ -7,6 +7,7 @@ public partial class SettingsPage : ContentPage
 	public SettingsPage()
 	{
 		InitializeComponent();
+        BindingContext = DataHandler.DataHandlerObject;
         setupUI(); // setting up ui
     }
 

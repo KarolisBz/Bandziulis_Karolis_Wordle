@@ -2,6 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Wordle_Karolis_G00417529.SettingsPage"
+             xmlns:model="clr-namespace:Wordle_Karolis_G00417529"
+             xmlns:viewmodel="clr-namespace:Wordle_Karolis_G00417529"
+             x:DataType="viewmodel:DataHandler"
              Title="SettingsPage"
              BackgroundColor="White"
              Shell.NavBarIsVisible="False">
@@ -51,21 +54,21 @@
 
             <Grid RowDefinitions="*,*,*,*,*,*,*,*,*,*,*,*" x:Name="contentGrid" ZIndex="10" HeightRequest="700" WidthRequest="500" HorizontalOptions="Center" VerticalOptions="Center">
                 <VerticalStackLayout HorizontalOptions="Center" Padding="35">
-                    <Label Style="{StaticResource labelStyle1}" FontSize="25" Text="animation speed: 1x" HorizontalTextAlignment="Center" x:Name="lbl1"/>
-                    <Slider WidthRequest="250" BackgroundColor="black" MinimumTrackColor="MediumPurple" x:Name="slider1"/>
+                    <Label Style="{StaticResource labelStyle1}" FontSize="25" Text="{Binding AnimationSpeed, StringFormat='animation speed: {0.F2}x'}" HorizontalTextAlignment="Center" x:Name="lbl1"/>
+                    <Slider WidthRequest="250" MinimumTrackColor="MediumPurple" MaximumTrackColor="Black" x:Name="slider1"/>
 
                     <HorizontalStackLayout>
-                        <CheckBox IsChecked="False" Color="MediumPurple" x:Name="checkBox1"/>
+                        <CheckBox IsChecked="{Binding EasyMode}" Color="MediumPurple" x:Name="checkBox1"/>
                         <Label Style="{StaticResource labelStyle1}" FontSize="25" Text="Easy Mode" HorizontalTextAlignment="Center" x:Name="lbl2"/>
                     </HorizontalStackLayout>
 
                     <HorizontalStackLayout>
-                        <CheckBox IsChecked="False" Color="MediumPurple" x:Name="checkBox2"/>
+                        <CheckBox IsChecked="{Binding DarkMode}" Color="MediumPurple" x:Name="checkBox2"/>
                         <Label Style="{StaticResource labelStyle1}" FontSize="25" Text="Dark Mode" HorizontalTextAlignment="Center" x:Name="lbl3"/>
                     </HorizontalStackLayout>
 
                     <HorizontalStackLayout>
-                        <CheckBox IsChecked="False" Color="MediumPurple" x:Name="checkBox3"/>
+                        <CheckBox IsChecked="{Binding Cheats}" Color="MediumPurple" x:Name="checkBox3"/>
                         <Label Style="{StaticResource labelStyle1}" FontSize="25" Text="Cheats" HorizontalTextAlignment="Center" x:Name="lbl4"/>
                     </HorizontalStackLayout>
                 </VerticalStackLayout>

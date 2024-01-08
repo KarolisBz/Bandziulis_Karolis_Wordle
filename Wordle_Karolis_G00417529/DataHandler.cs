@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using Microsoft.Maui;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
@@ -7,7 +8,7 @@ using System.Text.Json;
 namespace Wordle_Karolis_G00417529
 {
     // this class handles most of loading, saving and storing of data
-    public class DataHandler 
+    public class DataHandler : INotifyPropertyChanged
     {
         // class fields //
         static private string filePath = System.IO.Path.Combine(FileSystem.Current.AppDataDirectory, "wordleUserData2.json");
@@ -15,10 +16,10 @@ namespace Wordle_Karolis_G00417529
         // player data //
         static public string currentPlayer;
         // settings data //
-        static public bool darkMode;
-        static public float fontSize;
-        static public bool easyMode;
-        static public bool timerOn;
+        static private bool darkMode;
+        static private bool easyMode;
+        static private bool cheats;
+        static private double animationSpeed;
         // api cached //
         static private HttpClient client;
         static public List<string> wordList;
@@ -29,19 +30,23 @@ namespace Wordle_Karolis_G00417529
         // wrapped data //
         static public DataPackage wrappedData = new DataPackage(); // creating data wrapper
         static public progressionVeiwModel cachedProgressViewModel = new progressionVeiwModel();
+        static public DataHandler DataHandlerObject;
 
         // constructor, don't call more then once in entire program
         public DataHandler()
         {
+            // we cache ourselves to be visible to everyone
+            DataHandlerObject = this;
+
             // requests loading of data when created, however data is static and can be accessed anywhere without object
             if (!loadData())
             {
                 // if we failed to load data, then we will give it default values
                 currentPlayer = "Default_User";
+                animationSpeed = 1;
                 darkMode = false;
-                fontSize = 20;
                 easyMode = false;
-                timerOn = true;
+                cheats = false;
                 gameFinished = false;
                 cachedProgressViewModel.AttemptList = new ObservableCollection<wordleAttempt>();
             }
@@ -76,9 +81,9 @@ namespace Wordle_Karolis_G00417529
             // wrapped variables
             public string currentPlayerPacked { get; set; }
             public bool darkModePacked { get; set; }
-            public float fontSizePacked { get; set; }
+            public double animationSpeedPacked { get; set; }
             public bool easyModePacked { get; set; }
-            public bool timerOnPacked { get; set; }
+            public bool cheatsPacked { get; set; }
             public ObservableCollection<wordleAttempt> attemptListPacked { get; set; }
         }
 
@@ -127,10 +132,10 @@ namespace Wordle_Karolis_G00417529
 
                         // moving data from wrapped package to class
                         currentPlayer = wrappedData.currentPlayerPacked;
+                        animationSpeed = wrappedData.animationSpeedPacked;
                         darkMode = wrappedData.darkModePacked;
-                        fontSize = wrappedData.fontSizePacked;
                         easyMode = wrappedData.easyModePacked;
-                        timerOn = wrappedData.timerOnPacked;
+                        cheats = wrappedData.cheatsPacked;
                         cachedProgressViewModel.AttemptList = wrappedData.attemptListPacked;
                     }
                     status = true;
@@ -167,10 +172,10 @@ namespace Wordle_Karolis_G00417529
 
                 // wrapping all data in current class into wrappedData, overwriting old dataStore
                 wrappedData.currentPlayerPacked = currentPlayer;
+                wrappedData.animationSpeedPacked = animationSpeed;
                 wrappedData.darkModePacked = darkMode;
-                wrappedData.fontSizePacked = fontSize;
                 wrappedData.easyModePacked = easyMode;
-                wrappedData.timerOnPacked = timerOn;
+                wrappedData.cheatsPacked = cheats;
                 wrappedData.attemptListPacked = cachedProgressViewModel.AttemptList;
 
                 string JsonString = JsonSerializer.Serialize(wrappedData);
@@ -196,11 +201,11 @@ namespace Wordle_Karolis_G00417529
 
         static public void display()
         {
-            Debug.Print("\nCurrent Player: " + currentPlayer + "\n" +
-                        "Dark Mode: " + darkMode + "\n" +
-                        "Font Size: " + fontSize + "\n" +
-                        "Easy Mode: " + easyMode + "\n" +
-                        "Timer On: " + timerOn + "\n");
+            Debug.Print("\nCurrent Player: " + currentPlayer.ToString() + "\n" +
+                        "Dark Mode: " + darkMode.ToString() + "\n" +
+                        "Animation Speed: " + animationSpeed.ToString() + "\n" +
+                        "Easy Mode: " + easyMode.ToString() + "\n" +
+                        "Cheats: " + cheats.ToString() + "\n");
         }
 
         static private async void fetchSaveApi()
@@ -293,5 +298,41 @@ namespace Wordle_Karolis_G00417529
             }
         }
 
+        // DATA veiwmodel - used for settings page
+        // getters and setters
+        public bool DarkMode
+        {
+            get { return darkMode; }
+            set { darkMode = value; OnPropertyChanged(); savingExtender(); }
+        }
+        public bool EasyMode
+        {
+            get { return easyMode; }
+            set { easyMode = value; OnPropertyChanged(); savingExtender(); }
+        }
+        public bool Cheats
+        {
+            get { return cheats; }
+            set { cheats = value; OnPropertyChanged(); savingExtender(); }
+        }
+        public double AnimationSpeed
+        {
+            get { return animationSpeed; }
+            set { animationSpeed = value; OnPropertyChanged(); savingExtender(); }
+        }
+
+        // veiwModel functions
+        private async void savingExtender()
+        {
+            await saveDataAsync();
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        // credits to Donny Hurley for this function
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }
