@@ -12,7 +12,8 @@ public partial class gamePage : ContentPage
     Image refernce;
     int currentEntery, enteryMaxSize;
     bool inputLocked, appOn, enteryLocked, lastInputLock;
-    double maxSize;
+    bool notResetScaling = true;
+    double maxSize, mobileGridY;
     wordleAttempt currentWordle;
 
 	public gamePage()
@@ -82,6 +83,7 @@ public partial class gamePage : ContentPage
         currentEntery = 0;
         maxSize = gameGrid.WidthRequest;
         enteryMaxSize = 50;
+        mobileGridY = gameGrid.TranslationY;
 
         // hooking function to every time layout is changed
         LayoutChanged += OnWindowChange;
@@ -158,10 +160,59 @@ public partial class gamePage : ContentPage
 
     private void refreshEntrys()
     {
-        foreach (var entry in entries)
-        {
-         
+        appOn = false; // locking threading
+
+        // removing all old entries
+        foreach (Entry entry in entries) 
+        { 
+            gameGrid.Remove(entry);
+            // ideally you'd want to destroy these objects,
+            // but I've not found a way to do this
         }
+        entries.Clear();
+
+        // generating new entries
+        for (int row = 0; row < 6; row++) // 6 attempts
+        {
+            for (int col = 0; col < 5; col++) // 5 letter word
+            {
+                // creating text box's
+                Entry newEntry = new Entry();
+                newEntry.ZIndex = 5; // always ontop
+                newEntry.MaxLength = 2;
+                newEntry.FontSize = enteryMaxSize;
+                newEntry.FontFamily = "MerryDeer";
+                newEntry.TextColor = new Color(255, 255, 255);
+                newEntry.TextTransform = TextTransform.Lowercase;
+                newEntry.Rotation = 180;
+                newEntry.HorizontalOptions = LayoutOptions.Fill;
+                newEntry.VerticalOptions = LayoutOptions.Fill;
+                newEntry.HorizontalTextAlignment = TextAlignment.Center;
+                newEntry.VerticalTextAlignment = TextAlignment.Center;
+                newEntry.IsTextPredictionEnabled = false;
+                newEntry.IsSpellCheckEnabled = false;
+                newEntry.SetValue(Grid.RowProperty, row);
+                newEntry.SetValue(Grid.ColumnProperty, col);
+                gameGrid.Add(newEntry);
+                entries.Add(newEntry);
+
+                // making sure start entry of each row is length 1
+                if (col == 0) newEntry.MaxLength = 1;
+
+                // adding functionality to each entery
+                newEntry.TextChanged += NewEntry_TextChanged;
+                newEntry.Completed += NewEntry_Completed;
+            }
+        }
+
+        // focusing on first entery and setting it up
+        Entry firstEntery = entries[0];
+        firstEntery.MaxLength = 1;
+        firstEntery.Focus();
+
+        currentEntery = 0;
+        scaleElements();
+        appOn = true; // unlocking threading
     }
 
     private void NewEntry_Completed(object sender, EventArgs e)
@@ -222,6 +273,7 @@ public partial class gamePage : ContentPage
                     currentEntery = ((currentRow + 1) * 5);
                 }
                 entries[currentEntery-1].Focus();
+                lastInputLock = false;
 
                 // if game is lost or won, we lock inputs
                 if (result[0] == 1)
@@ -374,15 +426,23 @@ public partial class gamePage : ContentPage
         currentEntery = 0;
         entries[currentEntery].Focus();
 
-        // wiping grid
-        foreach (Entry entry in entries)
+        // wiping grid (mobile has a glitch where entires cannot return to tranparent)
+        // so we are going to have to respawn them
+        if (DeviceInfo.Current.Idiom != DeviceIdiom.Phone)
         {
-            entry.Text = "";
-            entry.CancelAnimations();
-            entry.Rotation = 180;
-            entry.BackgroundColor = new Color(0,0,0,0);
-            entry.Background = Brush.Transparent;
-            entry.Opacity = 1;
+            foreach (Entry entry in entries)
+            {
+                entry.Text = "";
+                entry.CancelAnimations();
+                entry.Rotation = 180;
+                entry.Opacity = 1;
+                entry.BackgroundColor = new Color(0, 0, 0, 0);
+            }
+        }
+        else
+        {
+            notResetScaling = false;
+            refreshEntrys();
         }
 
         // spawning new game
@@ -515,12 +575,16 @@ public partial class gamePage : ContentPage
         }
 
         // moving grid up on mobile
-        if (isMobile)
+        if (isMobile && notResetScaling)
         {
-            gameGrid.TranslationY -= windowHeight * 0.1;
-            startGameBtn.TranslationY -= (windowHeight * 0.1) + (gameGrid.HeightRequest * 0.5) - startGameBtn.HeightRequest;
+            gameGrid.TranslationY -= windowHeight * 0.12;
+            startGameBtn.TranslationY -= (windowHeight * 0.12) + (gameGrid.HeightRequest * 0.5) - startGameBtn.HeightRequest;
             startGameBtn.FontSize = fontManager.findFontSizeToConstraint(startGameBtn.HeightRequest * 3);
-        }  
+        }
+        else if (isMobile) 
+        {
+            startGameBtn.FontSize = fontManager.findFontSizeToConstraint(startGameBtn.HeightRequest * 3);
+        }
     }
 
     private void OnWindowChange(object sender, EventArgs e)

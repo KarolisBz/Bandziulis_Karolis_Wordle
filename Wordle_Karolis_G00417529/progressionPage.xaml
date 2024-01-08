@@ -31,13 +31,13 @@
 
             <!-- Content over background image -->
             <Label
-              ZIndex="1"
-              FontFamily="HeavenlyChristmas"
-              x:Name="pageTitle"
-              FontSize="250"
-              TextColor ="Black"
-              HorizontalTextAlignment="Center"
-              Text="(Progression)"/>
+             ZIndex="1"
+             FontFamily="HeavenlyChristmas"
+             x:Name="pageTitle"
+             FontSize="250"
+             TextColor ="Black"
+             HorizontalTextAlignment="Center"
+             Text="(Progression)"/>
 
             <BoxView
              ZIndex="0"
@@ -92,11 +92,11 @@
                                             <Label/>
                                              
                                             <!-- manual emoji grid -->
-                                            <Grid HorizontalOptions="Center" HeightRequest="{DynamicResource templateGridHeight}" WidthRequest="{DynamicResource templateGridWidth}">
+                                            <Grid HorizontalOptions="Center" HeightRequest="310" WidthRequest="260">
                                                 <!-- background of emoji grid -->
                                                 <BoxView
-                                                 HeightRequest="{Binding Source={x:Reference this}, Path=Parent.HeightRequest}"
-                                                 WidthRequest="{Binding Source={x:Reference this}, Path=Parent.WidthRequest}"
+                                                 HeightRequest="310"
+                                                 WidthRequest="260"
                                                  CornerRadius="{StaticResource boxRad}"
                                                  ZIndex="9"
                                                  Grid.Row="0"

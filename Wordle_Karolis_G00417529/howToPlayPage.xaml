@@ -39,15 +39,15 @@
              Opacity="0.95"/>
 
             <BoxView
-            Grid.Row="0"
-            x:Name = "holder"
-            HeightRequest = "700"
-            WidthRequest = "500"
-            VerticalOptions="Center"
-            HorizontalOptions="Center"
-            CornerRadius="40"
-            Color="white"
-            Opacity="0.95"/>
+             Grid.Row="0"
+             x:Name = "holder"
+             HeightRequest = "700"
+             WidthRequest = "500"
+             VerticalOptions="Center"
+             HorizontalOptions="Center"
+             CornerRadius="40"
+             Color="white"
+             Opacity="0.95"/>
 
             <!-- content grid -->
             <Grid RowDefinitions="*,*,*,*,*,*,*,*,*,*,*,*" x:Name="contentGrid" ZIndex="10" HeightRequest="700" WidthRequest="500" HorizontalOptions="Center" VerticalOptions="Center">
