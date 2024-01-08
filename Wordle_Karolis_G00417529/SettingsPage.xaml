@@ -17,13 +17,59 @@
 
             <!-- Content over background image -->
             <Label
-              ZIndex="1"
-              FontFamily="HeavenlyChristmas"
-              x:Name="pageTitle"
-              FontSize="250"
-              TextColor ="Black"
-              HorizontalTextAlignment="Center"
-              Text="(Settings)"/>
+             ZIndex="1"
+             FontFamily="HeavenlyChristmas"
+             x:Name="pageTitle"
+             FontSize="250"
+             TextColor ="Black"
+             HorizontalTextAlignment="Center"
+             Text="(Settings)"/>
+
+            <!-- background page img -->
+            <BoxView
+             ZIndex="0"
+             Grid.Row="0"
+             x:Name = "holderShadow"
+             HeightRequest = "720"
+             WidthRequest = "520"
+             VerticalOptions="Center"
+             HorizontalOptions="Center"
+             CornerRadius="40"
+             Color="black"
+             Opacity="0.95"/>
+
+            <BoxView
+             Grid.Row="0"
+             x:Name = "holder"
+             HeightRequest = "700"
+             WidthRequest = "500"
+             VerticalOptions="Center"
+             HorizontalOptions="Center"
+             CornerRadius="40"
+             Color="white"
+             Opacity="0.95"/>
+
+            <Grid RowDefinitions="*,*,*,*,*,*,*,*,*,*,*,*" x:Name="contentGrid" ZIndex="10" HeightRequest="700" WidthRequest="500" HorizontalOptions="Center" VerticalOptions="Center">
+                <VerticalStackLayout HorizontalOptions="Center" Padding="35">
+                    <Label Style="{StaticResource labelStyle1}" FontSize="25" Text="animation speed: 1x" HorizontalTextAlignment="Center" x:Name="lbl1"/>
+                    <Slider WidthRequest="250" BackgroundColor="black" MinimumTrackColor="MediumPurple" x:Name="slider1"/>
+
+                    <HorizontalStackLayout>
+                        <CheckBox IsChecked="False" Color="MediumPurple" x:Name="checkBox1"/>
+                        <Label Style="{StaticResource labelStyle1}" FontSize="25" Text="Easy Mode" HorizontalTextAlignment="Center" x:Name="lbl2"/>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout>
+                        <CheckBox IsChecked="False" Color="MediumPurple" x:Name="checkBox2"/>
+                        <Label Style="{StaticResource labelStyle1}" FontSize="25" Text="Dark Mode" HorizontalTextAlignment="Center" x:Name="lbl3"/>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout>
+                        <CheckBox IsChecked="False" Color="MediumPurple" x:Name="checkBox3"/>
+                        <Label Style="{StaticResource labelStyle1}" FontSize="25" Text="Cheats" HorizontalTextAlignment="Center" x:Name="lbl4"/>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Grid>
 
             <!-- button grid -->
             <Grid RowDefinitions="*,*,*,*,*,*,*,*,*,*,*,*" ColumnDefinitions="*,*" ColumnSpacing="1555" x:Name="btnHolder" ZIndex="5">
