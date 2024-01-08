@@ -1,3 +1,4 @@
+using ABI.System.Collections.Generic;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Platform;
 using System.Diagnostics;
@@ -39,9 +40,48 @@ public partial class gamePage : ContentPage
         // we sale all ui
         scaleElements();
 
+        // setting up new game
+        setupLocalGame();
+    }
+
+    private void setupLocalGame()
+    {
         // we create game and wordleAttempt, only save if the game is finished!
         currentWordle = new wordleAttempt();
         currentWordle.setupGame();
+
+        // we apply cheats / easy mode
+        if (DataHandler.DataHandlerObject.Cheats) // apply only cheats if both are active
+        {
+            for (int i = 1; i < 31; i++)
+            {
+                // add word awnser to every row
+                if (i % 5 == 0)
+                {
+                    for (int index = 0; index < 5; index++)
+                    {
+                        entries[(i - 5) + index].Placeholder = "" + currentWordle.CorrectWord[index];
+                    }
+                }
+            }
+        }
+        else if (DataHandler.DataHandlerObject.EasyMode)
+        {
+            for (int i = 1; i < 31; i++)
+            {
+                // add word suggestion to every row
+                if (i % 5 == 0)
+                {
+                    for (int index = 0; index < 5; index++)
+                    {
+                        if (index == 0 ||  index == 4) // give first and last letter
+                        {
+                            entries[(i - 5) + index].Placeholder = "" + currentWordle.CorrectWord[index];
+                        }
+                    }
+                }
+            }
+        }
     }
 
     protected override void OnAppearing()
@@ -105,6 +145,8 @@ public partial class gamePage : ContentPage
 
             howToPlayBtn.IsVisible = false;
             howToPlayImg.IsVisible = false;
+
+            background.Source = "mobilebackground.png";
         }
 
         // adding grid box's and text box's
@@ -435,6 +477,7 @@ public partial class gamePage : ContentPage
             foreach (Entry entry in entries)
             {
                 entry.Text = "";
+                entry.Placeholder = null;
                 entry.CancelAnimations();
                 entry.Rotation = 180;
                 entry.Opacity = 1;
@@ -448,8 +491,7 @@ public partial class gamePage : ContentPage
         }
 
         // spawning new game
-        currentWordle = new wordleAttempt();
-        currentWordle.setupGame();
+        setupLocalGame();
         setGameIsOver(false);
     }
 
