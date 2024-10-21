@@ -1,12 +1,12 @@
-Wordle Game in .NET MAUI
-- read me was added for veiwing purposes only
+# Wordle Game in .NET MAUI
 
-Welcome to the Wordle Game project! This is a simple implementation of the popular word-guessing game, built using .NET MAUI.
- This project was developed as part of my 2nd-year coursework to explore cross-platform application development.
+**Note:** This README was added for viewing purposes only.
 
-Features
-Cross-platform compatibility (iOS, Android, Windows)
-Simple and intuitive user interface
-Responsive design for various screen sizes
-Randomly selected words from a API call
-Color-coded feedback for each guess
+Welcome to the Wordle Game project! This is a simple implementation of the popular word-guessing game, built using .NET MAUI. This project was developed as part of my 2nd-year coursework to explore cross-platform application development.
+
+## Features
+- **Cross-platform compatibility:** iOS, Android, Windows
+- **Simple and intuitive user interface**
+- **Responsive design** for various screen sizes
+- **Randomly selected words** from an API call
+- **Color-coded feedback** for each guess
